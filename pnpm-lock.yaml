@@ -12,6 +12,7 @@ specifiers:
   '@angular/platform-browser': ^14.1.0
   '@angular/platform-browser-dynamic': ^14.1.0
   '@angular/router': ^14.1.0
+  '@fantasy0v0/universal-frontend-utility': ^14.1.2
   '@types/jasmine': ~4.0.0
   jasmine-core: ~4.2.0
   karma: ~6.4.0
@@ -33,6 +34,7 @@ dependencies:
   '@angular/platform-browser': 14.1.2_3otf24jo3f4idajpgwhhqlt624
   '@angular/platform-browser-dynamic': 14.1.2_5i6d4327rbwp4cvkcywjmoq47q
   '@angular/router': 14.1.2_4wcrleoqytgp5zjvynaz56ywje
+  '@fantasy0v0/universal-frontend-utility': 14.1.2_m5sie2slp3ong33c4oejeljh6e
   rxjs: 7.5.6
   tslib: 2.4.0
   zone.js: 0.11.7
@@ -1746,6 +1748,24 @@ packages:
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
     dev: true
+
+  /@fantasy0v0/universal-frontend-utility/14.1.2_m5sie2slp3ong33c4oejeljh6e:
+    resolution: {integrity: sha512-g/FWw7/txh//EP8wC0KTDh7iYUz2IO9rPBj62BnfNfc7ZzyYPorzoPmD0dIYMfM+WKmups+f39X1EhGsKOHmzw==}
+    peerDependencies:
+      '@angular/common': ^14.1.2
+      '@angular/core': ^14.1.2
+      '@angular/forms': ^14.1.2
+      '@angular/platform-browser': ^14.1.2
+      rxjs: ~7.5.0
+      zone.js: ~0.11.4
+    dependencies:
+      '@angular/common': 14.1.2_u5nixh7yjkeifypi65adzbr7xi
+      '@angular/core': 14.1.2_rxjs@7.5.6+zone.js@0.11.7
+      '@angular/forms': 14.1.2_4wcrleoqytgp5zjvynaz56ywje
+      '@angular/platform-browser': 14.1.2_3otf24jo3f4idajpgwhhqlt624
+      rxjs: 7.5.6
+      zone.js: 0.11.7
+    dev: false
 
   /@gar/promisify/1.1.3:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
