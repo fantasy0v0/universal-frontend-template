@@ -7,7 +7,7 @@ import {
   RouterStateSnapshot,
   UrlTree
 } from '@angular/router';
-import { UniversalUserService } from "../services/universal-user/universal-user.service";
+import { UniversalUserService } from "../../services/universal-user/universal-user.service";
 import { NzMessageService } from "ng-zorro-antd/message";
 
 @Injectable({

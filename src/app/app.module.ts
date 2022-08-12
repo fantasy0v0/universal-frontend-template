@@ -7,12 +7,15 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { zh_CN } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './pages/login/login.component';
 import { MainComponent } from './pages/main/main.component';
 import { HasPermissionDirective } from './directives/has-permission/has-permission.directive';
+import { NzInputModule } from "ng-zorro-antd/input";
+import { NzFormModule } from "ng-zorro-antd/form";
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 registerLocaleData(zh);
 
@@ -28,7 +31,11 @@ registerLocaleData(zh);
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NzInputModule,
+    NzFormModule,
+    ReactiveFormsModule,
+    NzButtonModule
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]

@@ -73,7 +73,8 @@
               "browserTarget": "universal-frontend-template:build:production"
             },
             "development": {
-              "browserTarget": "universal-frontend-template:build:development"
+              "browserTarget": "universal-frontend-template:build:development",
+              "proxyConfig": "proxyconfig.json"
             }
           },
           "defaultConfiguration": "development"

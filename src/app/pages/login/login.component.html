@@ -1,1 +1,51 @@
-<p>login works!</p>
+<div class="box">
+  <div class="dynamic-shadow"></div>
+  <div class="logo">Logo</div>
+  <div class="title">登录通用管理后台</div>
+  <div class="content">
+    <form nz-form [formGroup]="formGroup" class="login-form"
+          (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="accountErrorTpl">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="account"
+                   placeholder="帐号"/>
+          </nz-input-group>
+          <ng-template #accountErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              请输入您的帐号
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              帐号的长度不能少于6
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              帐号的长度不能超过255
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="passwordErrorTpl">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password"
+                   placeholder="密码"/>
+          </nz-input-group>
+          <ng-template #passwordErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              请输入您的密码
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              密码的长度不能少于6
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              帐号的长度不能超过255
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <button nz-button class="login-form-button login-form-margin"
+              [nzLoading]="loading" [nzType]="'primary'">登录
+      </button>
+    </form>
+  </div>
+</div>

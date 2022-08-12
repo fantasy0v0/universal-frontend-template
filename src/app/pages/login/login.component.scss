@@ -1,0 +1,59 @@
+:host {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  /*background-image: url('/assets/wallpaper.jfif');*/
+  background-size: cover;
+  overflow-x: hidden;
+}
+
+.box {
+  position: absolute;
+  background-color: rgb(255 255 255 / 50%);
+  width: 16.625rem;
+  right: 6%;
+  top: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 1rem 0 rgba(0, 0, 0, .5);
+  backdrop-filter: blur(.382rem);
+  border-radius: .618rem;
+
+  & > .logo {
+    width: 64px;
+    height: 64px;
+    margin: 10px 0;
+
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  & > .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: .5rem 0;
+  }
+
+  & > .content {
+    margin: 10px 0;
+
+    .login-form {
+      max-width: 300px;
+    }
+
+    .login-form-margin {
+      margin-bottom: 16px;
+    }
+
+    .login-form-forgot {
+      float: right;
+    }
+
+    .login-form-button {
+      width: 100%;
+    }
+  }
+}
