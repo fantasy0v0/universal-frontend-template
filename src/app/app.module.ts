@@ -16,8 +16,16 @@ import { HasPermissionDirective } from './directives/has-permission/has-permissi
 import { NzInputModule } from "ng-zorro-antd/input";
 import { NzFormModule } from "ng-zorro-antd/form";
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 registerLocaleData(zh);
+import { UserOutline, LockOutline } from '@ant-design/icons-angular/icons';
+import { IconDefinition } from '@ant-design/icons-angular';
+import {NzIconModule} from "ng-zorro-antd/icon";
+
+const icons: IconDefinition[] = [ UserOutline, LockOutline ];
 
 @NgModule({
   declarations: [
@@ -35,7 +43,11 @@ registerLocaleData(zh);
     NzInputModule,
     NzFormModule,
     ReactiveFormsModule,
-    NzButtonModule
+    NzButtonModule,
+    NzNotificationModule,
+    NzCheckboxModule,
+    NzIconModule.forRoot(icons),
+    NzMessageModule
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]

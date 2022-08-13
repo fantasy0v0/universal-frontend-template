@@ -22,10 +22,11 @@ export class UniversalUserService {
    * 登录接口
    * @param account 账号
    * @param password 密码
+   * @param rememberMe 是否记住我
    */
-  login(account: string, password: string) {
+  login(account: string, password: string, rememberMe: boolean) {
     let observable = this.http.post<Result<LoginResponse>>(`${ ApiPrefix }/user/login`, {
-      account, password
+      account, password, rememberMe, type: 0
     }).pipe(errorToException(), mergeMap(result => {
       const data = checkResult(result);
       return of(data);

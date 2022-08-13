@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit {
     private router: Router) {
     this.formGroup = fb.group({
       account: [ null, [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ] ],
-      password: [ null, [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ] ]
+      password: [ null, [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ] ],
+      rememberMe: [ false ]
     });
   }
 
@@ -43,9 +44,10 @@ export class LoginComponent implements OnInit {
     }
     const account = this.formGroup.get('account')!.value;
     const password = this.formGroup.get('password')!.value;
+    const rememberMe = this.formGroup.get('rememberMe')!.value;
     this.loading = true;
     try {
-      await this.userService.login(account, password);
+      await this.userService.login(account, password, rememberMe);
       this.notification.success('登录成功', '正在加载中, 请稍后...', {
         nzDuration: 0
       });
@@ -53,7 +55,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/main');
       });
     } catch (e) {
-      const message = errorMessage(e, "");
+      const message = errorMessage(e);
       this.notification.error('登录失败', message);
     } finally {
       this.loading = false;

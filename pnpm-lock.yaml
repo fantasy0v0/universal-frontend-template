@@ -12,6 +12,7 @@ specifiers:
   '@angular/platform-browser': ^14.1.0
   '@angular/platform-browser-dynamic': ^14.1.0
   '@angular/router': ^14.1.0
+  '@ant-design/icons-angular': ^14.1.0
   '@fantasy0v0/universal-frontend-utility': ^14.0.1
   '@types/jasmine': ~4.0.0
   '@types/luxon': ^3.0.0
@@ -37,6 +38,7 @@ dependencies:
   '@angular/platform-browser': 14.1.2_3otf24jo3f4idajpgwhhqlt624
   '@angular/platform-browser-dynamic': 14.1.2_5i6d4327rbwp4cvkcywjmoq47q
   '@angular/router': 14.1.2_4wcrleoqytgp5zjvynaz56ywje
+  '@ant-design/icons-angular': 14.1.0_4wcrleoqytgp5zjvynaz56ywje
   '@fantasy0v0/universal-frontend-utility': 14.0.1_m5sie2slp3ong33c4oejeljh6e
   luxon: 3.0.1
   ng-zorro-antd: 13.4.0_rnk5cboyfk3xfghpnmmkstuvxi
@@ -423,6 +425,22 @@ packages:
       '@angular/common': ^13.0.1
       '@angular/core': ^13.0.0
       '@angular/platform-browser': ^13.0.1
+      rxjs: ^6.4.0 || ^7.4.0
+    dependencies:
+      '@angular/common': 14.1.2_u5nixh7yjkeifypi65adzbr7xi
+      '@angular/core': 14.1.2_rxjs@7.5.6+zone.js@0.11.7
+      '@angular/platform-browser': 14.1.2_3otf24jo3f4idajpgwhhqlt624
+      '@ant-design/colors': 5.1.1
+      rxjs: 7.5.6
+      tslib: 2.4.0
+    dev: false
+
+  /@ant-design/icons-angular/14.1.0_4wcrleoqytgp5zjvynaz56ywje:
+    resolution: {integrity: sha512-SvWi8p4L+cCfTGtezeUq1s8kahZEO1UVf7ZR615Fix3c2l9OnAJi+niDkq2fZHjpiarFrt8HoZ2EhMAMN7jfbg==}
+    peerDependencies:
+      '@angular/common': ^14.1.0
+      '@angular/core': ^14.1.0
+      '@angular/platform-browser': ^14.1.0
       rxjs: ^6.4.0 || ^7.4.0
     dependencies:
       '@angular/common': 14.1.2_u5nixh7yjkeifypi65adzbr7xi
