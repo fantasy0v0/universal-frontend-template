@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { LoginResponse } from "./vo/LoginResponse";
-import { ApiPrefix } from "../common";
+import { ApiPrefix, checkResult, errorToException, Result } from "../common";
 import { firstValueFrom, mergeMap, of } from "rxjs";
-import { checkResult, errorToException, Result } from "@fantasy0v0/universal-frontend-utility";
 import { UserInfo } from "./vo/UserInfo";
 import { Session } from "./vo/Session";
 
@@ -29,7 +28,7 @@ export class UniversalUserService {
       account, password, rememberMe, type: 0
     }).pipe(errorToException(), mergeMap(result => {
       const data = checkResult(result);
-      return of(data);
+      return of(data!);
     }), mergeMap(rsp => {
       saveUserInfo(rsp);
       saveSession(rsp);

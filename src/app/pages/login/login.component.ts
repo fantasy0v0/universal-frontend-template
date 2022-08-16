@@ -1,11 +1,10 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { BingService } from "../../services/bing/bing.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { errorMessage, formGroupInvalid } from "@fantasy0v0/universal-frontend-utility";
 import { Router } from "@angular/router";
 import { NzNotificationService } from "ng-zorro-antd/notification";
 import { UniversalUserService } from "../../services/universal-user/universal-user.service";
-import { timer } from "rxjs";
+import { errorMessage, formGroupInvalid, sleep } from "../../services/common";
 
 @Component({
   selector: 'app-login',
@@ -51,9 +50,8 @@ export class LoginComponent implements OnInit {
       this.notification.success('登录成功', '正在加载中, 请稍后...', {
         nzDuration: 0
       });
-      timer(300).subscribe(() => {
-        this.router.navigateByUrl('/main');
-      });
+      await sleep(300);
+      await this.router.navigateByUrl('/main');
     } catch (e) {
       const message = errorMessage(e);
       this.notification.error('登录失败', message);

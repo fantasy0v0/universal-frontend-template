@@ -19,7 +19,6 @@
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
     "@ant-design/icons-angular": "^14.1.0",
-    "@fantasy0v0/universal-frontend-utility": "^14.0.1",
     "luxon": "^3.0.1",
     "ng-zorro-antd": "13.4.0",
     "rxjs": "~7.5.0",

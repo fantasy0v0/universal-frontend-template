@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { checkResult, Result } from "@fantasy0v0/universal-frontend-utility";
-import { ApiPrefix } from "../common";
+import { ApiPrefix, checkResult, Result } from "../common";
 import { firstValueFrom, mergeMap, of } from "rxjs";
 import { catchError } from "rxjs/operators";
 
