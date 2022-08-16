@@ -8,15 +8,15 @@ const routes: Routes = [{
   path: 'login',
   component: LoginComponent
 }, {
-  path: 'main',
+  path: '',
   component: MainComponent,
-  canActivate: [ AuthGuard ],
-  canActivateChild: [ AuthGuard ],
+  /*canActivate: [ AuthGuard ],
+  canActivateChild: [ AuthGuard ],*/
   children: []
 }, {
   path: '**',
   pathMatch: 'full',
-  redirectTo: 'main'
+  redirectTo: ''
 }];
 
 @NgModule({

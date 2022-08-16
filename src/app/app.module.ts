@@ -19,13 +19,18 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 registerLocaleData(zh);
-import { UserOutline, LockOutline } from '@ant-design/icons-angular/icons';
+import { UserOutline, LockOutline, MenuUnfoldOutline, MenuFoldOutline } from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
 import {NzIconModule} from "ng-zorro-antd/icon";
+import { NzLayoutModule } from "ng-zorro-antd/layout";
 
-const icons: IconDefinition[] = [ UserOutline, LockOutline ];
+const icons: IconDefinition[] = [
+  UserOutline, LockOutline,
+  MenuUnfoldOutline, MenuFoldOutline
+];
 
 @NgModule({
   declarations: [
@@ -47,7 +52,9 @@ const icons: IconDefinition[] = [ UserOutline, LockOutline ];
     NzNotificationModule,
     NzCheckboxModule,
     NzIconModule.forRoot(icons),
-    NzMessageModule
+    NzMessageModule,
+    NzLayoutModule,
+    NzMenuModule
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]

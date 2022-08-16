@@ -1,0 +1,53 @@
+@import "src/variables";
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  & > nz-layout {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+nz-sider {
+  box-shadow: 1px 0 5px #00152959;
+}
+
+nz-header {
+  background: #fff;
+  padding: 0;
+}
+
+div.logo {
+  position: relative;
+  height: 64px;
+  padding-left: 24px;
+  overflow: hidden;
+  line-height: 64px;
+  box-shadow: 0 1px 5px #00152959;
+  transition: all .3s;
+
+  & > a {
+    & > h1 {
+      display: inline-block;
+      margin: 0 0 0 1rem;
+      font-weight: 600;
+      font-size: 1rem;
+      vertical-align: middle;
+    }
+  }
+}
+
+i.trigger {
+  height: 64px;
+  padding: 20px 24px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all .3s, padding 0s;
+}
+
+nz-content {
+  height: calc(100vh - 64px);
+}
