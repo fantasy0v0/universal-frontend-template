@@ -26,7 +26,7 @@ div.logo {
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  box-shadow: 0 1px 5px #00152959;
+  border-bottom: 1px solid #e2e2e2;
   transition: all .3s;
 
   & > a {
@@ -49,5 +49,9 @@ i.trigger {
 }
 
 nz-content {
-  height: calc(100vh - 64px);
+  position: relative;
+  height: calc(100vh - 64px - 2rem);
+  margin: 1rem;
+  padding: .5rem;
+  background-color: white;
 }

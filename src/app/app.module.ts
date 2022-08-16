@@ -22,14 +22,22 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 
 registerLocaleData(zh);
-import { UserOutline, LockOutline, MenuUnfoldOutline, MenuFoldOutline } from '@ant-design/icons-angular/icons';
+import {
+  UserOutline, LockOutline,
+  MenuUnfoldOutline, MenuFoldOutline,
+  SettingOutline, FundTwoTone, TeamOutline
+} from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
 import {NzIconModule} from "ng-zorro-antd/icon";
 import { NzLayoutModule } from "ng-zorro-antd/layout";
+import { WeclomeComponent } from './pages/main/children/weclome/weclome.component';
+import { SystemRoleListComponent } from './pages/main/children/system/system-role-list/system-role-list.component';
+import { SystemUserListComponent } from './pages/main/children/system/system-user-list/system-user-list.component';
 
 const icons: IconDefinition[] = [
   UserOutline, LockOutline,
-  MenuUnfoldOutline, MenuFoldOutline
+  MenuUnfoldOutline, MenuFoldOutline,
+  SettingOutline, FundTwoTone, TeamOutline
 ];
 
 @NgModule({
@@ -37,7 +45,10 @@ const icons: IconDefinition[] = [
     AppComponent,
     LoginComponent,
     MainComponent,
-    HasPermissionDirective
+    HasPermissionDirective,
+    WeclomeComponent,
+    SystemRoleListComponent,
+    SystemUserListComponent
   ],
   imports: [
     BrowserModule,
