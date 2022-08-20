@@ -1,3 +1,4 @@
+import {SimpleDataVO} from "../../vo/SimpleDataVO";
 
 export class LoginResponse {
 
@@ -19,7 +20,7 @@ export class LoginResponse {
   /**
    * 角色编号
    */
-  role!: number;
+  role!: SimpleDataVO;
 
   /**
    * 权限集合

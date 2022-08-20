@@ -62,6 +62,7 @@ export class UniversalUserService {
       headers: getAuthorizationHeader()
     }).pipe(errorToException(), mergeMap(result => {
       checkResult(result);
+      localStorage.removeItem(SessionKey);
       localStorage.removeItem(UserKey);
       return of(null)
     }));
@@ -73,7 +74,7 @@ export class UniversalUserService {
    * @param permissions 要求的权限
    */
   hasPermission(permissions: string[]): boolean {
-    const userInfo = getUserInfo();
+    const userInfo = this.getUserInfo();
     if (null == userInfo) {
       return false;
     }
@@ -88,11 +89,12 @@ export class UniversalUserService {
   /**
    * 修改当前用户密码
    * @param currentPassword 当前密码
-   * @param newPassword 新的密码
+   * @param newPassword 新的密码,
+   * @param type 认证方式, 默认为0
    */
-  changePassword(currentPassword: string, newPassword: string) {
+  changePassword(currentPassword: string, newPassword: string, type: number = 0) {
     let observable = this.http.put<Result<void>>(`${ ApiPrefix }/user/changePassword`, {
-      currentPassword, newPassword
+      currentPassword, newPassword, type
     }, {
       headers: getAuthorizationHeader()
     }).pipe(errorToException(), mergeMap(result => {
@@ -100,6 +102,17 @@ export class UniversalUserService {
       return of(data);
     }));
     return firstValueFrom(observable);
+  }
+
+  /**
+   * 获取当前用户信息
+   */
+  getUserInfo() {
+    let item = localStorage.getItem(UserKey);
+    if (null == item) {
+      return undefined;
+    }
+    return JSON.parse(item) as UserInfo;
   }
 }
 
@@ -151,15 +164,4 @@ function saveUserInfo(rsp: LoginResponse) {
     permissions: rsp.permissions
   }
   localStorage.setItem(UserKey, JSON.stringify(userInfo));
-}
-
-/**
- * 获取当前用户信息
- */
-function getUserInfo() {
-  let item = localStorage.getItem(UserKey);
-  if (null == item) {
-    return undefined;
-  }
-  return JSON.parse(item) as UserInfo;
 }

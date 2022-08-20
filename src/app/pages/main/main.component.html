@@ -39,6 +39,18 @@
         [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
         (click)="isCollapsed = !isCollapsed"
       ></i>
+      <span class="user-info" *ngIf="userInfo">
+          <nz-avatar [nzSize]="35" nzIcon="user"></nz-avatar>
+          <span class="role">{{ userInfo.role.name }}</span>
+          <span class="name" nz-dropdown
+                [nzDropdownMenu]="menu">{{ userInfo.name }}</span>
+        </span>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="changePassword()">修改密码</li>
+          <li nz-menu-item (click)="logout()">退出</li>
+        </ul>
+      </nz-dropdown-menu>
     </nz-header>
     <nz-content [@subRouteAnimation]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>

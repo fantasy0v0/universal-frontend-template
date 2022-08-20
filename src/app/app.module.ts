@@ -33,6 +33,11 @@ import { NzLayoutModule } from "ng-zorro-antd/layout";
 import { WeclomeComponent } from './pages/main/children/weclome/weclome.component';
 import { SystemRoleListComponent } from './pages/main/children/system/system-role-list/system-role-list.component';
 import { SystemUserListComponent } from './pages/main/children/system/system-user-list/system-user-list.component';
+import {NzAvatarModule} from "ng-zorro-antd/avatar";
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
+import { NzModalModule } from 'ng-zorro-antd/modal';
+
+import { ChangePasswordComponent } from './dialogs/change-password/change-password.component';
 
 const icons: IconDefinition[] = [
   UserOutline, LockOutline,
@@ -48,7 +53,8 @@ const icons: IconDefinition[] = [
     HasPermissionDirective,
     WeclomeComponent,
     SystemRoleListComponent,
-    SystemUserListComponent
+    SystemUserListComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +71,10 @@ const icons: IconDefinition[] = [
     NzIconModule.forRoot(icons),
     NzMessageModule,
     NzLayoutModule,
-    NzMenuModule
+    NzMenuModule,
+    NzAvatarModule,
+    NzDropDownModule,
+    NzModalModule
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]

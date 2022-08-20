@@ -1,3 +1,4 @@
+import {SimpleDataVO} from "../../vo/SimpleDataVO";
 
 /**
  * 用户信息
@@ -15,9 +16,9 @@ export interface UserInfo {
   name: string;
 
   /**
-   * 角色编号
+   * 角色信息
    */
-  role: number;
+  role: SimpleDataVO;
 
   /**
    * 权限集合

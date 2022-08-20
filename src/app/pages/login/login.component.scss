@@ -12,6 +12,7 @@
   background-color: rgb(255 255 255 / 90%);
   right: 6%;
   top: 20%;
+  width: 16.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,10 +40,6 @@
 
   & > .content {
     margin: .625rem 2rem;
-
-    .login-form {
-      max-width: 300px;
-    }
 
     .login-form-margin {
       margin-bottom: 16px;

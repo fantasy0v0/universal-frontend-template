@@ -6,17 +6,18 @@ export const routeAnimation = trigger('routeAnimation', [
       query(':enter', [
         style({
           position: 'absolute',
-          opacity: '0'
+          opacity: 0
         }),
-        animate('.5s ease-out', style({
+        animate('.3s ease-out', style({
           opacity: 1
         }))
       ], { optional: true }),
       query(':leave', [
         style({
           position: 'absolute',
+          opacity: 1
         }),
-        animate('.5s ease-out', style({
+        animate('.3s ease-out', style({
           opacity: 0
         }))
       ], { optional: true })
@@ -33,7 +34,7 @@ export const subRouteAnimation = trigger('subRouteAnimation', [
           opacity: '0',
           left: '1.5rem'
         }),
-        animate('.5s ease-out', style({
+        animate('.3s ease-out', style({
           opacity: 1,
           left: '.5rem'
         }))
@@ -43,7 +44,7 @@ export const subRouteAnimation = trigger('subRouteAnimation', [
           position: 'absolute',
           left: '.5rem'
         }),
-        animate('.5s ease-out', style({
+        animate('.3s ease-out', style({
           opacity: 0,
           left: '-2rem'
         }))
