@@ -32,6 +32,7 @@ export const subRouteAnimation = trigger('subRouteAnimation', [
         style({
           position: 'absolute',
           opacity: '0',
+          width: '100%',
           left: '1.5rem'
         }),
         animate('.3s ease-out', style({
@@ -42,6 +43,7 @@ export const subRouteAnimation = trigger('subRouteAnimation', [
       query(':leave', [
         style({
           position: 'absolute',
+          width: '100%',
           left: '.5rem'
         }),
         animate('.3s ease-out', style({

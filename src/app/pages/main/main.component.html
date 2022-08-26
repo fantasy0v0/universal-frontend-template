@@ -15,8 +15,13 @@
         <i nz-icon nzType="fund" nzTheme="twotone"></i>
         <span>欢迎页面</span>
       </li>
-      <li nz-submenu nzTitle="系统管理" nzIcon="setting">
+      <li nz-submenu nzTitle="系统管理" nzIcon="setting" *appHasPermission="[ 'ROLE_管理员' ]">
         <ul>
+          <li nz-menu-item
+              routerLink="/system-resource-list">
+            <i nz-icon nzType="team" nzTheme="outline"></i>
+            <span>资源管理</span>
+          </li>
           <li nz-menu-item
               routerLink="/system-role-list">
             <i nz-icon nzType="team" nzTheme="outline"></i>

@@ -1,1 +1,43 @@
-<p>system-user-list works!</p>
+<div class="condition">
+  <form [formGroup]="formGroup">
+    <nz-space>
+      <nz-select *nzSpaceItem formControlName="role" style="width: 7rem">
+        <nz-option [nzValue]="-1" nzLabel="所有"></nz-option>
+        <nz-option [nzValue]="1" nzLabel="管理员"></nz-option>
+      </nz-select>
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" *nzSpaceItem>
+        <input type="text" nz-input placeholder="按名称搜索" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch>
+          <span nz-icon nzType="search"></span>
+        </button>
+      </ng-template>
+      <button nz-button nzType="primary" nzShape="circle" *nzSpaceItem title="新增用户">
+        <span nz-icon nzType="plus"></span>
+      </button>
+    </nz-space>
+  </form>
+</div>
+<div class="body">
+  <nz-table [nzData]="data">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>姓名</th>
+      <th>角色</th>
+      <th>状态</th>
+      <th>创建时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of data">
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.role.name }}</td>
+      <td>{{ item.status }}</td>
+      <td>{{ item.createdAt }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

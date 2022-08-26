@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { LoginResponse } from "./vo/LoginResponse";
-import { ApiPrefix, checkResult, errorToException, Result } from "../common";
-import { firstValueFrom, mergeMap, of } from "rxjs";
-import { UserInfo } from "./vo/UserInfo";
-import { Session } from "./vo/Session";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {LoginResponse} from "./vo/LoginResponse";
+import {ApiPrefix, checkResult, errorToException, Paging, PagingResult, Result} from "../common";
+import {firstValueFrom, mergeMap, of} from "rxjs";
+import {UserInfo} from "./vo/UserInfo";
+import {Session} from "./vo/Session";
+import {SystemUserVO} from "./vo/SystemUserVO";
 
 const SessionKey = "universal_session";
 
@@ -15,7 +16,8 @@ const UserKey = "universal_user";
 })
 export class UniversalUserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   /**
    * 登录接口
@@ -24,7 +26,7 @@ export class UniversalUserService {
    * @param rememberMe 是否记住我
    */
   login(account: string, password: string, rememberMe: boolean) {
-    let observable = this.http.post<Result<LoginResponse>>(`${ ApiPrefix }/user/login`, {
+    let observable = this.http.post<Result<LoginResponse>>(`${ApiPrefix}/user/login`, {
       account, password, rememberMe, type: 0
     }).pipe(errorToException(), mergeMap(result => {
       const data = checkResult(result);
@@ -45,7 +47,7 @@ export class UniversalUserService {
     if (null == session || session.expired()) {
       return Promise.resolve(false);
     }
-    let observable = this.http.get<Result<boolean>>(`${ ApiPrefix }/user/online`, {
+    let observable = this.http.get<Result<boolean>>(`${ApiPrefix}/user/online`, {
       headers: getAuthorizationHeader()
     }).pipe(errorToException(), mergeMap(result => {
       const data = checkResult(result);
@@ -58,7 +60,7 @@ export class UniversalUserService {
    * 用户退出
    */
   logout() {
-    let observable = this.http.put<Result<void>>(`${ ApiPrefix }/user/logout`, null, {
+    let observable = this.http.put<Result<void>>(`${ApiPrefix}/user/logout`, null, {
       headers: getAuthorizationHeader()
     }).pipe(errorToException(), mergeMap(result => {
       checkResult(result);
@@ -93,7 +95,7 @@ export class UniversalUserService {
    * @param type 认证方式, 默认为0
    */
   changePassword(currentPassword: string, newPassword: string, type: number = 0) {
-    let observable = this.http.put<Result<void>>(`${ ApiPrefix }/user/changePassword`, {
+    let observable = this.http.put<Result<void>>(`${ApiPrefix}/user/changePassword`, {
       currentPassword, newPassword, type
     }, {
       headers: getAuthorizationHeader()
@@ -113,6 +115,29 @@ export class UniversalUserService {
       return undefined;
     }
     return JSON.parse(item) as UserInfo;
+  }
+
+  /**
+   * 查询系统内所有用户
+   * @param paging 分页条件
+   * @param name 按名称查询
+   * @param role 按角色查询
+   */
+  findAll(paging: Paging, name?: string, role?: number) {
+    let params = paging.toHttpParams();
+    if (null != name && name.length > 0) {
+      params = params.append("name", name);
+    }
+    if (null != role) {
+      params = params.append("role", role);
+    }
+    let observable = this.http.get<Result<PagingResult<SystemUserVO>>>(`${ApiPrefix}/system/user/findAll`, {
+      params, headers: getAuthorizationHeader()
+    }).pipe(errorToException(), mergeMap(result => {
+      const data = checkResult(result);
+      return of(data!);
+    }));
+    return firstValueFrom(observable);
   }
 }
 
