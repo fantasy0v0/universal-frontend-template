@@ -123,8 +123,13 @@ export class UniversalUserService {
    * @param name 按名称查询
    * @param role 按角色查询
    */
-  findAll(paging: Paging, name?: string, role?: number) {
-    let params = paging.toHttpParams();
+  findAll(paging?: Paging, name?: string, role?: number) {
+    let params: HttpParams;
+    if (null != paging) {
+      params = paging.toHttpParams();
+    } else {
+      params = new HttpParams();
+    }
     if (null != name && name.length > 0) {
       params = params.append("name", name);
     }

@@ -44,6 +44,7 @@ import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzBadgeModule} from "ng-zorro-antd/badge";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
+import { SystemRoleUpdateComponent } from './dialogs/system-role-update/system-role-update.component';
 
 const icons: IconDefinition[] = [
   UserOutline, LockOutline,
@@ -61,7 +62,8 @@ const icons: IconDefinition[] = [
     WeclomeComponent,
     SystemRoleListComponent,
     SystemUserListComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    SystemRoleUpdateComponent
   ],
   imports: [
     BrowserModule,

@@ -20,7 +20,7 @@ export interface SystemUserVO {
   /**
    * 联系号码
    */
-  contactNumber: string;
+  contactNumber?: string;
 
   /**
    * 角色

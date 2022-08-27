@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DialogService } from './dialog.service';
+import { SystemDialogService } from './system-dialog.service';
 
-describe('DialogService', () => {
-  let service: DialogService;
+describe('SystemDialogService', () => {
+  let service: SystemDialogService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DialogService);
+    service = TestBed.inject(SystemDialogService);
   });
 
   it('should be created', () => {

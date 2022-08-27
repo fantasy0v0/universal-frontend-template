@@ -1,1 +1,49 @@
-<p>system-role-list works!</p>
+<div class="condition">
+  <form [formGroup]="formGroup">
+    <nz-space>
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" *nzSpaceItem>
+        <input type="text" nz-input placeholder="按名称搜索" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="onSerach()">
+          <span nz-icon nzType="search"></span>
+        </button>
+      </ng-template>
+      <button nz-button nzType="primary" nzShape="circle" *nzSpaceItem title="新增角色" (click)="saveOrUpdate()">
+        <span nz-icon nzType="plus"></span>
+      </button>
+    </nz-space>
+  </form>
+</div>
+<div class="body">
+  <nz-table [nzData]="data">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>名称</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of data">
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>
+        <nz-space>
+          <ng-container *ngIf="item.id > 1000">
+            <button  *nzSpaceItem
+                     nz-button nzType="link" nzSize="small"
+                     nz-popconfirm nzPopconfirmTitle="是否确认删除该角色?"
+                     (nzOnConfirm)="deleteRole(item)"
+            >删除</button>
+          </ng-container>
+          <button  *nzSpaceItem
+                   nz-button nzType="link" nzSize="small"
+                   (click)="saveOrUpdate(item)"
+          >编辑</button>
+        </nz-space>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

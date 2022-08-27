@@ -4,8 +4,8 @@ import {subRouteAnimation} from "../../animations/route";
 import {errorMessage} from "../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {UniversalUserService} from "../../services/universal-user/universal-user.service";
-import {DialogService} from "../../services/dialog/dialog.service";
 import {UserInfo} from "../../services/universal-user/vo/UserInfo";
+import {SystemDialogService} from "../../services/dialog/system/system-dialog.service";
 
 @Component({
   selector: 'app-main',
@@ -23,7 +23,7 @@ export class MainComponent implements OnInit {
 
   constructor(private message: NzMessageService,
               private userService: UniversalUserService,
-              private dialogService: DialogService,
+              private dialogService: SystemDialogService,
               private router: Router) { }
 
   ngOnInit(): void {

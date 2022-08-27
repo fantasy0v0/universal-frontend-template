@@ -1,0 +1,26 @@
+<form nz-form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>角色名称</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback
+                     [nzErrorTip]="nameErrorTpl">
+      <input nz-input formControlName="name" />
+      <ng-template #nameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入角色名称
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button nzType="primary" type="submit" [nzLoading]="loading">
+        <ng-container *ngIf="null != data else elseTemplate">
+          修改
+        </ng-container>
+        <ng-template #elseTemplate>
+          添加
+        </ng-template>
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
