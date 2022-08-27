@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {LoginResponse} from "./vo/LoginResponse";
 import {ApiPrefix, checkResult, errorToException, Paging, PagingResult, Result} from "../common";
 import {firstValueFrom, mergeMap, of} from "rxjs";
@@ -139,6 +139,39 @@ export class UniversalUserService {
     }));
     return firstValueFrom(observable);
   }
+
+  /**
+   * 重置指定用户的密码
+   * @param userId 用户编号
+   * @param type 认证方式
+   */
+  restPassword(userId: number, type: number) {
+    let params = new HttpParams().append("type", type);
+    let observable = this.http.post<Result<string>>(`${ApiPrefix}/system/user/${userId}/resetPassword`, null, {
+      params, headers: getAuthorizationHeader()
+    }).pipe(errorToException(), mergeMap(result => {
+      const data = checkResult(result);
+      return of(data!);
+    }));
+    return firstValueFrom(observable);
+  }
+
+  /**
+   * 禁用指定用户的认证方式
+   * @param userId 用户编号
+   * @param type 认证方式
+   */
+  disable(userId: number, type: number) {
+    let params = new HttpParams().append("type", type);
+    let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/disable`, null, {
+      params, headers: getAuthorizationHeader()
+    }).pipe(errorToException(), mergeMap(result => {
+      const data = checkResult(result);
+      return of(data);
+    }));
+    return firstValueFrom(observable);
+  }
+
 }
 
 /**

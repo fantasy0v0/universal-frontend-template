@@ -25,7 +25,8 @@ registerLocaleData(zh);
 import {
   UserOutline, LockOutline,
   MenuUnfoldOutline, MenuFoldOutline,
-  SettingOutline, FundTwoTone, TeamOutline, PlusOutline
+  SettingOutline, FundTwoTone, TeamOutline, PlusOutline,
+  AppstoreOutline
 } from '@ant-design/icons-angular/icons';
 import { IconDefinition } from '@ant-design/icons-angular';
 import {NzIconModule} from "ng-zorro-antd/icon";
@@ -41,11 +42,14 @@ import { ChangePasswordComponent } from './dialogs/change-password/change-passwo
 import {NzSpaceModule} from "ng-zorro-antd/space";
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzTableModule} from "ng-zorro-antd/table";
+import {NzBadgeModule} from "ng-zorro-antd/badge";
+import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 
 const icons: IconDefinition[] = [
   UserOutline, LockOutline,
   MenuUnfoldOutline, MenuFoldOutline,
-  SettingOutline, FundTwoTone, TeamOutline, PlusOutline
+  SettingOutline, FundTwoTone, TeamOutline, PlusOutline,
+  AppstoreOutline
 ];
 
 @NgModule({
@@ -80,7 +84,9 @@ const icons: IconDefinition[] = [
     NzModalModule,
     NzSpaceModule,
     NzSelectModule,
-    NzTableModule
+    NzTableModule,
+    NzBadgeModule,
+    NzPopconfirmModule
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]

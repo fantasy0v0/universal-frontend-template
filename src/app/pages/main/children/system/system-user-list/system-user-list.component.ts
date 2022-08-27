@@ -4,6 +4,7 @@ import {UniversalUserService} from "../../../../../services/universal-user/unive
 import {SystemUserVO} from "../../../../../services/universal-user/vo/SystemUserVO";
 import {errorMessage, Paging} from "../../../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {NzModalService} from "ng-zorro-antd/modal";
 
 @Component({
   selector: 'app-system-user-list',
@@ -21,6 +22,7 @@ export class SystemUserListComponent implements OnInit {
   data: SystemUserVO[] = [];
 
   constructor(private userService: UniversalUserService,
+              private modal: NzModalService,
               private message: NzMessageService) {
     this.formGroup = new FormGroup({
       role: new FormControl(-1),
@@ -50,4 +52,32 @@ export class SystemUserListComponent implements OnInit {
     }
   }
 
+  async restPassword(item: SystemUserVO) {
+    this.loading = true;
+    try {
+      const newPassword = await this.userService.restPassword(item.id, 0);
+      this.modal.success({
+        nzTitle: "密码重置成功",
+        nzContent: `新密码为: ${newPassword}`
+      });
+    } catch (e) {
+      const msg = errorMessage(e);
+      this.message.error(msg);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async disable(item: SystemUserVO) {
+    this.loading = true;
+    try {
+      await this.userService.disable(item.id, 0);
+      this.message.success("禁用成功");
+    } catch (e) {
+      const msg = errorMessage(e);
+      this.message.error(msg);
+    } finally {
+      this.loading = false;
+    }
+  }
 }
