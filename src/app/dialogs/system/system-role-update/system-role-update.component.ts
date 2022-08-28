@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {SimpleDataVO} from "../../services/vo/SimpleDataVO";
+import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {NzModalRef} from "ng-zorro-antd/modal";
-import {errorMessage, formGroupInvalid} from "../../services/common";
+import {errorMessage, formGroupInvalid} from "../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {UniversalRoleService} from "../../services/universal-role/universal-role.service";
+import {UniversalRoleService} from "../../../services/universal-role/universal-role.service";
 
 @Component({
   selector: 'app-system-role-update',
