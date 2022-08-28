@@ -1,0 +1,87 @@
+<form nz-form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>用户姓名</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback
+                     [nzErrorTip]="nameErrorTpl">
+      <input nz-input formControlName="name" />
+      <ng-template #nameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入用户姓名
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>用户角色</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback
+                     [nzErrorTip]="roleErrorTpl">
+      <nz-select formControlName="role">
+        <ng-container *ngFor="let role of roles">
+          <nz-option [nzValue]="role.id" [nzLabel]="role.name"></nz-option>
+        </ng-container>
+      </nz-select>
+      <ng-template #roleErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请选择用户角色
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">联系号码</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input formControlName="contactNumber" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>认证方式</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback
+                     [nzErrorTip]="typeErrorTpl">
+      <nz-select formControlName="type">
+        <nz-option [nzValue]="0" nzLabel="网页"></nz-option>
+      </nz-select>
+      <ng-template #typeErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请选择认证方式
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>用户账号</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback
+                     [nzErrorTip]="accountErrorTpl">
+      <input nz-input formControlName="account" />
+      <ng-template #accountErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入用户账号
+        </ng-container>
+        <ng-container *ngIf="control.hasError('minLength')">
+          用户账号不能少于6位
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>用户密码</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback
+                     [nzErrorTip]="passwordErrorTpl">
+      <input nz-input formControlName="password" />
+      <ng-template #passwordErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          请输入用户密码
+        </ng-container>
+        <ng-container *ngIf="control.hasError('minLength')">
+          用户密码不能少于6位
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button nzType="primary" type="submit" [nzLoading]="loading">
+        添加
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

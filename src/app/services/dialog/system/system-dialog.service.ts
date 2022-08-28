@@ -4,6 +4,7 @@ import {ChangePasswordComponent} from "../../../dialogs/change-password/change-p
 import {SimpleDataVO} from "../../vo/SimpleDataVO";
 import {SystemRoleUpdateComponent} from "../../../dialogs/system/system-role-update/system-role-update.component";
 import {firstValueFrom} from "rxjs";
+import {SystemUserAddComponent} from "../../../dialogs/system/system-user-add/system-user-add.component";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,18 @@ export class SystemDialogService {
       nzComponentParams: {
         data
       },
+      nzFooter: null
+    }).afterClose.asObservable();
+    return firstValueFrom(observable);
+  }
+
+  /**
+   * 添加用户添加对话框
+   */
+  systemUserAdd() {
+    let observable = this.modal.create<SystemUserAddComponent, boolean>({
+      nzTitle: "添加用户",
+      nzContent: SystemUserAddComponent,
       nzFooter: null
     }).afterClose.asObservable();
     return firstValueFrom(observable);

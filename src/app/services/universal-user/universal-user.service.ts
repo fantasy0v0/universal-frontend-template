@@ -6,6 +6,7 @@ import {firstValueFrom, mergeMap, of} from "rxjs";
 import {UserInfo} from "./vo/UserInfo";
 import {Session} from "./vo/Session";
 import {SystemUserVO} from "./vo/SystemUserVO";
+import {SystemUserAddRequest} from "./vo/SystemUserAddRequest";
 
 const SessionKey = "universal_session";
 
@@ -170,6 +171,20 @@ export class UniversalUserService {
     let params = new HttpParams().append("type", type);
     let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/disable`, null, {
       params, headers: getAuthorizationHeader()
+    }).pipe(errorToException(), mergeMap(result => {
+      const data = checkResult(result);
+      return of(data);
+    }));
+    return firstValueFrom(observable);
+  }
+
+  /**
+   * 添加一名用户
+   * @param request 请求
+   */
+  addUser(request: SystemUserAddRequest) {
+    let observable = this.http.post<Result<void>>(`${ApiPrefix}/system/user`, request, {
+      headers: getAuthorizationHeader()
     }).pipe(errorToException(), mergeMap(result => {
       const data = checkResult(result);
       return of(data);

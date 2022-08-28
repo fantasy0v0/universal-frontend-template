@@ -5,6 +5,7 @@ import {SystemUserVO} from "../../../../../services/universal-user/vo/SystemUser
 import {errorMessage, Paging} from "../../../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzModalService} from "ng-zorro-antd/modal";
+import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
 
 @Component({
   selector: 'app-system-user-list',
@@ -23,6 +24,7 @@ export class SystemUserListComponent implements OnInit {
 
   constructor(private userService: UniversalUserService,
               private modal: NzModalService,
+              private dialogService: SystemDialogService,
               private message: NzMessageService) {
     this.formGroup = new FormGroup({
       role: new FormControl(-1),
@@ -78,6 +80,13 @@ export class SystemUserListComponent implements OnInit {
       this.message.error(msg);
     } finally {
       this.loading = false;
+    }
+  }
+
+  async toAddUser() {
+    const result = await this.dialogService.systemUserAdd();
+    if (result) {
+      this.onSerach();
     }
   }
 }
