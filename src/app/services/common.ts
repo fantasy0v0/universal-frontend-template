@@ -136,6 +136,11 @@ export class PagingResult<T> {
   total!: number;
 
   /**
+   * 总页数
+   */
+  totalPages!: number;
+
+  /**
    * 分页记录
    */
   content!: T[];
