@@ -73,8 +73,21 @@ export class SystemUserListComponent implements OnInit {
   async disable(item: SystemUserVO) {
     this.loading = true;
     try {
-      await this.userService.disable(item.id, 0);
-      this.message.success("禁用成功");
+      await this.userService.disable(item.id);
+      this.message.success("操作成功");
+    } catch (e) {
+      const msg = errorMessage(e);
+      this.message.error(msg);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async enable(item: SystemUserVO) {
+    this.loading = true;
+    try {
+      await this.userService.enable(item.id);
+      this.message.success("操作成功");
     } catch (e) {
       const msg = errorMessage(e);
       this.message.error(msg);

@@ -163,14 +163,26 @@ export class UniversalUserService {
   }
 
   /**
-   * 禁用指定用户的认证方式
+   * 将用户状态修改为禁用状态
    * @param userId 用户编号
-   * @param type 认证方式
    */
-  disable(userId: number, type: number) {
-    let params = new HttpParams().append("type", type);
+  disable(userId: number) {
     let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/disable`, null, {
-      params, headers: getAuthorizationHeader()
+      headers: getAuthorizationHeader()
+    }).pipe(errorToException(), mergeMap(result => {
+      const data = checkResult(result);
+      return of(data);
+    }));
+    return firstValueFrom(observable);
+  }
+
+  /**
+   * 将用户状态修改为正常状态
+   * @param userId 用户编号
+   */
+  enable(userId: number) {
+    let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/enable`, null, {
+      headers: getAuthorizationHeader()
     }).pipe(errorToException(), mergeMap(result => {
       const data = checkResult(result);
       return of(data);

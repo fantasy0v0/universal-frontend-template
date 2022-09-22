@@ -61,6 +61,12 @@
                 nz-popconfirm nzPopconfirmTitle="是否确认禁用该用户?"
                 (nzOnConfirm)="disable(item)">禁用</button>
             </ng-container>
+            <ng-container *ngIf="'已禁用' === item.status">
+              <button *nzSpaceItem
+                      nz-button nzType="link" nzSize="small"
+                      nz-popconfirm nzPopconfirmTitle="是否确认启用该用户?"
+                      (nzOnConfirm)="enable(item)">启用</button>
+            </ng-container>
           </ng-container>
         </nz-space>
       </td>
