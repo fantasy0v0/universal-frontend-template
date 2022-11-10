@@ -30,6 +30,10 @@ div.logo {
   transition: all .3s;
 
   & > a {
+    & > img {
+      width: 2.2857rem;
+      height: 2.2857rem;
+    }
     & > h1 {
       display: inline-block;
       margin: 0 0 0 1rem;

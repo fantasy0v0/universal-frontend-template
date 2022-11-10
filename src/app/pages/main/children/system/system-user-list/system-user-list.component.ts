@@ -20,6 +20,8 @@ export class SystemUserListComponent implements OnInit {
 
   paging = Paging.of(1, 10);
 
+  total = 0;
+
   data: SystemUserVO[] = [];
 
   constructor(private userService: UniversalUserService,
@@ -33,10 +35,10 @@ export class SystemUserListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onSerach();
+    this.onSearch();
   }
 
-  async onSerach() {
+  async onSearch() {
     this.loading = true;
     try {
       let role = this.formGroup.get("role")!.value as number | undefined;
@@ -45,6 +47,7 @@ export class SystemUserListComponent implements OnInit {
       }
       const name = this.formGroup.get("name")!.value as string;
       const pagingResult = await this.userService.findAll(this.paging, name, role);
+      this.total = pagingResult.total;
       this.data = pagingResult.content;
     } catch (e) {
       const msg = errorMessage(e);
@@ -99,7 +102,7 @@ export class SystemUserListComponent implements OnInit {
   async toAddUser() {
     const result = await this.dialogService.systemUserAdd();
     if (result) {
-      this.onSerach();
+      this.onSearch();
     }
   }
 }

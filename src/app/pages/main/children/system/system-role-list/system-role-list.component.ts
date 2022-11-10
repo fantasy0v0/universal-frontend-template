@@ -19,6 +19,8 @@ export class SystemRoleListComponent implements OnInit {
 
   paging = Paging.of(1, 10);
 
+  total = 0;
+
   data: SimpleDataVO[] = [];
 
   constructor(private roleService: UniversalRoleService,
@@ -30,14 +32,15 @@ export class SystemRoleListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onSerach();
+    this.onSearch();
   }
 
-  async onSerach() {
+  async onSearch() {
     this.loading = true;
     try {
       const name = this.formGroup.get("name")!.value as string;
       const pagingResult = await this.roleService.findAll(this.paging, name);
+      this.total = pagingResult.total;
       this.data = pagingResult.content;
     } catch (e) {
       const msg = errorMessage(e);
@@ -52,7 +55,7 @@ export class SystemRoleListComponent implements OnInit {
     try {
       await this.roleService.deleteById(item.id);
       this.message.success("删除成功");
-      this.onSerach();
+      this.onSearch();
     } catch (e) {
       const msg = errorMessage(e);
       this.message.error(msg);
@@ -63,7 +66,7 @@ export class SystemRoleListComponent implements OnInit {
 
   async saveOrUpdate(data?: SimpleDataVO) {
     await this.dialogService.systemRoleSaveOrUpdate(data);
-    this.onSerach();
+    this.onSearch();
   }
 
 }

@@ -5,7 +5,7 @@
         <input type="text" nz-input placeholder="按名称搜索" formControlName="name" />
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch (click)="onSerach()">
+        <button nz-button nzType="primary" nzSearch (click)="onSearch()" [nzLoading]="loading">
           <span nz-icon nzType="search"></span>
         </button>
       </ng-template>
@@ -16,7 +16,12 @@
   </form>
 </div>
 <div class="body">
-  <nz-table [nzData]="data">
+  <nz-table [nzData]="data" nzFrontPagination="false"
+            [nzLoading]="loading" nzSize="small" [nzTotal]="total"
+            [(nzPageIndex)]="paging.pageNumber"
+            [(nzPageSize)]="paging.pageSize"
+            (nzPageSizeChange)="onSearch()"
+            (nzPageIndexChange)="onSearch()">
     <thead>
     <tr>
       <th>编号</th>
