@@ -17,11 +17,11 @@ export class BingService {
   wallpaper() {
     let observable = this.http.get<Result<string>>(`${ ApiPrefix }/bing/wallpaper`)
       .pipe(
-        catchError(() => of({ code: "0", data: "/assets/wallpaper.jfif" })),
         mergeMap(result => {
           const url = checkResult(result);
           return of(url);
-        })
+        }),
+        catchError(() => of("/assets/wallpaper.jfif")),
       );
     return firstValueFrom(observable);
   }
