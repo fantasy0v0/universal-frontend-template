@@ -22,7 +22,7 @@ specifiers:
   karma-jasmine: ~5.1.0
   karma-jasmine-html-reporter: ~2.0.0
   luxon: ^3.0.1
-  ng-zorro-antd: 14.1.1
+  ng-zorro-antd: 14.2.1
   rxjs: ~7.5.0
   tslib: ^2.3.0
   typescript: ~4.8.4
@@ -39,7 +39,7 @@ dependencies:
   '@angular/router': 15.0.0_od7x7eiknzykqzej2fiuwvnwva
   '@ant-design/icons-angular': 14.1.0_od7x7eiknzykqzej2fiuwvnwva
   luxon: 3.0.1
-  ng-zorro-antd: 14.1.1_cjr7632rh6fqhxnb7e2n62ipx4
+  ng-zorro-antd: 14.2.1_cjr7632rh6fqhxnb7e2n62ipx4
   rxjs: 7.5.6
   tslib: 2.4.0
   zone.js: 0.11.7
@@ -4959,8 +4959,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
 
-  /ng-zorro-antd/14.1.1_cjr7632rh6fqhxnb7e2n62ipx4:
-    resolution: {integrity: sha512-Pp5l3gS4jQnFYUQt6oWMg7eJ2AyWWdwrpouClk2KDefZABXCFHgf03N08LCAUCw6quabItFARfhvCSucqb8rfg==}
+  /ng-zorro-antd/14.2.1_cjr7632rh6fqhxnb7e2n62ipx4:
+    resolution: {integrity: sha512-7tREaIHkoBKYXeZy1sHcI0JZNsoOXivnrASJeiuE+CeYVJjn24PIl4Wah+PiZfyIB0TUpjXjJ+iv+Si0BagppQ==}
     peerDependencies:
       '@angular/animations': ^14.1.0
       '@angular/common': ^14.1.0
@@ -4978,7 +4978,7 @@ packages:
       '@angular/router': 15.0.0_od7x7eiknzykqzej2fiuwvnwva
       '@ant-design/icons-angular': 14.1.0_od7x7eiknzykqzej2fiuwvnwva
       date-fns: 2.29.1
-      tslib: 2.4.0
+      tslib: 2.4.1
     transitivePeerDependencies:
       - rxjs
     dev: false
