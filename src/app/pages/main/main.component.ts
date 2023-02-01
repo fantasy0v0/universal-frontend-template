@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, RouterOutlet} from "@angular/router";
+import {ChildrenOutletContexts, Router} from "@angular/router";
 import {subRouteAnimation} from "../../animations/route";
 import {errorMessage} from "../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -24,14 +24,15 @@ export class MainComponent implements OnInit {
   constructor(private message: NzMessageService,
               private userService: UniversalUserService,
               private dialogService: SystemDialogService,
-              private router: Router) { }
+              private router: Router,
+              private contexts: ChildrenOutletContexts) { }
 
   ngOnInit(): void {
     this.userInfo = this.userService.getUserInfo();
   }
 
-  prepareRoute(outlet: RouterOutlet) {
-    return outlet.isActivated ? outlet.activatedRoute : '';
+  prepareRoute() {
+    return this.contexts.getContext('primary')?.route?.snapshot.toString();
   }
 
   async logout() {

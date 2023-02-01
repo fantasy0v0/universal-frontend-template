@@ -51,7 +51,7 @@
         </ng-container>
       </td>
       <td>{{ item.contactNumber ?? '无' }}</td>
-      <td>{{ item.createdAt }}</td>
+      <td>{{ item.createdAt | date: 'yyyy年MM月dd日 HH:mm:ss' }}</td>
       <td>
         <nz-space>
           <ng-container *ngIf="item.role.id !== 0">
