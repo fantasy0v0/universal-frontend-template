@@ -4,11 +4,14 @@
   <div class="title">登录通用管理后台</div>
   <div class="content">
     <form nz-form [formGroup]="formGroup" class="login-form"
+          nzLayout="vertical"
           (ngSubmit)="submitForm()">
       <nz-form-item>
+        <nz-form-label nzFor="account">账号</nz-form-label>
         <nz-form-control [nzErrorTip]="accountErrorTpl">
           <nz-input-group nzPrefixIcon="user">
             <input type="text" nz-input formControlName="account"
+                   id="account"
                    autocomplete="username"
                    placeholder="帐号"/>
           </nz-input-group>
@@ -17,7 +20,7 @@
               请输入您的帐号
             </ng-container>
             <ng-container *ngIf="control.hasError('minlength')">
-              帐号的长度不能少于6
+              帐号的长度不能少于6位
             </ng-container>
             <ng-container *ngIf="control.hasError('maxlength')">
               帐号的长度不能超过255
@@ -26,9 +29,11 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
+        <nz-form-label nzFor="password">密码:</nz-form-label>
         <nz-form-control [nzErrorTip]="passwordErrorTpl">
           <nz-input-group nzPrefixIcon="lock">
             <input type="password" nz-input formControlName="password"
+                   id="password"
                    autocomplete="current-password"
                    placeholder="密码"/>
           </nz-input-group>
