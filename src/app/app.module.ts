@@ -46,6 +46,7 @@ import {NzBadgeModule} from "ng-zorro-antd/badge";
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import { SystemRoleUpdateComponent } from './dialogs/system/system-role-update/system-role-update.component';
 import { SystemUserAddComponent } from './dialogs/system/system-user-add/system-user-add.component';
+import { NgProgressModule } from "../modules/ng-progress/ng-progress.module";
 
 const icons: IconDefinition[] = [
   UserOutline, LockOutline,
@@ -90,7 +91,8 @@ const icons: IconDefinition[] = [
     NzSelectModule,
     NzTableModule,
     NzBadgeModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
+    NgProgressModule
   ],
   providers: [{ provide: NZ_I18N, useValue: zh_CN }],
   bootstrap: [AppComponent]
