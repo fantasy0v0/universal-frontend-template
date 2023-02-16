@@ -1,16 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {LoginResponse} from "./vo/LoginResponse";
-import {ApiPrefix, checkResult, errorToException, Paging, PagingResult, Result} from "../common";
-import {firstValueFrom, mergeMap, of} from "rxjs";
-import {UserInfo} from "./vo/UserInfo";
 import {Session} from "./vo/Session";
+import {ApiPrefix, checkResult, errorToException, Paging, PagingResult, Result} from "../common";
+import { firstValueFrom, mergeMap, of, retry } from "rxjs";
+import {UserInfo} from "./vo/UserInfo";
 import {SystemUserVO} from "./vo/SystemUserVO";
 import {SystemUserAddRequest} from "./vo/SystemUserAddRequest";
+import { DateTime } from "luxon";
 
 const SessionKey = "universal_session";
-
-const UserKey = "universal_user";
 
 @Injectable({
   providedIn: 'root'
@@ -27,13 +25,12 @@ export class UniversalUserService {
    * @param rememberMe 是否记住我
    */
   login(account: string, password: string, rememberMe: boolean) {
-    let observable = this.http.post<Result<LoginResponse>>(`${ApiPrefix}/user/login`, {
+    let observable = this.http.post<Result<Session>>(`${ApiPrefix}/user/login`, {
       account, password, rememberMe, type: 0
     }).pipe(errorToException(), mergeMap(result => {
       const data = checkResult(result);
       return of(data!);
     }), mergeMap(rsp => {
-      saveUserInfo(rsp);
       saveSession(rsp);
       return of(null);
     }));
@@ -45,12 +42,12 @@ export class UniversalUserService {
    */
   online() {
     let session = getSession();
-    if (null == session || session.expired()) {
+    if (null == session || expired(session)) {
       return Promise.resolve(false);
     }
     let observable = this.http.get<Result<boolean>>(`${ApiPrefix}/user/online`, {
       headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
+    }).pipe(retry(5), errorToException(), mergeMap(result => {
       const data = checkResult(result);
       return of(data);
     }));
@@ -66,7 +63,6 @@ export class UniversalUserService {
     }).pipe(errorToException(), mergeMap(result => {
       checkResult(result);
       localStorage.removeItem(SessionKey);
-      localStorage.removeItem(UserKey);
       return of(null)
     }));
     return firstValueFrom(observable);
@@ -110,12 +106,17 @@ export class UniversalUserService {
   /**
    * 获取当前用户信息
    */
-  getUserInfo() {
-    let item = localStorage.getItem(UserKey);
-    if (null == item) {
+  getUserInfo(): UserInfo | undefined {
+    let session = getSession();
+    if (undefined === session) {
       return undefined;
     }
-    return JSON.parse(item) as UserInfo;
+    return {
+      id: session.user.id,
+      name: session.user.name,
+      role: session.role,
+      permissions: session.permissions
+    };
   }
 
   /**
@@ -208,28 +209,33 @@ export class UniversalUserService {
 
 /**
  * 保存session信息
- * @param rsp 登录响应
+ * @param session session
  */
-function saveSession(rsp: LoginResponse) {
-  let session: Session = new Session();
-  session.token = rsp.token;
-  session.expiration = rsp.expiration;
-  localStorage.setItem(SessionKey, JSON.stringify(session));
+function saveSession(session: Session) {
+  let data = JSON.stringify(session);
+  data = btoa(encodeURIComponent(data));
+  localStorage.setItem(SessionKey, data);
 }
 
 /**
  * 获取保存的session信息
  */
-function getSession() {
+function getSession(): Session | undefined {
   let item = localStorage.getItem(SessionKey);
   if (null == item) {
-    return null;
+    return undefined;
   }
-  const data = JSON.parse(item);
-  const session = new Session();
-  session.token = data.token;
-  session.expiration = data.expiration;
-  return session;
+  let data = atob(item);
+  data = decodeURIComponent(data);
+  return JSON.parse(data) as Session;
+}
+
+/**
+ * 是否已经到期
+ */
+function expired(session: Session) {
+  let d1 = DateTime.fromISO(session.expiration)
+  return d1 < DateTime.now();
 }
 
 /**
@@ -240,18 +246,4 @@ export function getAuthorizationHeader() {
   return {
     Authorization: session ? session.token : ""
   };
-}
-
-/**
- * 保存用户信息
- * @param rsp 登录相应
- */
-function saveUserInfo(rsp: LoginResponse) {
-  let userInfo: UserInfo = {
-    id: rsp.id,
-    name: rsp.name,
-    role: rsp.role,
-    permissions: rsp.permissions
-  }
-  localStorage.setItem(UserKey, JSON.stringify(userInfo));
 }
