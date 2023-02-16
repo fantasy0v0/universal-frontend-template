@@ -42,8 +42,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       return urlTree;
     } catch (e) {
       console.error(e);
-      this.message.warning("登录信息已过期, 将跳转至登录页面...");
-      return urlTree;
+      this.message.warning("网络异常, 请稍后重试");
+      return false;
     }
   }
 

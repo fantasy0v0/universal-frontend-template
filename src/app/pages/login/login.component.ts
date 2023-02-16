@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
       const ref = this.notification.success('登录成功', '正在加载中, 请稍后...', {
         nzDuration: 0
       });
-      await sleep(300);
       this.router.navigateByUrl('/main');
+      await sleep(300);
       this.notification.remove(ref.messageId);
     } catch (e) {
       const message = errorMessage(e);
