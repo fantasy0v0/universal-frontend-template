@@ -32,7 +32,7 @@ export class UniversalUserService {
       return of(data!);
     }), mergeMap(rsp => {
       saveSession(rsp);
-      return of(null);
+      return of(mapUserInfo(rsp));
     }));
     return firstValueFrom(observable);
   }
@@ -111,12 +111,7 @@ export class UniversalUserService {
     if (undefined === session) {
       return undefined;
     }
-    return {
-      id: session.user.id,
-      name: session.user.name,
-      role: session.role,
-      permissions: session.permissions
-    };
+    return mapUserInfo(session);
   }
 
   /**
@@ -246,4 +241,13 @@ export function getAuthorizationHeader() {
   return {
     Authorization: session ? session.token : ""
   };
+}
+
+function mapUserInfo(session: Session): UserInfo {
+  return {
+    id: session.user.id,
+    name: session.user.name,
+    role: session.role,
+    permissions: session.permissions
+  }
 }
