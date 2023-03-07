@@ -1,6 +1,7 @@
 import { FormArray, FormGroup } from "@angular/forms";
 import { HttpParams } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
+import {firstValueFrom, mergeMap, Observable, of} from "rxjs";
 
 export const ApiPrefix = "/api";
 
@@ -85,6 +86,24 @@ export function checkResult<T>(result: Result<T>) {
     throw new Exception(result.msg);
   }
   return result.data;
+}
+
+/**
+ * 从接口响应中取出返回的结果, 并返回一个Promise对象
+ * @param observable observable
+ * @param map 对返回的结果进行二次处理或转换
+ */
+export function getResult<T, R>(observable: Observable<Result<T>>,
+                                map: (data: T | undefined) => R): Promise<R> {
+  return firstValueFrom(
+    observable.pipe(
+      errorToException(),
+      mergeMap(result => {
+        const data = checkResult(result);
+        return of(map(data));
+      })
+    )
+  );
 }
 
 /**
