@@ -29,7 +29,7 @@ export class UniversalRoleService {
     let observable = this.http.get<Result<PagingResult<SimpleDataVO>>>(`${ApiPrefix}/system/role/findAll`, {
       params, headers: getAuthorizationHeader()
     });
-    return getResult(observable, data => data!);
+    return getResult(observable);
   }
 
   /**
@@ -40,7 +40,7 @@ export class UniversalRoleService {
     let observable = this.http.post<Result<void>>(`${ApiPrefix}/system/role`, role, {
       headers: getAuthorizationHeader()
     });
-    return getResult(observable, () => undefined);
+    return getResult(observable);
   }
 
   /**
@@ -51,7 +51,7 @@ export class UniversalRoleService {
     let observable = this.http.delete<Result<void>>(`${ApiPrefix}/system/role/${id}`, {
       headers: getAuthorizationHeader()
     });
-    return getResult(observable, () => undefined);
+    return getResult(observable);
   }
 
 }

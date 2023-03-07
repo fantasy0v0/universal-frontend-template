@@ -23,15 +23,13 @@ export class UniversalUserService {
    * @param password 密码
    * @param rememberMe 是否记住我
    */
-  login(account: string, password: string, rememberMe: boolean) {
+  async login(account: string, password: string, rememberMe: boolean) {
     let observable = this.http.post<Result<Session>>(`${ApiPrefix}/user/login`, {
       account, password, rememberMe, type: 0
     });
-    return getResult(observable, data => {
-      const session = data!;
-      saveSession(session);
-      return mapUserInfo(session);
-    });
+    const session = await getResult(observable);
+    saveSession(session);
+    return mapUserInfo(session);
   }
 
   /**
@@ -45,20 +43,18 @@ export class UniversalUserService {
     let observable = this.http.get<Result<boolean>>(`${ApiPrefix}/user/online`, {
       headers: getAuthorizationHeader()
     });
-    return getResult(observable, data => data!);
+    return getResult(observable);
   }
 
   /**
    * 用户退出
    */
-  logout() {
+  async logout() {
     let observable = this.http.put<Result<void>>(`${ApiPrefix}/user/logout`, null, {
       headers: getAuthorizationHeader()
     });
-    return getResult(observable, () => {
-      localStorage.removeItem(SessionKey);
-      return;
-    });
+    await getResult(observable);
+    localStorage.removeItem(SessionKey);
   }
 
   /**
@@ -90,7 +86,7 @@ export class UniversalUserService {
     }, {
       headers: getAuthorizationHeader()
     });
-    return getResult(observable, () => null);
+    return getResult(observable);
   }
 
   /**
@@ -126,7 +122,7 @@ export class UniversalUserService {
     let observable = this.http.get<Result<PagingResult<SystemUserVO>>>(`${ApiPrefix}/system/user/findAll`, {
       params, headers: getAuthorizationHeader()
     });
-    return getResult(observable, data => data!);
+    return getResult(observable);
   }
 
   /**
@@ -139,7 +135,7 @@ export class UniversalUserService {
     let observable = this.http.post<Result<string>>(`${ApiPrefix}/system/user/${userId}/resetPassword`, null, {
       params, headers: getAuthorizationHeader()
     });
-    return getResult(observable, data => data!);
+    return getResult(observable);
   }
 
   /**
@@ -150,7 +146,7 @@ export class UniversalUserService {
     let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/disable`, null, {
       headers: getAuthorizationHeader()
     });
-    return getResult(observable, data => data);
+    return getResult(observable);
   }
 
   /**
@@ -161,7 +157,7 @@ export class UniversalUserService {
     let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/enable`, null, {
       headers: getAuthorizationHeader()
     });
-    return getResult(observable, data => data);
+    return getResult(observable);
   }
 
   /**
@@ -172,7 +168,7 @@ export class UniversalUserService {
     let observable = this.http.post<Result<void>>(`${ApiPrefix}/system/user`, request, {
       headers: getAuthorizationHeader()
     });
-    return getResult(observable, data => data);
+    return getResult(observable);
   }
 
 }

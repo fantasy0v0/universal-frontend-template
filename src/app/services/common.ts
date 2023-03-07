@@ -30,12 +30,12 @@ export class Exception {
 /**
  *  服务端接口响应类
  */
-export class Result<T> {
+export interface Result<T> {
 
   /**
    * 错误码
    */
-  code!: string;
+  code: string;
 
   /**
    * 错误信息
@@ -45,7 +45,7 @@ export class Result<T> {
   /**
    * 响应内容
    */
-  data?: T;
+  data: T;
 }
 
 /**
@@ -91,16 +91,14 @@ export function checkResult<T>(result: Result<T>) {
 /**
  * 从接口响应中取出返回的结果, 并返回一个Promise对象
  * @param observable observable
- * @param map 对返回的结果进行二次处理或转换
  */
-export function getResult<T, R>(observable: Observable<Result<T>>,
-                                map: (data: T | undefined) => R): Promise<R> {
+export function getResult<T>(observable: Observable<Result<T>>): Promise<T> {
   return firstValueFrom(
     observable.pipe(
       errorToException(),
       mergeMap(result => {
         const data = checkResult(result);
-        return of(map(data));
+        return of(data);
       })
     )
   );
