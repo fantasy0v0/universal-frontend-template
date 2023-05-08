@@ -1,6 +1,7 @@
 import { FormArray, FormGroup } from "@angular/forms";
 import { HttpParams } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
+import {firstValueFrom, mergeMap, Observable, of} from "rxjs";
 
 export const ApiPrefix = "/api";
 
@@ -29,12 +30,12 @@ export class Exception {
 /**
  *  服务端接口响应类
  */
-export class Result<T> {
+export interface Result<T> {
 
   /**
    * 错误码
    */
-  code!: string;
+  code: string;
 
   /**
    * 错误信息
@@ -44,7 +45,7 @@ export class Result<T> {
   /**
    * 响应内容
    */
-  data?: T;
+  data: T;
 }
 
 /**
@@ -85,6 +86,22 @@ export function checkResult<T>(result: Result<T>) {
     throw new Exception(result.msg);
   }
   return result.data;
+}
+
+/**
+ * 从接口响应中取出返回的结果, 并返回一个Promise对象
+ * @param observable observable
+ */
+export function getResult<T>(observable: Observable<Result<T>>): Promise<T> {
+  return firstValueFrom(
+    observable.pipe(
+      errorToException(),
+      mergeMap(result => {
+        const data = checkResult(result);
+        return of(data);
+      })
+    )
+  );
 }
 
 /**

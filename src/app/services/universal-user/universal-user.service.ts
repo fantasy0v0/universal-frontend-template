@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Session} from "./vo/Session";
-import {ApiPrefix, checkResult, errorToException, Paging, PagingResult, Result} from "../common";
-import { firstValueFrom, mergeMap, of, retry } from "rxjs";
+import {ApiPrefix, getResult, Paging, PagingResult, Result} from "../common";
 import {UserInfo} from "./vo/UserInfo";
 import {SystemUserVO} from "./vo/SystemUserVO";
 import {SystemUserAddRequest} from "./vo/SystemUserAddRequest";
@@ -24,17 +23,13 @@ export class UniversalUserService {
    * @param password 密码
    * @param rememberMe 是否记住我
    */
-  login(account: string, password: string, rememberMe: boolean) {
+  async login(account: string, password: string, rememberMe: boolean) {
     let observable = this.http.post<Result<Session>>(`${ApiPrefix}/user/login`, {
       account, password, rememberMe, type: 0
-    }).pipe(errorToException(), mergeMap(result => {
-      const data = checkResult(result);
-      return of(data!);
-    }), mergeMap(rsp => {
-      saveSession(rsp);
-      return of(null);
-    }));
-    return firstValueFrom(observable);
+    });
+    const session = await getResult(observable);
+    saveSession(session);
+    return mapUserInfo(session);
   }
 
   /**
@@ -47,25 +42,19 @@ export class UniversalUserService {
     }
     let observable = this.http.get<Result<boolean>>(`${ApiPrefix}/user/online`, {
       headers: getAuthorizationHeader()
-    }).pipe(retry(5), errorToException(), mergeMap(result => {
-      const data = checkResult(result);
-      return of(data);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
   /**
    * 用户退出
    */
-  logout() {
+  async logout() {
     let observable = this.http.put<Result<void>>(`${ApiPrefix}/user/logout`, null, {
       headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      checkResult(result);
-      localStorage.removeItem(SessionKey);
-      return of(null)
-    }));
-    return firstValueFrom(observable);
+    });
+    await getResult(observable);
+    localStorage.removeItem(SessionKey);
   }
 
   /**
@@ -96,11 +85,8 @@ export class UniversalUserService {
       currentPassword, newPassword, type
     }, {
       headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      const data = checkResult(result);
-      return of(data);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
   /**
@@ -111,12 +97,7 @@ export class UniversalUserService {
     if (undefined === session) {
       return undefined;
     }
-    return {
-      id: session.user.id,
-      name: session.user.name,
-      role: session.role,
-      permissions: session.permissions
-    };
+    return mapUserInfo(session);
   }
 
   /**
@@ -140,11 +121,8 @@ export class UniversalUserService {
     }
     let observable = this.http.get<Result<PagingResult<SystemUserVO>>>(`${ApiPrefix}/system/user/findAll`, {
       params, headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      const data = checkResult(result);
-      return of(data!);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
   /**
@@ -156,11 +134,8 @@ export class UniversalUserService {
     let params = new HttpParams().append("type", type);
     let observable = this.http.post<Result<string>>(`${ApiPrefix}/system/user/${userId}/resetPassword`, null, {
       params, headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      const data = checkResult(result);
-      return of(data!);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
   /**
@@ -170,11 +145,8 @@ export class UniversalUserService {
   disable(userId: number) {
     let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/disable`, null, {
       headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      const data = checkResult(result);
-      return of(data);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
   /**
@@ -184,11 +156,8 @@ export class UniversalUserService {
   enable(userId: number) {
     let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/enable`, null, {
       headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      const data = checkResult(result);
-      return of(data);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
   /**
@@ -198,11 +167,8 @@ export class UniversalUserService {
   addUser(request: SystemUserAddRequest) {
     let observable = this.http.post<Result<void>>(`${ApiPrefix}/system/user`, request, {
       headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      const data = checkResult(result);
-      return of(data);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
 }
@@ -246,4 +212,13 @@ export function getAuthorizationHeader() {
   return {
     Authorization: session ? session.token : ""
   };
+}
+
+function mapUserInfo(session: Session): UserInfo {
+  return {
+    id: session.user.id,
+    name: session.user.name,
+    role: session.role,
+    permissions: session.permissions
+  }
 }

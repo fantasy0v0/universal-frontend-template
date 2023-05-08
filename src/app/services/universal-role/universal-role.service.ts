@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {ApiPrefix, checkResult, errorToException, Paging, PagingResult, Result} from "../common";
+import {ApiPrefix, getResult, Paging, PagingResult, Result} from "../common";
 import {SimpleDataVO} from "../vo/SimpleDataVO";
 import {getAuthorizationHeader} from "../universal-user/universal-user.service";
-import {firstValueFrom, mergeMap, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +28,8 @@ export class UniversalRoleService {
     }
     let observable = this.http.get<Result<PagingResult<SimpleDataVO>>>(`${ApiPrefix}/system/role/findAll`, {
       params, headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      const data = checkResult(result);
-      return of(data!);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
   /**
@@ -43,11 +39,8 @@ export class UniversalRoleService {
   saveOrUpdate(role: SimpleDataVO) {
     let observable = this.http.post<Result<void>>(`${ApiPrefix}/system/role`, role, {
       headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      checkResult(result);
-      return of(null);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
   /**
@@ -57,11 +50,8 @@ export class UniversalRoleService {
   deleteById(id: number) {
     let observable = this.http.delete<Result<void>>(`${ApiPrefix}/system/role/${id}`, {
       headers: getAuthorizationHeader()
-    }).pipe(errorToException(), mergeMap(result => {
-      checkResult(result);
-      return of(null);
-    }));
-    return firstValueFrom(observable);
+    });
+    return getResult(observable);
   }
 
 }
