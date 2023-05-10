@@ -44,6 +44,11 @@ div.logo {
   }
 }
 
+ul.menu {
+  overflow: hidden auto;
+  height: calc(100vh - 64px);
+}
+
 i.trigger {
   height: 64px;
   padding: 20px 24px;
