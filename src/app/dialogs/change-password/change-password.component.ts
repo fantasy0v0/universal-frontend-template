@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {errorMessage, formGroupInvalid} from "../../services/common";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {UniversalUserService} from "../../services/universal-user/universal-user.service";
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {ErrorService} from "../../services/error/error.service";
+import {$loading} from "../../interceptors/my.interceptor";
+import {Subscription} from "rxjs";
 
 function passwordMatcherValidator(control: AbstractControl): ValidationErrors | null {
   if (null == control.parent) {
@@ -24,19 +27,25 @@ function passwordMatcherValidator(control: AbstractControl): ValidationErrors | 
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   formGroup: FormGroup;
 
   loading = false;
 
+  loadingSubscription: Subscription;
+
   constructor(private modal: NzModalRef,
               private userService: UniversalUserService,
-              private message: NzMessageService) {
+              private message: NzMessageService,
+              private error: ErrorService) {
     this.formGroup = new FormGroup({
       password: new FormControl("", [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ]),
       newPassword: new FormControl("", [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ]),
       repeat: new FormControl("", [ passwordMatcherValidator ])
+    });
+    this.loadingSubscription = $loading.toObservable().subscribe(value => {
+      this.loading = value;
     });
   }
 
@@ -60,11 +69,14 @@ export class ChangePasswordComponent implements OnInit {
       this.message.success('密码修改成功');
       this.destroyModal();
     } catch (e) {
-      const msg = errorMessage(e, "密码修改失败");
-      this.message.error(msg);
+      this.error.process(e, "密码修改失败");
     } finally {
       this.message.remove(ref.messageId);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.loadingSubscription.unsubscribe();
   }
 
 }

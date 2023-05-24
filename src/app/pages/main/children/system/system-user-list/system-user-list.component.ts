@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {UniversalUserService} from "../../../../../services/universal-user/universal-user.service";
 import {SystemUserVO} from "../../../../../services/universal-user/vo/SystemUserVO";
@@ -6,13 +6,16 @@ import {errorMessage, Paging} from "../../../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
+import {Subscription} from "rxjs";
+import {$loading} from "../../../../../interceptors/my.interceptor";
+import {ErrorService} from "../../../../../services/error/error.service";
 
 @Component({
   selector: 'app-system-user-list',
   templateUrl: './system-user-list.component.html',
   styleUrls: ['./system-user-list.component.scss']
 })
-export class SystemUserListComponent implements OnInit {
+export class SystemUserListComponent implements OnInit, OnDestroy {
 
   formGroup: FormGroup;
 
@@ -24,13 +27,19 @@ export class SystemUserListComponent implements OnInit {
 
   data: SystemUserVO[] = [];
 
+  loadingSubscription: Subscription;
+
   constructor(private userService: UniversalUserService,
               private modal: NzModalService,
               private dialogService: SystemDialogService,
+              private error: ErrorService,
               private message: NzMessageService) {
     this.formGroup = new FormGroup({
       role: new FormControl(-1),
       name: new FormControl(null)
+    });
+    this.loadingSubscription = $loading.toObservable().subscribe(value => {
+      this.loading = value;
     });
   }
 
@@ -39,7 +48,6 @@ export class SystemUserListComponent implements OnInit {
   }
 
   async onSearch() {
-    this.loading = true;
     try {
       let role = this.formGroup.get("role")!.value as number | undefined;
       if (-1 === role) {
@@ -50,15 +58,11 @@ export class SystemUserListComponent implements OnInit {
       this.total = pagingResult.total;
       this.data = pagingResult.content;
     } catch (e) {
-      const msg = errorMessage(e);
-      this.message.error(msg);
-    } finally {
-      this.loading = false;
+      this.error.process(e);
     }
   }
 
   async restPassword(item: SystemUserVO) {
-    this.loading = true;
     try {
       const newPassword = await this.userService.restPassword(item.id, 0);
       this.modal.success({
@@ -66,36 +70,25 @@ export class SystemUserListComponent implements OnInit {
         nzContent: `新密码为: ${newPassword}`
       });
     } catch (e) {
-      const msg = errorMessage(e);
-      this.message.error(msg);
-    } finally {
-      this.loading = false;
+      this.error.process(e);
     }
   }
 
   async disable(item: SystemUserVO) {
-    this.loading = true;
     try {
       await this.userService.disable(item.id);
       this.message.success("操作成功");
     } catch (e) {
-      const msg = errorMessage(e);
-      this.message.error(msg);
-    } finally {
-      this.loading = false;
+      this.error.process(e);
     }
   }
 
   async enable(item: SystemUserVO) {
-    this.loading = true;
     try {
       await this.userService.enable(item.id);
       this.message.success("操作成功");
     } catch (e) {
-      const msg = errorMessage(e);
-      this.message.error(msg);
-    } finally {
-      this.loading = false;
+      this.error.process(e);
     }
   }
 
@@ -104,5 +97,9 @@ export class SystemUserListComponent implements OnInit {
     if (result) {
       this.onSearch();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.loadingSubscription.unsubscribe();
   }
 }

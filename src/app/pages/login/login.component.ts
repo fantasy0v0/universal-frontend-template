@@ -1,19 +1,23 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 import { BingService } from "../../services/bing/bing.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NzNotificationService } from "ng-zorro-antd/notification";
 import { UniversalUserService } from "../../services/universal-user/universal-user.service";
 import { errorMessage, formGroupInvalid, sleep } from "../../services/common";
+import {Subscription} from "rxjs";
+import {$loading} from "../../interceptors/my.interceptor";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.scss' ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loading = false;
+
+  loadingSubscription: Subscription;
 
   formGroup: FormGroup;
 
@@ -28,6 +32,9 @@ export class LoginComponent implements OnInit {
       account: [ null, [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ] ],
       password: [ null, [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ] ],
       rememberMe: [ false ]
+    });
+    this.loadingSubscription = $loading.toObservable().subscribe(value => {
+      this.loading = value;
     });
   }
 
@@ -44,7 +51,6 @@ export class LoginComponent implements OnInit {
     const account = this.formGroup.get('account')!.value;
     const password = this.formGroup.get('password')!.value;
     const rememberMe = this.formGroup.get('rememberMe')!.value;
-    this.loading = true;
     try {
       await this.userService.login(account, password, rememberMe);
       const ref = this.notification.success('登录成功', '正在加载中, 请稍后...', {
@@ -56,9 +62,11 @@ export class LoginComponent implements OnInit {
     } catch (e) {
       const message = errorMessage(e);
       this.notification.error('登录失败', message);
-    } finally {
-      this.loading = false;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.loadingSubscription.unsubscribe();
   }
 
 }
