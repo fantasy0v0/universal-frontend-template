@@ -8,22 +8,19 @@ export const ApiPrefix = "/api";
 /**
  * 异常
  */
-export class Exception {
+export class ResultError extends Error {
 
-  constructor(private _msg?: string, private _err?: Error) {}
+  code: string
 
-  get msg() {
-    return this._msg ? this._msg : "";
-  }
+  msg?: string
 
-  get error() {
-    return this._err;
-  }
+  data?: any;
 
-  printStackTrace() {
-    if (this._err && this._err.stack) {
-      console.error(this._err.stack);
-    }
+  constructor(result: Result<any>) {
+    super(result.msg);
+    this.code = result.code;
+    this.msg = result.msg;
+    this.data = result.data;
   }
 }
 
@@ -53,7 +50,7 @@ export interface Result<T> {
  */
 export function errorToException<T>() {
   return catchError<T, never>(err => {
-    throw new Exception("未知错误, 请检查网络是否正常或者联系维护人员", err);
+    throw new Error("未知错误, 请检查网络是否正常或者联系维护人员", err);
   });
 }
 
@@ -64,8 +61,10 @@ export function errorToException<T>() {
  */
 export function errorMessage(err: any, topic?: string) {
   let msg;
-  if (err instanceof Exception) {
-    msg = err.msg;
+  if (err instanceof ResultError) {
+    msg = err.msg ? err.msg : '服务异常';
+  } else if (err instanceof Error) {
+    msg = err.message;
   } else {
     console.error(err);
     msg = "未知错误";
@@ -83,7 +82,7 @@ export function errorMessage(err: any, topic?: string) {
  */
 export function checkResult<T>(result: Result<T>) {
   if ("0" !== result.code) {
-    throw new Exception(result.msg);
+    throw new Error(result.msg);
   }
   return result.data;
 }

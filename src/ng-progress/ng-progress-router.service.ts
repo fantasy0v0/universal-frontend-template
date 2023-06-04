@@ -14,7 +14,7 @@ export class NgProgressRouterService {
 
   private routerSubscription: Subscription;
 
-  constructor(private ngrogress: NgProgress, private router: Router) {
+  constructor(private ngrogress: NgProgress, router: Router) {
     this.settingSubscription = this.ngrogress.settings.subscribe(setting => {
       this.enable = setting.router;
     });

@@ -1,18 +1,30 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {NzModalRef} from "ng-zorro-antd/modal";
-import {errorMessage, formGroupInvalid} from "../../../services/common";
+import {formGroupInvalid} from "../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {UniversalRoleService} from "../../../services/universal-role/universal-role.service";
-import {$loading} from "../../../interceptors/my.interceptor";
+import {$loading} from "../../../interceptors/my/my.interceptor";
 import {Subscription} from "rxjs";
 import {ErrorService} from "../../../services/error/error.service";
+import { CommonModule } from '@angular/common';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @Component({
+  standalone: true,
   selector: 'app-system-role-update',
   templateUrl: './system-role-update.component.html',
-  styleUrls: ['./system-role-update.component.scss']
+  styleUrls: ['./system-role-update.component.scss'],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule
+  ]
 })
 export class SystemRoleUpdateComponent implements OnInit, OnDestroy {
 

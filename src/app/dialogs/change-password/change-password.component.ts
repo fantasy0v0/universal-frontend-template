@@ -1,12 +1,16 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {errorMessage, formGroupInvalid} from "../../services/common";
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators} from "@angular/forms";
+import {formGroupInvalid} from "../../services/common";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {UniversalUserService} from "../../services/universal-user/universal-user.service";
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {ErrorService} from "../../services/error/error.service";
-import {$loading} from "../../interceptors/my.interceptor";
+import {$loading} from "../../interceptors/my/my.interceptor";
 import {Subscription} from "rxjs";
+import { CommonModule } from '@angular/common';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 function passwordMatcherValidator(control: AbstractControl): ValidationErrors | null {
   if (null == control.parent) {
@@ -23,9 +27,17 @@ function passwordMatcherValidator(control: AbstractControl): ValidationErrors | 
 }
 
 @Component({
+  standalone: true,
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.scss']
+  styleUrls: ['./change-password.component.scss'],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+  ]
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
 

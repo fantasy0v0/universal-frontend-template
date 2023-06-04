@@ -3,11 +3,14 @@ import { NgProgressState, NgProgressSettings } from '../ng-progress.interface';
 import { NgProgress } from '../ng-progress.service';
 import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'ng-progress-component',
   templateUrl: './ng-progress.component.html',
-  styleUrls: ['./ng-progress.component.scss']
+  styleUrls: ['./ng-progress.component.scss'],
+  imports: [CommonModule]
 })
 export class NgProgressComponent implements OnInit, OnDestroy {
 

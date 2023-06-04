@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {UniversalUserService} from "../../../../../services/universal-user/universal-user.service";
 import {SystemUserVO} from "../../../../../services/universal-user/vo/SystemUserVO";
 import {errorMessage, Paging} from "../../../../../services/common";
@@ -7,13 +7,35 @@ import {NzMessageService} from "ng-zorro-antd/message";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
 import {Subscription} from "rxjs";
-import {$loading} from "../../../../../interceptors/my.interceptor";
+import {$loading} from "../../../../../interceptors/my/my.interceptor";
 import {ErrorService} from "../../../../../services/error/error.service";
+import { CommonModule } from '@angular/common';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
+  standalone: true,
   selector: 'app-system-user-list',
   templateUrl: './system-user-list.component.html',
-  styleUrls: ['./system-user-list.component.scss']
+  styleUrls: ['./system-user-list.component.scss'],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzTableModule,
+    NzSpaceModule,
+    NzButtonModule,
+    NzSelectModule,
+    NzBadgeModule,
+    NzIconModule
+  ]
 })
 export class SystemUserListComponent implements OnInit, OnDestroy {
 

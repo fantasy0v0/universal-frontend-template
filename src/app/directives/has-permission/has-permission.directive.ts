@@ -2,6 +2,7 @@ import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { UniversalUserService } from "../../services/universal-user/universal-user.service";
 
 @Directive({
+  standalone: true,
   selector: '[appHasPermission]'
 })
 export class HasPermissionDirective {

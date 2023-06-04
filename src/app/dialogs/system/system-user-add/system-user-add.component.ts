@@ -1,19 +1,33 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UniversalRoleService} from "../../../services/universal-role/universal-role.service";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {formGroupInvalid} from "../../../services/common";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {UniversalUserService} from "../../../services/universal-user/universal-user.service";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {$loading} from "../../../interceptors/my.interceptor";
+import {$loading} from "../../../interceptors/my/my.interceptor";
 import {Subscription} from "rxjs";
 import {ErrorService} from "../../../services/error/error.service";
+import { CommonModule } from '@angular/common';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import {NzSelectModule} from "ng-zorro-antd/select";
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @Component({
+  standalone: true,
   selector: 'app-system-user-add',
   templateUrl: './system-user-add.component.html',
-  styleUrls: ['./system-user-add.component.scss']
+  styleUrls: ['./system-user-add.component.scss'],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    NzSelectModule
+  ]
 })
 export class SystemUserAddComponent implements OnInit, OnDestroy {
 

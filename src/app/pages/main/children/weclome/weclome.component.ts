@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-weclome',
   templateUrl: './weclome.component.html',
   styleUrls: ['./weclome.component.scss']
