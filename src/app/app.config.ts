@@ -6,7 +6,7 @@ import { zh_CN } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { routes } from './app.routes';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import { NgProgressHttpInterceptor } from 'src/ng-progress/ng-progress-http.interceptor';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzMessageModule } from 'ng-zorro-antd/message';
@@ -19,6 +19,7 @@ import {
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import {MyInterceptor} from "./interceptors/my/my.interceptor";
 
 registerLocaleData(zh);
 const icons: IconDefinition[] = [
@@ -39,11 +40,14 @@ export const appConfig: ApplicationConfig = {
     {
       provide: NZ_I18N, useValue: zh_CN
     },
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     provideRouter(routes, withDebugTracing()),
     {
       provide: HTTP_INTERCEPTORS, useClass: NgProgressHttpInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi: true
     }
   ]
 };
