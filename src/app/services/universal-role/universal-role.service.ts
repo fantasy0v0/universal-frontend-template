@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {ApiPrefix, getResult, Paging, PagingResult, Result} from "../common";
+import {ApiPrefix, getResult, Paging, PagingData, Result} from "../common";
 import {SimpleDataVO} from "../vo/SimpleDataVO";
 import {getAuthorizationHeader} from "../universal-user/universal-user.service";
 
@@ -26,7 +26,7 @@ export class UniversalRoleService {
     if (null != name && name.length > 0) {
       params = params.append("name", name);
     }
-    let observable = this.http.get<Result<PagingResult<SimpleDataVO>>>(`${ApiPrefix}/system/role/findAll`, {
+    let observable = this.http.get<Result<PagingData<SimpleDataVO>>>(`${ApiPrefix}/system/role/findAll`, {
       params, headers: getAuthorizationHeader()
     });
     return getResult(observable);

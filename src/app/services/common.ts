@@ -144,7 +144,7 @@ export class Paging {
 /**
  * 分页结果
  */
-export class PagingResult<T> {
+export class PagingData<T> {
 
   /**
    * 总记录数
