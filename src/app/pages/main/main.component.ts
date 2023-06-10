@@ -10,7 +10,7 @@ import {NzMessageModule, NzMessageService} from "ng-zorro-antd/message";
 import {UniversalUserService} from "../../services/universal-user/universal-user.service";
 import {UserInfo} from "../../services/universal-user/vo/UserInfo";
 import {SystemDialogService} from "../../services/dialog/system/system-dialog.service";
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { HasPermissionDirective } from 'src/app/directives/has-permission/has-permission.directive';
 import { ErrorService } from 'src/app/services/error/error.service';
 
@@ -31,7 +31,8 @@ import { ErrorService } from 'src/app/services/error/error.service';
     NzIconModule,
     NzAvatarModule,
     NzDropDownModule,
-    HasPermissionDirective
+    HasPermissionDirective,
+    NgOptimizedImage
   ]
 })
 export class MainComponent implements OnInit {
