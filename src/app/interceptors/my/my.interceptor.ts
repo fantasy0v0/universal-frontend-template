@@ -1,38 +1,22 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {Injectable, signal} from '@angular/core';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {finalize} from "rxjs/operators";
 
-class GlobalLoading {
-  private subject = new Subject<boolean>()
-
-  next(value: boolean) {
-    this.subject.next(value);
-  }
-
-  toObservable(): Observable<boolean> {
-    return this.subject.asObservable();
-  }
-}
-
-export const $loading = new GlobalLoading();
+export const $loading = signal(false);
 
 @Injectable()
 export class MyInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor() {
+  }
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    $loading.next(true);
+    $loading.set(true);
     return next.handle(req).pipe(finalize(() => {
       setTimeout(() => {
-        $loading.next(false);
-      }, 100);
+        $loading.set(false);
+      }, 180);
     }));
   }
 }

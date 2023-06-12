@@ -29,7 +29,7 @@ export class SystemRoleUpdateComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading.toObservable();
+  loading = $loading;
 
   @Input()
   data?: SimpleDataVO;

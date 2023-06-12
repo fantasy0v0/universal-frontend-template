@@ -37,7 +37,7 @@ export class SystemRoleListComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading.toObservable();
+  loading = $loading;
 
   paging = Paging.of(1, 10);
 

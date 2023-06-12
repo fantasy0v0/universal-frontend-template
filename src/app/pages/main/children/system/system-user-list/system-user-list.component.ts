@@ -42,7 +42,7 @@ export class SystemUserListComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading.toObservable();
+  loading = $loading;
 
   paging = Paging.of(1, 10);
 

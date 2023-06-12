@@ -49,7 +49,7 @@ export class ChangePasswordComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading.toObservable();
+  loading = $loading;
 
   constructor(private modal: NzModalRef,
               private userService: UniversalUserService,

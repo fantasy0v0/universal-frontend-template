@@ -28,7 +28,7 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 })
 export class LoginComponent implements OnInit {
 
-  loading = $loading.toObservable();
+  loading = $loading;
 
   formGroup: FormGroup;
 

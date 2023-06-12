@@ -32,7 +32,7 @@ export class SystemUserAddComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading.toObservable();
+  loading = $loading;
 
   roles: SimpleDataVO[] = [];
 
