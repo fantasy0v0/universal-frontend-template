@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UniversalRoleService} from "../../../services/universal-role/universal-role.service";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
@@ -7,13 +7,12 @@ import {NzModalRef} from "ng-zorro-antd/modal";
 import {UniversalUserService} from "../../../services/universal-user/universal-user.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {$loading} from "../../../interceptors/my/my.interceptor";
-import {Subscription} from "rxjs";
 import {ErrorService} from "../../../services/error/error.service";
-import { CommonModule } from '@angular/common';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import {CommonModule} from '@angular/common';
+import {NzFormModule} from 'ng-zorro-antd/form';
+import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzSelectModule} from "ng-zorro-antd/select";
-import { NzInputModule } from 'ng-zorro-antd/input';
+import {NzInputModule} from 'ng-zorro-antd/input';
 
 @Component({
   standalone: true,
@@ -29,15 +28,13 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzSelectModule
   ]
 })
-export class SystemUserAddComponent implements OnInit, OnDestroy {
+export class SystemUserAddComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = false;
+  loading = $loading.toObservable();
 
   roles: SimpleDataVO[] = [];
-
-  loadingSubscription: Subscription;
 
   constructor(private roleService: UniversalRoleService,
               private modal: NzModalRef,
@@ -52,13 +49,6 @@ export class SystemUserAddComponent implements OnInit, OnDestroy {
       account: new FormControl(null, [ Validators.required, Validators.minLength(6) ]),
       password: new FormControl(null, [ Validators.required, Validators.minLength(6) ])
     });
-    this.loadingSubscription = $loading.toObservable().subscribe(value => {
-      this.loading = value;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.loadingSubscription.unsubscribe();
   }
 
   ngOnInit(): void {

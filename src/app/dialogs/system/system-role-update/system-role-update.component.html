@@ -13,7 +13,7 @@
   </nz-form-item>
   <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button nz-button nzType="primary" type="submit" [nzLoading]="loading">
+      <button nz-button nzType="primary" type="submit" [nzLoading]="loading | async">
         <ng-container *ngIf="null != data else elseTemplate">
           修改
         </ng-container>

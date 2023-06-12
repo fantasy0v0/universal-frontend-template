@@ -1,18 +1,16 @@
-import {Component, ElementRef, OnDestroy, OnInit, inject} from '@angular/core';
-import { BingService } from "../../services/bing/bing.service";
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import {  NzNotificationService } from "ng-zorro-antd/notification";
-import { UniversalUserService } from "../../services/universal-user/universal-user.service";
-import { errorMessage, formGroupInvalid, sleep } from "../../services/common";
-import {Subscription} from "rxjs";
+import {Component, ElementRef, inject, OnInit} from '@angular/core';
+import {BingService} from "../../services/bing/bing.service";
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {NzNotificationService} from "ng-zorro-antd/notification";
+import {UniversalUserService} from "../../services/universal-user/universal-user.service";
+import {errorMessage, formGroupInvalid, sleep} from "../../services/common";
 import {$loading} from "../../interceptors/my/my.interceptor";
-import { CommonModule } from '@angular/common';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { ErrorService } from 'src/app/services/error/error.service';
+import {CommonModule} from '@angular/common';
+import {NzFormModule} from 'ng-zorro-antd/form';
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {NzInputModule} from 'ng-zorro-antd/input';
+import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 
 @Component({
   standalone: true,
@@ -28,11 +26,9 @@ import { ErrorService } from 'src/app/services/error/error.service';
     NzCheckboxModule
   ]
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
-  loading = false;
-
-  loadingSubscription: Subscription;
+  loading = $loading.toObservable();
 
   formGroup: FormGroup;
 
@@ -47,9 +43,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       account: [ null, [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ] ],
       password: [ null, [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ] ],
       rememberMe: new FormControl(false)
-    });
-    this.loadingSubscription = $loading.toObservable().subscribe(value => {
-      this.loading = value;
     });
   }
 
@@ -78,10 +71,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       const message = errorMessage(e);
       this.notification.error('登录失败', message);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.loadingSubscription.unsubscribe();
   }
 
 }

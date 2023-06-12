@@ -21,7 +21,7 @@
 </div>
 <div class="body">
   <nz-table [nzData]="data" nzFrontPagination="false"
-            [nzLoading]="loading" nzSize="small" [nzTotal]="total"
+            [nzLoading]="loading | async" nzSize="small" [nzTotal]="total"
             [(nzPageIndex)]="paging.pageNumber"
             [(nzPageSize)]="paging.pageSize"
             (nzPageSizeChange)="onSearch()"

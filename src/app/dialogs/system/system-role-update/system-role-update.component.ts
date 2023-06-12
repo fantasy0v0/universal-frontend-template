@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {NzModalRef} from "ng-zorro-antd/modal";
@@ -6,12 +6,11 @@ import {formGroupInvalid} from "../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {UniversalRoleService} from "../../../services/universal-role/universal-role.service";
 import {$loading} from "../../../interceptors/my/my.interceptor";
-import {Subscription} from "rxjs";
 import {ErrorService} from "../../../services/error/error.service";
-import { CommonModule } from '@angular/common';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import {CommonModule} from '@angular/common';
+import {NzFormModule} from 'ng-zorro-antd/form';
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {NzInputModule} from 'ng-zorro-antd/input';
 
 @Component({
   standalone: true,
@@ -26,16 +25,14 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzButtonModule
   ]
 })
-export class SystemRoleUpdateComponent implements OnInit, OnDestroy {
+export class SystemRoleUpdateComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = false;
+  loading = $loading.toObservable();
 
   @Input()
   data?: SimpleDataVO;
-
-  loadingSubscription: Subscription;
 
   constructor(private modal: NzModalRef,
               private roleService: UniversalRoleService,
@@ -43,9 +40,6 @@ export class SystemRoleUpdateComponent implements OnInit, OnDestroy {
               private message: NzMessageService) {
     this.formGroup = new FormGroup({
       name: new FormControl(null)
-    });
-    this.loadingSubscription = $loading.toObservable().subscribe(value => {
-      this.loading = value;
     });
   }
 
@@ -71,9 +65,5 @@ export class SystemRoleUpdateComponent implements OnInit, OnDestroy {
     } catch (e) {
       this.error.process(e);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.loadingSubscription.unsubscribe();
   }
 }

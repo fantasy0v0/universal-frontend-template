@@ -15,7 +15,7 @@ class GlobalLoading {
     this.subject.next(value);
   }
 
-  toObservable() {
+  toObservable(): Observable<boolean> {
     return this.subject.asObservable();
   }
 }

@@ -1,23 +1,23 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {UniversalUserService} from "../../../../../services/universal-user/universal-user.service";
 import {SystemUserVO} from "../../../../../services/universal-user/vo/SystemUserVO";
-import {errorMessage, Paging} from "../../../../../services/common";
+import {Paging} from "../../../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
-import {Subscription} from "rxjs";
 import {$loading} from "../../../../../interceptors/my/my.interceptor";
 import {ErrorService} from "../../../../../services/error/error.service";
-import { CommonModule } from '@angular/common';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import {CommonModule} from '@angular/common';
+import {NzFormModule} from 'ng-zorro-antd/form';
+import {NzInputModule} from 'ng-zorro-antd/input';
+import {NzTableModule} from 'ng-zorro-antd/table';
+import {NzSpaceModule} from 'ng-zorro-antd/space';
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {NzSelectModule} from 'ng-zorro-antd/select';
+import {NzBadgeModule} from 'ng-zorro-antd/badge';
+import {NzIconModule} from 'ng-zorro-antd/icon';
+import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 
 @Component({
   standalone: true,
@@ -34,22 +34,21 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzButtonModule,
     NzSelectModule,
     NzBadgeModule,
-    NzIconModule
+    NzIconModule,
+    NzPopconfirmModule
   ]
 })
-export class SystemUserListComponent implements OnInit, OnDestroy {
+export class SystemUserListComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = false;
+  loading = $loading.toObservable();
 
   paging = Paging.of(1, 10);
 
   total = 0;
 
   data: SystemUserVO[] = [];
-
-  loadingSubscription: Subscription;
 
   constructor(private userService: UniversalUserService,
               private modal: NzModalService,
@@ -59,9 +58,6 @@ export class SystemUserListComponent implements OnInit, OnDestroy {
     this.formGroup = new FormGroup({
       role: new FormControl(-1),
       name: new FormControl(null)
-    });
-    this.loadingSubscription = $loading.toObservable().subscribe(value => {
-      this.loading = value;
     });
   }
 
@@ -119,9 +115,5 @@ export class SystemUserListComponent implements OnInit, OnDestroy {
     if (result) {
       this.onSearch();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.loadingSubscription.unsubscribe();
   }
 }

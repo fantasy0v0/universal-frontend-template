@@ -1,18 +1,17 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ChildrenOutletContexts, Router, RouterModule, RouterOutlet} from "@angular/router";
 import {NzLayoutModule} from "ng-zorro-antd/layout";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {NzAvatarModule} from "ng-zorro-antd/avatar";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import {subRouteAnimation} from "../../animations/route";
-import {errorMessage} from "../../services/common";
 import {NzMessageModule, NzMessageService} from "ng-zorro-antd/message";
 import {UniversalUserService} from "../../services/universal-user/universal-user.service";
 import {UserInfo} from "../../services/universal-user/vo/UserInfo";
 import {SystemDialogService} from "../../services/dialog/system/system-dialog.service";
 import {CommonModule, NgOptimizedImage} from '@angular/common';
-import { HasPermissionDirective } from 'src/app/directives/has-permission/has-permission.directive';
-import { ErrorService } from 'src/app/services/error/error.service';
+import {HasPermissionDirective} from 'src/app/directives/has-permission/has-permission.directive';
+import {ErrorService} from 'src/app/services/error/error.service';
 
 @Component({
   standalone: true,

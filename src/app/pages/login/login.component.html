@@ -58,7 +58,7 @@
         </div>
       </div>
       <button nz-button class="login-form-button login-form-margin"
-              [nzLoading]="loading" [nzType]="'primary'">登录
+              [nzLoading]="loading | async" [nzType]="'primary'">登录
       </button>
     </form>
   </div>

@@ -1,16 +1,22 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators
+} from "@angular/forms";
 import {formGroupInvalid} from "../../services/common";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {UniversalUserService} from "../../services/universal-user/universal-user.service";
-import { NzMessageService } from 'ng-zorro-antd/message';
+import {NzMessageService} from 'ng-zorro-antd/message';
 import {ErrorService} from "../../services/error/error.service";
 import {$loading} from "../../interceptors/my/my.interceptor";
-import {Subscription} from "rxjs";
-import { CommonModule } from '@angular/common';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import {CommonModule} from '@angular/common';
+import {NzFormModule} from 'ng-zorro-antd/form';
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {NzInputModule} from 'ng-zorro-antd/input';
 
 function passwordMatcherValidator(control: AbstractControl): ValidationErrors | null {
   if (null == control.parent) {
@@ -39,13 +45,11 @@ function passwordMatcherValidator(control: AbstractControl): ValidationErrors | 
     NzButtonModule,
   ]
 })
-export class ChangePasswordComponent implements OnInit, OnDestroy {
+export class ChangePasswordComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = false;
-
-  loadingSubscription: Subscription;
+  loading = $loading.toObservable();
 
   constructor(private modal: NzModalRef,
               private userService: UniversalUserService,
@@ -55,9 +59,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       password: new FormControl("", [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ]),
       newPassword: new FormControl("", [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ]),
       repeat: new FormControl("", [ passwordMatcherValidator ])
-    });
-    this.loadingSubscription = $loading.toObservable().subscribe(value => {
-      this.loading = value;
     });
   }
 
@@ -85,10 +86,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     } finally {
       this.message.remove(ref.messageId);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.loadingSubscription.unsubscribe();
   }
 
 }
