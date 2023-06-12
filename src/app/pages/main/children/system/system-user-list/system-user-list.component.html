@@ -9,7 +9,7 @@
         <input type="text" nz-input placeholder="按名称搜索" formControlName="name" />
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch (click)="onSearch()" [nzLoading]="loading">
+        <button nz-button nzType="primary" nzSearch (click)="onSearch()" [nzLoading]="loading | async">
           <span nz-icon nzType="search"></span>
         </button>
       </ng-template>
