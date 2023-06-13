@@ -61,17 +61,16 @@ export function castError<T>() {
  */
 export function errorMessage(err: any, topic?: string) {
   let msg;
-  if (err instanceof ResultError) {
-    msg = err.msg ? err.msg : '服务异常';
-  } else if (err instanceof Error) {
-    msg = err.message;
+  if (err instanceof Error) {
+    if (err instanceof ResultError) {
+      msg = err.msg ? err.msg : '服务异常';
+    } else {
+      console.error(err);
+      msg = err.message ? err.message : '未知错误';
+    }
   } else {
     console.error(err);
-    if (err instanceof Error && err.message) {
-      msg = err.message;
-    } else {
-      msg = "未知错误";
-    }
+    msg = "未知错误";
   }
   if (null != topic) {
     msg = topic + ":" + msg;
