@@ -48,7 +48,7 @@ export interface Result<T> {
 /**
  * 处理异常的响应消息
  */
-export function errorToException<T>() {
+export function castError<T>() {
   return catchError<T, never>(err => {
     throw new Error("未知错误, 请检查网络是否正常或者联系维护人员", err);
   });
@@ -67,7 +67,11 @@ export function errorMessage(err: any, topic?: string) {
     msg = err.message;
   } else {
     console.error(err);
-    msg = "未知错误";
+    if (err instanceof Error && err.message) {
+      msg = err.message;
+    } else {
+      msg = "未知错误";
+    }
   }
   if (null != topic) {
     msg = topic + ":" + msg;
@@ -82,7 +86,7 @@ export function errorMessage(err: any, topic?: string) {
  */
 export function checkResult<T>(result: Result<T>) {
   if ("0" !== result.code) {
-    throw new Error(result.msg);
+    throw new ResultError(result);
   }
   return result.data;
 }
@@ -94,7 +98,7 @@ export function checkResult<T>(result: Result<T>) {
 export function getResult<T>(observable: Observable<Result<T>>): Promise<T> {
   return firstValueFrom(
     observable.pipe(
-      errorToException(),
+      castError(),
       mergeMap(result => {
         const data = checkResult(result);
         return of(data);
