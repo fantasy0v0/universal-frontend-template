@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "universal-frontend-template-new": {
+    "universal-frontend-template": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "universal-frontend-template-new:build:production"
+              "browserTarget": "universal-frontend-template:build:production"
             },
             "development": {
-              "browserTarget": "universal-frontend-template-new:build:development",
+              "browserTarget": "universal-frontend-template:build:development",
               "proxyConfig": "proxyconfig.json"
             }
           },
@@ -85,7 +85,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "universal-frontend-template-new:build"
+            "browserTarget": "universal-frontend-template:build"
           }
         },
         "test": {

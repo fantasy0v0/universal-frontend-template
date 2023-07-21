@@ -1,11 +1,10 @@
-import {Component, ElementRef, inject, OnInit} from '@angular/core';
+import {Component, ElementRef, inject, OnInit, signal} from '@angular/core';
 import {BingService} from "../../services/bing/bing.service";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import {UniversalUserService} from "../../services/universal-user/universal-user.service";
 import {errorMessage, formGroupInvalid, sleep} from "../../services/common";
-import {$loading} from "../../interceptors/my/my.interceptor";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzButtonModule} from 'ng-zorro-antd/button';
@@ -28,7 +27,7 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 })
 export class LoginComponent implements OnInit {
 
-  loading = $loading;
+  loading = signal(false);
 
   formGroup: FormGroup;
 
@@ -59,6 +58,7 @@ export class LoginComponent implements OnInit {
     const account = this.formGroup.get('account')!.value;
     const password = this.formGroup.get('password')!.value;
     const rememberMe = this.formGroup.get('rememberMe')!.value;
+    this.loading.set(true);
     try {
       await this.userService.login(account, password, rememberMe);
       const ref = this.notification.success('登录成功', '正在加载中, 请稍后...', {
@@ -70,6 +70,8 @@ export class LoginComponent implements OnInit {
     } catch (e) {
       const message = errorMessage(e);
       this.notification.error('登录失败', message);
+    } finally {
+      this.loading.set(false);
     }
   }
 

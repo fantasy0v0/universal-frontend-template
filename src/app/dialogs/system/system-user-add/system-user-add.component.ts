@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UniversalRoleService} from "../../../services/universal-role/universal-role.service";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
@@ -6,7 +6,6 @@ import {formGroupInvalid} from "../../../services/common";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {UniversalUserService} from "../../../services/universal-user/universal-user.service";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {$loading} from "../../../interceptors/my/my.interceptor";
 import {ErrorService} from "../../../services/error/error.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -32,7 +31,7 @@ export class SystemUserAddComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading;
+  loading = signal(false);
 
   roles: SimpleDataVO[] = [];
 
@@ -70,6 +69,7 @@ export class SystemUserAddComponent implements OnInit {
     const type = this.formGroup.get("type")!.value as number;
     const account = this.formGroup.get("account")!.value as string;
     const password = this.formGroup.get("password")!.value as string;
+    this.loading.set(true);
     try {
       await this.userService.addUser({
         name, role, contactNumber, type,
@@ -79,6 +79,8 @@ export class SystemUserAddComponent implements OnInit {
       this.modal.close(true);
     } catch (e) {
       this.error.process(e);
+    } finally {
+      this.loading.set(false);
     }
   }
 }

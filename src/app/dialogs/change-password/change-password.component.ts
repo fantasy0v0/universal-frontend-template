@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -12,7 +12,6 @@ import {NzModalRef} from "ng-zorro-antd/modal";
 import {UniversalUserService} from "../../services/universal-user/universal-user.service";
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ErrorService} from "../../services/error/error.service";
-import {$loading} from "../../interceptors/my/my.interceptor";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzButtonModule} from 'ng-zorro-antd/button';
@@ -49,7 +48,7 @@ export class ChangePasswordComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading;
+  loading = signal(false);
 
   constructor(private modal: NzModalRef,
               private userService: UniversalUserService,
@@ -76,6 +75,7 @@ export class ChangePasswordComponent implements OnInit {
     }
     const password = this.formGroup.get('password')?.value;
     const newPassword = this.formGroup.get('newPassword')?.value;
+    this.loading.set(true);
     const ref = this.message.loading("修改中");
     try {
       await this.userService.changePassword(password, newPassword);
@@ -85,6 +85,7 @@ export class ChangePasswordComponent implements OnInit {
       this.error.process(e, "密码修改失败");
     } finally {
       this.message.remove(ref.messageId);
+      this.loading.set(false);
     }
   }
 

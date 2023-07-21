@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {UniversalUserService} from "../../../../../services/universal-user/universal-user.service";
 import {SystemUserVO} from "../../../../../services/universal-user/vo/SystemUserVO";
@@ -6,7 +6,6 @@ import {Paging} from "../../../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
-import {$loading} from "../../../../../interceptors/my/my.interceptor";
 import {ErrorService} from "../../../../../services/error/error.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -42,7 +41,7 @@ export class SystemUserListComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading;
+  loading = signal(false);
 
   paging = Paging.of(1, 10);
 
@@ -66,6 +65,7 @@ export class SystemUserListComponent implements OnInit {
   }
 
   async onSearch() {
+    this.loading.set(true);
     try {
       let role = this.formGroup.get("role")!.value as number | undefined;
       if (-1 === role) {
@@ -77,10 +77,13 @@ export class SystemUserListComponent implements OnInit {
       this.data = pagingResult.content;
     } catch (e) {
       this.error.process(e);
+    } finally {
+      this.loading.set(false);
     }
   }
 
   async restPassword(item: SystemUserVO) {
+    this.loading.set(true);
     try {
       const newPassword = await this.userService.restPassword(item.id, 0);
       this.modal.success({
@@ -89,24 +92,32 @@ export class SystemUserListComponent implements OnInit {
       });
     } catch (e) {
       this.error.process(e);
+    } finally {
+      this.loading.set(false);
     }
   }
 
   async disable(item: SystemUserVO) {
+    this.loading.set(true);
     try {
       await this.userService.disable(item.id);
       this.message.success("操作成功");
     } catch (e) {
       this.error.process(e);
+    } finally {
+      this.loading.set(false);
     }
   }
 
   async enable(item: SystemUserVO) {
+    this.loading.set(true);
     try {
       await this.userService.enable(item.id);
       this.message.success("操作成功");
     } catch (e) {
       this.error.process(e);
+    } finally {
+      this.loading.set(false);
     }
   }
 

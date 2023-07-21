@@ -3,6 +3,9 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Observable} from 'rxjs';
 import {finalize} from "rxjs/operators";
 
+/**
+ * @deprecated 全局共享加载状态效果并不理想
+ */
 export const $loading = signal(false);
 
 @Injectable()

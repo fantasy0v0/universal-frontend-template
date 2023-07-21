@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {Paging} from "../../../../../services/common";
 import {UniversalRoleService} from "../../../../../services/universal-role/universal-role.service";
 import {SimpleDataVO} from "../../../../../services/vo/SimpleDataVO";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
-import {$loading} from "../../../../../interceptors/my/my.interceptor";
 import {ErrorService} from "../../../../../services/error/error.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -37,7 +36,7 @@ export class SystemRoleListComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading;
+  loading = signal(false);
 
   paging = Paging.of(1, 10);
 
@@ -59,6 +58,7 @@ export class SystemRoleListComponent implements OnInit {
   }
 
   async onSearch() {
+    this.loading.set(true);
     try {
       const name = this.formGroup.get("name")!.value as string;
       const pagingResult = await this.roleService.findAll(this.paging, name);
@@ -66,16 +66,21 @@ export class SystemRoleListComponent implements OnInit {
       this.data = pagingResult.content;
     } catch (e) {
       this.error.process(e);
+    } finally {
+      this.loading.set(false);
     }
   }
 
   async deleteRole(item: SimpleDataVO) {
+    this.loading.set(true);
     try {
       await this.roleService.deleteById(item.id);
       this.message.success("删除成功");
       this.onSearch();
     } catch (e) {
       this.error.process(e);
+    } finally {
+      this.loading.set(false);
     }
   }
 

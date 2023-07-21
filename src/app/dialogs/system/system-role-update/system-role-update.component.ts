@@ -1,11 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {formGroupInvalid} from "../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {UniversalRoleService} from "../../../services/universal-role/universal-role.service";
-import {$loading} from "../../../interceptors/my/my.interceptor";
 import {ErrorService} from "../../../services/error/error.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -29,7 +28,7 @@ export class SystemRoleUpdateComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  loading = $loading;
+  loading = signal(false);
 
   @Input()
   data?: SimpleDataVO;
@@ -55,6 +54,7 @@ export class SystemRoleUpdateComponent implements OnInit {
     }
 
     const name = this.formGroup.get("name")!.value as string;
+    this.loading.set(true);
     try {
       await this.roleService.saveOrUpdate({
         id: this.data?.id ?? 0,
@@ -64,6 +64,8 @@ export class SystemRoleUpdateComponent implements OnInit {
       this.modal.close();
     } catch (e) {
       this.error.process(e);
+    } finally {
+      this.loading.set(false);
     }
   }
 }
