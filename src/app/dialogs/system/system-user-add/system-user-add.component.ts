@@ -1,10 +1,10 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {UniversalRoleService} from "../../../services/universal-role/universal-role.service";
+import {SystemRoleService} from "../../../services/system/role/system-role.service";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {formGroupInvalid} from "../../../services/common";
 import {NzModalRef} from "ng-zorro-antd/modal";
-import {UniversalUserService} from "../../../services/universal-user/universal-user.service";
+import {SystemUserService} from "../../../services/system/user/system-user.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {ErrorService} from "../../../services/error/error.service";
 import {CommonModule} from '@angular/common';
@@ -35,11 +35,11 @@ export class SystemUserAddComponent implements OnInit {
 
   roles: SimpleDataVO[] = [];
 
-  constructor(private roleService: UniversalRoleService,
+  constructor(private roleService: SystemRoleService,
               private modal: NzModalRef,
               private message: NzMessageService,
               private error: ErrorService,
-              private userService: UniversalUserService) {
+              private userService: SystemUserService) {
     this.formGroup = new FormGroup({
       name: new FormControl(null, Validators.required),
       role: new FormControl(null, Validators.required),
@@ -52,9 +52,9 @@ export class SystemUserAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.roleService.findAll().then(result => {
-      this.roles = result.content;
+      this.roles = result;
       if (this.roles.length > 0) {
-        this.formGroup.get("role")!.setValue(this.roles[this.roles.length - 1].id);
+        this.formGroup.get("role")!.setValue(this.roles[0].id);
       }
     });
   }

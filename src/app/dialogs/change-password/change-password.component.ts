@@ -9,7 +9,7 @@ import {
 } from "@angular/forms";
 import {formGroupInvalid} from "../../services/common";
 import {NzModalRef} from "ng-zorro-antd/modal";
-import {UniversalUserService} from "../../services/universal-user/universal-user.service";
+import {SystemUserService} from "../../services/system/user/system-user.service";
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ErrorService} from "../../services/error/error.service";
 import {CommonModule} from '@angular/common';
@@ -51,7 +51,7 @@ export class ChangePasswordComponent implements OnInit {
   loading = signal(false);
 
   constructor(private modal: NzModalRef,
-              private userService: UniversalUserService,
+              private userService: SystemUserService,
               private message: NzMessageService,
               private error: ErrorService) {
     this.formGroup = new FormGroup({

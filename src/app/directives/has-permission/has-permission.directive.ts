@@ -1,5 +1,5 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { UniversalUserService } from "../../services/universal-user/universal-user.service";
+import { SystemUserService } from "../../services/system/user/system-user.service";
 
 @Directive({
   standalone: true,
@@ -7,7 +7,7 @@ import { UniversalUserService } from "../../services/universal-user/universal-us
 })
 export class HasPermissionDirective {
 
-  constructor(private userService: UniversalUserService,
+  constructor(private userService: SystemUserService,
               private viewContainer: ViewContainerRef,
               private templateRef: TemplateRef<any>) { }
 

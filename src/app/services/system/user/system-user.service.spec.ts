@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UniversalRoleService } from './universal-role.service';
+import { SystemUserService } from './system-user.service';
 
-describe('UniversalRoleService', () => {
-  let service: UniversalRoleService;
+describe('SystemUserService', () => {
+  let service: SystemUserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UniversalRoleService);
+    service = TestBed.inject(SystemUserService);
   });
 
   it('should be created', () => {

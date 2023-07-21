@@ -1,4 +1,4 @@
-import {SimpleDataVO} from "../../vo/SimpleDataVO";
+import {SimpleDataVO} from "../../../vo/SimpleDataVO";
 
 export interface Session {
 

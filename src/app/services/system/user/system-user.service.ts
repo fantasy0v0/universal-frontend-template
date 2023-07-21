@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Session} from "./vo/Session";
-import {ApiPrefix, getResult, Paging, PagingData, Result} from "../common";
+import {ApiPrefix, getResult, Paging, PagingData, Result} from "../../common";
 import {UserInfo} from "./vo/UserInfo";
 import {SystemUserVO} from "./vo/SystemUserVO";
 import {SystemUserAddRequest} from "./vo/SystemUserAddRequest";
@@ -12,7 +12,7 @@ const SessionKey = "universal_session";
 @Injectable({
   providedIn: 'root'
 })
-export class UniversalUserService {
+export class SystemUserService {
 
   constructor(private http: HttpClient) {
   }

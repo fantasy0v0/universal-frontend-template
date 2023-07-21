@@ -1,7 +1,7 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {UniversalUserService} from "../../../../../services/universal-user/universal-user.service";
-import {SystemUserVO} from "../../../../../services/universal-user/vo/SystemUserVO";
+import {SystemUserService} from "../../../../../services/system/user/system-user.service";
+import {SystemUserVO} from "../../../../../services/system/user/vo/SystemUserVO";
 import {Paging} from "../../../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzModalService} from "ng-zorro-antd/modal";
@@ -17,6 +17,8 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NzBadgeModule} from 'ng-zorro-antd/badge';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
+import {SimpleDataVO} from "../../../../../services/vo/SimpleDataVO";
+import {SystemRoleService} from "../../../../../services/system/role/system-role.service";
 
 @Component({
   standalone: true,
@@ -49,7 +51,17 @@ export class SystemUserListComponent implements OnInit {
 
   data: SystemUserVO[] = [];
 
-  constructor(private userService: UniversalUserService,
+  /**
+   * 角色列表
+   */
+  roles: SimpleDataVO[] = [{
+    id: -1, name: "所有"
+  }, {
+    id: 1, name: "管理员"
+  }]
+
+  constructor(private userService: SystemUserService,
+              private systemRoleService: SystemRoleService,
               private modal: NzModalService,
               private dialogService: SystemDialogService,
               private error: ErrorService,
@@ -61,7 +73,19 @@ export class SystemUserListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.refreshRole();
     this.onSearch();
+  }
+
+  async refreshRole() {
+    try {
+      const data = await this.systemRoleService.findAll();
+      this.roles = [{
+        id: -1, name: "所有"
+      }, ...data];
+    } catch (e) {
+      this.error.process(e);
+    }
   }
 
   async onSearch() {

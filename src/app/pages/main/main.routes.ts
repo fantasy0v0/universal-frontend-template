@@ -8,7 +8,10 @@ export const routes: Routes = [{
   component: WeclomeComponent
 }, {
   path: 'system-role-list',
-  component: SystemRoleListComponent
+  component: SystemRoleListComponent,
+  data: {
+
+  }
 }, {
   path: 'system-user-list',
   component: SystemUserListComponent

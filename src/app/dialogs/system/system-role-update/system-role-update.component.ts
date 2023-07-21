@@ -4,7 +4,7 @@ import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {formGroupInvalid} from "../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {UniversalRoleService} from "../../../services/universal-role/universal-role.service";
+import {SystemRoleService} from "../../../services/system/role/system-role.service";
 import {ErrorService} from "../../../services/error/error.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -34,7 +34,7 @@ export class SystemRoleUpdateComponent implements OnInit {
   data?: SimpleDataVO;
 
   constructor(private modal: NzModalRef,
-              private roleService: UniversalRoleService,
+              private roleService: SystemRoleService,
               private error: ErrorService,
               private message: NzMessageService) {
     this.formGroup = new FormGroup({

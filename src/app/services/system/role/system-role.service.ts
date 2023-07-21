@@ -1,32 +1,26 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {ApiPrefix, getResult, Paging, PagingData, Result} from "../common";
-import {SimpleDataVO} from "../vo/SimpleDataVO";
-import {getAuthorizationHeader} from "../universal-user/universal-user.service";
+import {ApiPrefix, getResult, Paging, PagingData, Result} from "../../common";
+import {SimpleDataVO} from "../../vo/SimpleDataVO";
+import {getAuthorizationHeader} from "../user/system-user.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UniversalRoleService {
+export class SystemRoleService {
 
   constructor(private http: HttpClient) { }
 
   /**
    * 查询角色列表
-   * @param paging 分页参数
    * @param name 按名称查询
    */
-  findAll(paging?: Paging, name?: string) {
-    let params: HttpParams;
-    if (null != paging) {
-      params = paging.toHttpParams();
-    } else {
-      params = new HttpParams();
-    }
+  findAll(name?: string) {
+    let params = new HttpParams();
     if (null != name && name.length > 0) {
       params = params.append("name", name);
     }
-    let observable = this.http.get<Result<PagingData<SimpleDataVO>>>(`${ApiPrefix}/system/role/findAll`, {
+    let observable = this.http.get<Result<SimpleDataVO[]>>(`${ApiPrefix}/system/role/findAll`, {
       params, headers: getAuthorizationHeader()
     });
     return getResult(observable);

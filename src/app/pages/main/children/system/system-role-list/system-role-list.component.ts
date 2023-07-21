@@ -1,7 +1,7 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {Paging} from "../../../../../services/common";
-import {UniversalRoleService} from "../../../../../services/universal-role/universal-role.service";
+import {SystemRoleService} from "../../../../../services/system/role/system-role.service";
 import {SimpleDataVO} from "../../../../../services/vo/SimpleDataVO";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
@@ -38,13 +38,9 @@ export class SystemRoleListComponent implements OnInit {
 
   loading = signal(false);
 
-  paging = Paging.of(1, 10);
-
-  total = 0;
-
   data: SimpleDataVO[] = [];
 
-  constructor(private roleService: UniversalRoleService,
+  constructor(private roleService: SystemRoleService,
               private dialogService: SystemDialogService,
               private error: ErrorService,
               private message: NzMessageService) {
@@ -61,9 +57,7 @@ export class SystemRoleListComponent implements OnInit {
     this.loading.set(true);
     try {
       const name = this.formGroup.get("name")!.value as string;
-      const pagingResult = await this.roleService.findAll(this.paging, name);
-      this.total = pagingResult.total;
-      this.data = pagingResult.content;
+      this.data = await this.roleService.findAll(name);
     } catch (e) {
       this.error.process(e);
     } finally {

@@ -1,10 +1,10 @@
 import {inject} from "@angular/core";
-import {UniversalUserService} from "../services/universal-user/universal-user.service";
+import {SystemUserService} from "../services/system/user/system-user.service";
 import {CanActivateFn, Router} from "@angular/router";
 import {NzMessageService} from "ng-zorro-antd/message";
 
 async function isOnline() {
-  const userService = inject(UniversalUserService);
+  const userService = inject(SystemUserService);
   const router = inject(Router);
   const message = inject(NzMessageService);
 

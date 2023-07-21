@@ -16,12 +16,8 @@
   </form>
 </div>
 <div class="body">
-  <nz-table [nzData]="data" nzFrontPagination="false"
-            [nzLoading]="loading()" nzSize="small" [nzTotal]="total"
-            [(nzPageIndex)]="paging.pageNumber"
-            [(nzPageSize)]="paging.pageSize"
-            (nzPageSizeChange)="onSearch()"
-            (nzPageIndexChange)="onSearch()">
+  <nz-table [nzData]="data" nzFrontPagination="true"
+            [nzLoading]="loading()" nzSize="small">
     <thead>
     <tr>
       <th>编号</th>

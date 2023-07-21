@@ -1,4 +1,4 @@
-import {SimpleDataVO} from "../../vo/SimpleDataVO";
+import {SimpleDataVO} from "../../../vo/SimpleDataVO";
 
 /**
  * 用户信息

@@ -6,8 +6,8 @@ import {NzAvatarModule} from "ng-zorro-antd/avatar";
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 import {subRouteAnimation} from "../../animations/route";
 import {NzMessageModule, NzMessageService} from "ng-zorro-antd/message";
-import {UniversalUserService} from "../../services/universal-user/universal-user.service";
-import {UserInfo} from "../../services/universal-user/vo/UserInfo";
+import {SystemUserService} from "../../services/system/user/system-user.service";
+import {UserInfo} from "../../services/system/user/vo/UserInfo";
 import {SystemDialogService} from "../../services/dialog/system/system-dialog.service";
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {HasPermissionDirective} from 'src/app/directives/has-permission/has-permission.directive';
@@ -43,7 +43,7 @@ export class MainComponent implements OnInit {
   private error = inject(ErrorService);
 
   constructor(private message: NzMessageService,
-              private userService: UniversalUserService,
+              private userService: SystemUserService,
               private dialogService: SystemDialogService,
               private router: Router,
               private contexts: ChildrenOutletContexts) { }

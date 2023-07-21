@@ -3,7 +3,7 @@ import {BingService} from "../../services/bing/bing.service";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {NzNotificationService} from "ng-zorro-antd/notification";
-import {UniversalUserService} from "../../services/universal-user/universal-user.service";
+import {SystemUserService} from "../../services/system/user/system-user.service";
 import {errorMessage, formGroupInvalid, sleep} from "../../services/common";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private elementRef: ElementRef,
     private bingService: BingService,
-    private userService: UniversalUserService,
+    private userService: SystemUserService,
     private notification: NzNotificationService,
     private router: Router) {
     const fb = inject(FormBuilder);
