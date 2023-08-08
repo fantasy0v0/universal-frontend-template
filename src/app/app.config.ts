@@ -1,6 +1,6 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations'
-import { provideRouter, withDebugTracing } from '@angular/router';
+import {provideRouter, withDebugTracing, withHashLocation, withRouterConfig} from '@angular/router';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { zh_CN } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
@@ -15,7 +15,7 @@ import {
   UserOutline, LockOutline,
   MenuUnfoldOutline, MenuFoldOutline,
   SettingOutline, FundTwoTone, TeamOutline, PlusOutline,
-  AppstoreOutline
+  AppstoreOutline, ReloadOutline
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -26,7 +26,7 @@ const icons: IconDefinition[] = [
   UserOutline, LockOutline,
   MenuUnfoldOutline, MenuFoldOutline,
   SettingOutline, FundTwoTone, TeamOutline, PlusOutline,
-  AppstoreOutline
+  AppstoreOutline, ReloadOutline
 ];
 
 export const appConfig: ApplicationConfig = {
@@ -42,7 +42,7 @@ export const appConfig: ApplicationConfig = {
     },
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
-    provideRouter(routes, withDebugTracing()),
+    provideRouter(routes, withDebugTracing(), withHashLocation()),
     {
       provide: HTTP_INTERCEPTORS, useClass: NgProgressHttpInterceptor, multi: true
     },
