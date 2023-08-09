@@ -1,7 +1,7 @@
-import {Component, Input, OnInit, signal} from '@angular/core';
+import {Component, Inject, Input, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
-import {NzModalRef} from "ng-zorro-antd/modal";
+import {NZ_MODAL_DATA, NzModalRef} from "ng-zorro-antd/modal";
 import {formGroupInvalid} from "../../../services/common";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {SystemRoleService} from "../../../services/system/role/system-role.service";
@@ -30,13 +30,12 @@ export class SystemRoleUpdateComponent implements OnInit {
 
   loading = signal(false);
 
-  @Input()
-  data?: SimpleDataVO;
-
   constructor(private modal: NzModalRef,
               private roleService: SystemRoleService,
               private error: ErrorService,
-              private message: NzMessageService) {
+              private message: NzMessageService,
+              @Inject(NZ_MODAL_DATA)
+              public data: SimpleDataVO) {
     this.formGroup = new FormGroup({
       name: new FormControl(null)
     });
