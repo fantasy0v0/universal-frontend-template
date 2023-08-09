@@ -29,12 +29,10 @@ export class SystemDialogService {
    * @param data
    */
   systemRoleSaveOrUpdate(data?: SimpleDataVO) {
-    let observable = this.modal.create<SystemRoleUpdateComponent, void>({
+    let observable = this.modal.create<SystemRoleUpdateComponent, SimpleDataVO>({
       nzTitle: data ? "更新角色" : "添加角色",
       nzContent: SystemRoleUpdateComponent,
-      nzComponentParams: {
-        data
-      },
+      nzData: data,
       nzFooter: null
     }).afterClose.asObservable();
     return firstValueFrom(observable);
