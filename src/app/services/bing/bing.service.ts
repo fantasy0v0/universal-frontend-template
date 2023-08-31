@@ -9,19 +9,35 @@ import { catchError } from "rxjs/operators";
 })
 export class BingService {
 
+  /**
+   * 默认壁纸
+   * @private
+   */
+  private defaultImages = [
+    "/assets/wallpaper.jfif"
+  ];
+
   constructor(private http: HttpClient) { }
 
   /**
    * 获取每日壁纸
    */
   wallpaper() {
-    let observable = this.http.get<Result<string>>(`${ ApiPrefix }/bing/wallpaper`)
+    let observable = this.http.get<Result<string[]>>(`${ ApiPrefix }/bing/wallpaper`)
       .pipe(
         mergeMap(result => {
-          const url = checkResult(result);
-          return of(url);
+          const images = checkResult(result);
+          if (0 == images.length) {
+            return of(this.defaultImages);
+          } else {
+            return of(images);
+          }
         }),
-        catchError(() => of("/assets/wallpaper.jfif")),
+        catchError(() => of(this.defaultImages)),
+        mergeMap(images => {
+          let index = Math.round(Math.random() * images.length);
+          return of(images[index]);
+        })
       );
     return firstValueFrom(observable);
   }
