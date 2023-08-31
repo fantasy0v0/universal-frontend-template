@@ -126,6 +126,7 @@ export class SystemUserListComponent implements OnInit {
     try {
       await this.userService.disable(item.id);
       this.message.success("操作成功");
+      this.onSearch();
     } catch (e) {
       this.error.process(e);
     } finally {
@@ -138,6 +139,7 @@ export class SystemUserListComponent implements OnInit {
     try {
       await this.userService.enable(item.id);
       this.message.success("操作成功");
+      this.onSearch();
     } catch (e) {
       this.error.process(e);
     } finally {
