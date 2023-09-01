@@ -1,6 +1,5 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {Paging} from "../../../../../services/common";
 import {SystemRoleService} from "../../../../../services/system/role/system-role.service";
 import {SimpleDataVO} from "../../../../../services/vo/SimpleDataVO";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -34,7 +33,9 @@ import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 })
 export class SystemRoleListComponent implements OnInit {
 
-  formGroup: FormGroup;
+  formGroup = new FormGroup({
+    name: new FormControl<string | null>(null)
+  });
 
   loading = signal(false);
 
@@ -44,9 +45,6 @@ export class SystemRoleListComponent implements OnInit {
               private dialogService: SystemDialogService,
               private error: ErrorService,
               private message: NzMessageService) {
-    this.formGroup = new FormGroup({
-      name: new FormControl(null)
-    });
   }
 
   ngOnInit(): void {
@@ -56,7 +54,7 @@ export class SystemRoleListComponent implements OnInit {
   async onSearch() {
     this.loading.set(true);
     try {
-      const name = this.formGroup.get("name")!.value as string;
+      const name = this.formGroup.getRawValue().name;
       this.data = await this.roleService.findAll(name);
     } catch (e) {
       this.error.process(e);

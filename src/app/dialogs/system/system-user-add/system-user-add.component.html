@@ -8,6 +8,9 @@
         <ng-container *ngIf="control.hasError('required')">
           请输入用户姓名
         </ng-container>
+        <ng-container *ngIf="control.hasError('minLength')">
+          用户姓名不能少于2位
+        </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>

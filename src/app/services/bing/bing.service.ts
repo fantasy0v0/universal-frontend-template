@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { ApiPrefix, checkResult, Result } from "../common";
-import { firstValueFrom, mergeMap, of } from "rxjs";
+import { ApiPrefix, checkResult, Result } from "../util";
+import {firstValueFrom, map, of} from "rxjs";
 import { catchError } from "rxjs/operators";
 
 @Injectable({
@@ -25,18 +25,18 @@ export class BingService {
   wallpaper() {
     let observable = this.http.get<Result<string[]>>(`${ ApiPrefix }/bing/wallpaper`)
       .pipe(
-        mergeMap(result => {
+        map(result => {
           const images = checkResult(result);
           if (0 == images.length) {
-            return of(this.defaultImages);
+            return this.defaultImages;
           } else {
-            return of(images);
+            return images;
           }
         }),
         catchError(() => of(this.defaultImages)),
-        mergeMap(images => {
+        map(images => {
           let index = Math.round(Math.random() * images.length);
-          return of(images[index]);
+          return images[index];
         })
       );
     return firstValueFrom(observable);

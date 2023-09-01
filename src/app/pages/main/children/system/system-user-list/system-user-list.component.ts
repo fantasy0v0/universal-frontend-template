@@ -2,7 +2,7 @@ import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {SystemUserService} from "../../../../../services/system/user/system-user.service";
 import {SystemUserVO} from "../../../../../services/system/user/vo/SystemUserVO";
-import {Paging} from "../../../../../services/common";
+import {Paging} from "../../../../../services/util";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
@@ -41,7 +41,10 @@ import {SystemRoleService} from "../../../../../services/system/role/system-role
 })
 export class SystemUserListComponent implements OnInit {
 
-  formGroup: FormGroup;
+  formGroup = new FormGroup({
+    role: new FormControl(-1),
+    name: new FormControl<string | null>(null)
+  });
 
   loading = signal(false);
 
@@ -66,10 +69,7 @@ export class SystemUserListComponent implements OnInit {
               private dialogService: SystemDialogService,
               private error: ErrorService,
               private message: NzMessageService) {
-    this.formGroup = new FormGroup({
-      role: new FormControl(-1),
-      name: new FormControl(null)
-    });
+    this.formGroup
   }
 
   ngOnInit(): void {
@@ -79,7 +79,7 @@ export class SystemUserListComponent implements OnInit {
 
   async refreshRole() {
     try {
-      const data = await this.systemRoleService.findAll();
+      const data = await this.systemRoleService.findAll(null);
       this.roles = [{
         id: -1, name: "所有"
       }, ...data];
@@ -91,11 +91,12 @@ export class SystemUserListComponent implements OnInit {
   async onSearch() {
     this.loading.set(true);
     try {
-      let role = this.formGroup.get("role")!.value as number | undefined;
+      let a = this.formGroup.getRawValue().name
+      let role = this.formGroup.getRawValue().role;
       if (-1 === role) {
-        role = undefined;
+        role = null;
       }
-      const name = this.formGroup.get("name")!.value as string;
+      const name = this.formGroup.getRawValue().name;
       const pagingResult = await this.userService.findAll(this.paging, name, role);
       this.total = pagingResult.total;
       this.data = pagingResult.content;

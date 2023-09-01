@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {NzMessageService} from "ng-zorro-antd/message";
-import {errorMessage} from "../common";
+import {errorMessage} from "../util";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Injectable({

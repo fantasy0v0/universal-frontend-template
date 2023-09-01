@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} fr
 import {Router} from "@angular/router";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import {SystemUserService} from "../../services/system/user/system-user.service";
-import {errorMessage, formGroupInvalid, sleep} from "../../services/common";
+import {errorMessage, formGroupInvalid, sleep} from "../../services/util";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzButtonModule} from 'ng-zorro-antd/button';
@@ -29,7 +29,11 @@ export class LoginComponent implements OnInit {
 
   loading = signal(false);
 
-  formGroup: FormGroup;
+  formGroup = new FormGroup({
+    account: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(255)]),
+    password: new FormControl('', [ Validators.required, Validators.minLength(6), Validators.maxLength(255)]),
+    rememberMe: new FormControl(false)
+  });
 
   constructor(
     private elementRef: ElementRef,
@@ -37,12 +41,6 @@ export class LoginComponent implements OnInit {
     private userService: SystemUserService,
     private notification: NzNotificationService,
     private router: Router) {
-    const fb = inject(FormBuilder);
-    this.formGroup = fb.group({
-      account: [ null, [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ] ],
-      password: [ null, [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ] ],
-      rememberMe: new FormControl(false)
-    });
   }
 
   ngOnInit(): void {
@@ -55,9 +53,9 @@ export class LoginComponent implements OnInit {
     if (formGroupInvalid(this.formGroup)) {
       return;
     }
-    const account = this.formGroup.get('account')!.value;
-    const password = this.formGroup.get('password')!.value;
-    const rememberMe = this.formGroup.get('rememberMe')!.value;
+    const account = this.formGroup.getRawValue().account!;
+    const password = this.formGroup.getRawValue().password!;
+    const rememberMe = this.formGroup.getRawValue().rememberMe!;
     this.loading.set(true);
     try {
       await this.userService.login(account, password, rememberMe);
@@ -65,7 +63,7 @@ export class LoginComponent implements OnInit {
         nzDuration: 0
       });
       this.router.navigateByUrl('/main');
-      await sleep(300);
+      await sleep(200);
       this.notification.remove(ref.messageId);
     } catch (e) {
       const message = errorMessage(e);

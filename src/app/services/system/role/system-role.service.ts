@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {ApiPrefix, getResult, Paging, PagingData, Result} from "../../common";
+import {ApiPrefix, getResult, Null, Result} from "../../util";
 import {SimpleDataVO} from "../../vo/SimpleDataVO";
 import {getAuthorizationHeader} from "../user/system-user.service";
 
@@ -15,7 +15,7 @@ export class SystemRoleService {
    * 查询角色列表
    * @param name 按名称查询
    */
-  findAll(name?: string) {
+  findAll(name: Null<string>) {
     let params = new HttpParams();
     if (null != name && name.length > 0) {
       params = params.append("name", name);

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Session} from "./vo/Session";
-import {ApiPrefix, getResult, Paging, PagingData, Result} from "../../common";
+import {ApiPrefix, getResult, Null, Paging, PagingData, Result} from "../../util";
 import {UserInfo} from "./vo/UserInfo";
 import {SystemUserVO} from "./vo/SystemUserVO";
 import {SystemUserAddRequest} from "./vo/SystemUserAddRequest";
@@ -106,7 +106,7 @@ export class SystemUserService {
    * @param name 按名称查询
    * @param role 按角色查询
    */
-  findAll(paging?: Paging, name?: string, role?: number) {
+  findAll(paging: Null<Paging>, name: Null<string>, role: Null<number>) {
     let params: HttpParams;
     if (null != paging) {
       params = paging.toHttpParams();

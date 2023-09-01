@@ -7,7 +7,7 @@ import {
   ValidationErrors,
   Validators
 } from "@angular/forms";
-import {formGroupInvalid} from "../../services/common";
+import {formGroupInvalid} from "../../services/util";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {SystemUserService} from "../../services/system/user/system-user.service";
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -46,7 +46,11 @@ function passwordMatcherValidator(control: AbstractControl): ValidationErrors | 
 })
 export class ChangePasswordComponent implements OnInit {
 
-  formGroup: FormGroup;
+  formGroup = new FormGroup({
+    password: new FormControl("", [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ]),
+    newPassword: new FormControl("", [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ]),
+    repeat: new FormControl("", [ passwordMatcherValidator ])
+  });
 
   loading = signal(false);
 
@@ -54,11 +58,6 @@ export class ChangePasswordComponent implements OnInit {
               private userService: SystemUserService,
               private message: NzMessageService,
               private error: ErrorService) {
-    this.formGroup = new FormGroup({
-      password: new FormControl("", [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ]),
-      newPassword: new FormControl("", [ Validators.required, Validators.minLength(6), Validators.maxLength(255) ]),
-      repeat: new FormControl("", [ passwordMatcherValidator ])
-    });
   }
 
   ngOnInit(): void {
@@ -73,8 +72,8 @@ export class ChangePasswordComponent implements OnInit {
     if (formGroupInvalid(this.formGroup)) {
       return;
     }
-    const password = this.formGroup.get('password')?.value;
-    const newPassword = this.formGroup.get('newPassword')?.value;
+    const password = this.formGroup.getRawValue().password!;
+    const newPassword = this.formGroup.getRawValue().newPassword!;
     this.loading.set(true);
     const ref = this.message.loading("修改中");
     try {

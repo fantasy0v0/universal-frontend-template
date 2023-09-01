@@ -1,9 +1,14 @@
-import { FormArray, FormGroup } from "@angular/forms";
-import { HttpParams } from "@angular/common/http";
-import { catchError } from "rxjs/operators";
-import {firstValueFrom, mergeMap, Observable, of} from "rxjs";
+import {FormArray, FormGroup} from "@angular/forms";
+import {HttpParams} from "@angular/common/http";
+import {catchError} from "rxjs/operators";
+import {firstValueFrom, map, Observable} from "rxjs";
 
 export const ApiPrefix = "/api";
+
+/**
+ * 可为null类型
+ */
+export type Null<T> = T | null;
 
 /**
  * 异常
@@ -98,10 +103,7 @@ export function getResult<T>(observable: Observable<Result<T>>): Promise<T> {
   return firstValueFrom(
     observable.pipe(
       castError(),
-      mergeMap(result => {
-        const data = checkResult(result);
-        return of(data);
-      })
+      map(result => checkResult(result))
     )
   );
 }

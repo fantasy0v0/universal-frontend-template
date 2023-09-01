@@ -2,7 +2,7 @@ import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SystemRoleService} from "../../../services/system/role/system-role.service";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
-import {formGroupInvalid} from "../../../services/common";
+import {formGroupInvalid} from "../../../services/util";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {SystemUserService} from "../../../services/system/user/system-user.service";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -29,7 +29,14 @@ import {NzInputModule} from 'ng-zorro-antd/input';
 })
 export class SystemUserAddComponent implements OnInit {
 
-  formGroup: FormGroup;
+  formGroup = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    role: new FormControl<number | null>(null, Validators.required),
+    contactNumber: new FormControl<string | null>(null),
+    type: new FormControl(0, Validators.required),
+    account: new FormControl('', [ Validators.required, Validators.minLength(6) ]),
+    password: new FormControl('', [ Validators.required, Validators.minLength(6) ])
+  });
 
   loading = signal(false);
 
@@ -40,21 +47,13 @@ export class SystemUserAddComponent implements OnInit {
               private message: NzMessageService,
               private error: ErrorService,
               private userService: SystemUserService) {
-    this.formGroup = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      role: new FormControl(null, Validators.required),
-      contactNumber: new FormControl(null),
-      type: new FormControl(0, Validators.required),
-      account: new FormControl(null, [ Validators.required, Validators.minLength(6) ]),
-      password: new FormControl(null, [ Validators.required, Validators.minLength(6) ])
-    });
   }
 
   ngOnInit(): void {
-    this.roleService.findAll().then(result => {
+    this.roleService.findAll(null).then(result => {
       this.roles = result;
       if (this.roles.length > 0) {
-        this.formGroup.get("role")!.setValue(this.roles[0].id);
+        this.formGroup.controls.role.setValue(this.roles[0].id);
       }
     });
   }
