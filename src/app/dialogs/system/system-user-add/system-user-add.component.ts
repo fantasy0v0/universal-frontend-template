@@ -62,12 +62,12 @@ export class SystemUserAddComponent implements OnInit {
     if (formGroupInvalid(this.formGroup)) {
       return;
     }
-    const name = this.formGroup.get("name")!.value as string;
-    const role = this.formGroup.get("role")!.value as number;
-    const contactNumber = this.formGroup.get("contactNumber")!.value as string;
-    const type = this.formGroup.get("type")!.value as number;
-    const account = this.formGroup.get("account")!.value as string;
-    const password = this.formGroup.get("password")!.value as string;
+    const name = this.formGroup.getRawValue().name!;
+    const role = this.formGroup.getRawValue().role!;
+    const contactNumber = this.formGroup.getRawValue().contactNumber;
+    const type = this.formGroup.getRawValue().type!;
+    const account = this.formGroup.getRawValue().account!;
+    const password = this.formGroup.getRawValue().password!;
     this.loading.set(true);
     try {
       await this.userService.addUser({

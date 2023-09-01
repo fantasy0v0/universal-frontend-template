@@ -1,3 +1,4 @@
+import {Null} from "../../../util";
 
 export interface SystemUserAddRequest {
 
@@ -14,7 +15,7 @@ export interface SystemUserAddRequest {
   /**
    * 联系号码
    */
-  contactNumber?: string,
+  contactNumber: Null<string>,
 
   /**
    * 认证类型

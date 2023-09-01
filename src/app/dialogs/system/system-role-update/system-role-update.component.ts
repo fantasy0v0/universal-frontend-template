@@ -27,7 +27,7 @@ import {NzInputModule} from 'ng-zorro-antd/input';
 export class SystemRoleUpdateComponent implements OnInit {
 
   formGroup = new FormGroup({
-    name: new FormControl('', Validators.required)
+    name: new FormControl('', [Validators.required, Validators.minLength(2)])
   });
 
   loading = signal(false);
@@ -51,7 +51,7 @@ export class SystemRoleUpdateComponent implements OnInit {
       return;
     }
 
-    const name = this.formGroup.get("name")!.value as string;
+    const name = this.formGroup.getRawValue().name!;
     this.loading.set(true);
     try {
       await this.roleService.saveOrUpdate({
