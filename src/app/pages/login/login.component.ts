@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, OnInit, signal} from '@angular/core';
+import {Component, ElementRef, inject, OnInit, signal, ViewChild} from '@angular/core';
 import {BingService} from "../../services/bing/bing.service";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -45,8 +45,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.bingService.wallpaper().then(url => {
-      this.elementRef.nativeElement.style.backgroundImage = `url(${ url })`;
+      this.setBackgroundImage(url)
     });
+  }
+
+  private setBackgroundImage(url: string) {
+    const element = document.querySelector('#wallpaper') as HTMLElement | null;
+    if (null != element) {
+      element.style.backgroundImage = `url(${ url })`;
+      setTimeout(() => element.style.opacity = '1', 100);
+    }
   }
 
   async submitForm() {
