@@ -21,6 +21,8 @@ import {
 } from "ng-zorro-antd/dropdown";
 import {NzModalModule, NzModalService} from "ng-zorro-antd/modal";
 import {ErrorService} from "../../../../../services/error/error.service";
+import {BaseComponent} from "../../../../../util/base.component";
+import {NzMessageModule, NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-system-resource-list',
@@ -31,12 +33,13 @@ import {ErrorService} from "../../../../../services/error/error.service";
     NzButtonModule,
     NzIconModule,
     NzDropDownModule,
-    NzModalModule
+    NzModalModule,
+    NzMessageModule
   ],
   templateUrl: './system-resource-list.component.html',
   styleUrls: ['./system-resource-list.component.scss']
 })
-export class SystemResourceListComponent implements OnInit {
+export class SystemResourceListComponent extends BaseComponent {
 
   private resourceService = inject(SystemResourceService);
 
@@ -59,11 +62,11 @@ export class SystemResourceListComponent implements OnInit {
 
   private modal = inject(NzModalService);
 
-  private error = inject(ErrorService);
+  private message = inject(NzMessageService);
 
-  loading = signal(false);
+  private systemResourceService = inject(SystemResourceService);
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.refresh()
     this.elementRef.nativeElement.oncontextmenu = (event: MouseEvent) => {
       this.nzContextMenuService.create(event, this.menu);
@@ -91,7 +94,7 @@ export class SystemResourceListComponent implements OnInit {
   }
 
   async refresh() {
-    this.loading.set(true);
+    this.startLoading();
     try {
       const resources = await this.resourceService.findAll();
       this.resources = resources;
@@ -100,7 +103,7 @@ export class SystemResourceListComponent implements OnInit {
     } catch (e) {
       this.error.process(e);
     } finally {
-      this.loading.set(false);
+      this.stopLoading();
     }
   }
 
@@ -166,7 +169,8 @@ export class SystemResourceListComponent implements OnInit {
     } else if ('a' === type) {
       typeName = '动作';
     } else {
-
+      this.message.error('错误的分支');
+      return;
     }
     let content = `<b>${typeName}编号: ${id} ${typeName}名称: ${node.title}</b>`;
     const result = await new Promise(resolve => {
@@ -177,6 +181,26 @@ export class SystemResourceListComponent implements OnInit {
         nzOnCancel: () => resolve(false)
       });
     });
-    console.log(result);
+    this.startLoading();
+    try {
+      if ('r' === type) {
+        await this.systemResourceService.deleteById(id);
+      } else if ('a' === type) {
+        typeName = '动作';
+      } else {
+        this.message.error('错误的分支');
+        return;
+      }
+      this.message.success('删除成功');
+      this.refresh();
+    } catch (e) {
+      this.error.process(e);
+    } finally {
+      this.stopLoading();
+    }
+  }
+
+  toAddResource() {
+
   }
 }

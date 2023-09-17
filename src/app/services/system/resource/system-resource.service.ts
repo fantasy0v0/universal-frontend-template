@@ -21,4 +21,15 @@ export class SystemResourceService {
     return getResult(observable);
   }
 
+  /**
+   * 删除资源
+   * @param id 资源编号
+   */
+  deleteById(id: number) {
+    let observable = this.http.delete<Result<void>>(`${ApiPrefix}/system/resource/${id}`, {
+      headers: getAuthorizationHeader()
+    });
+    return getResult(observable);
+  }
+
 }

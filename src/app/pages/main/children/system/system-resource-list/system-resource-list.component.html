@@ -27,8 +27,8 @@
       <li nz-menu-item (click)="toDelete()">删除</li>
       <li nz-menu-divider></li>
     </ng-container>
-    <ng-container *ngIf="null == selectedNode || isResource()">
-      <li nz-menu-item>添加资源</li>
+    <ng-container *ngIf="undefined == selectedNode || isResource()">
+      <li nz-menu-item (click)="toAddResource()">添加资源</li>
     </ng-container>
     <ng-container *ngIf="isResource()">
       <li nz-menu-item>添加动作</li>
