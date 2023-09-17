@@ -1,12 +1,13 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {SystemUserService} from "../../../../../services/system/user/system-user.service";
 import {SystemUserVO} from "../../../../../services/system/user/vo/SystemUserVO";
 import {Paging} from "../../../../../services/util";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {NzModalService} from "ng-zorro-antd/modal";
-import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
-import {ErrorService} from "../../../../../services/error/error.service";
+import {
+  SystemDialogService
+} from "../../../../../services/dialog/system/system-dialog.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzInputModule} from 'ng-zorro-antd/input';
@@ -19,6 +20,7 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {SimpleDataVO} from "../../../../../services/vo/SimpleDataVO";
 import {SystemRoleService} from "../../../../../services/system/role/system-role.service";
+import {BaseComponent} from "../../../../../util/base.component";
 
 @Component({
   standalone: true,
@@ -39,14 +41,12 @@ import {SystemRoleService} from "../../../../../services/system/role/system-role
     NzPopconfirmModule
   ]
 })
-export class SystemUserListComponent implements OnInit {
+export class SystemUserListComponent extends BaseComponent {
 
   formGroup = new FormGroup({
     role: new FormControl(-1),
     name: new FormControl<string | null>(null)
   });
-
-  loading = signal(false);
 
   paging = Paging.of(1, 10);
 
@@ -67,12 +67,11 @@ export class SystemUserListComponent implements OnInit {
               private systemRoleService: SystemRoleService,
               private modal: NzModalService,
               private dialogService: SystemDialogService,
-              private error: ErrorService,
               private message: NzMessageService) {
-    this.formGroup
+    super();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.refreshRole();
     this.onSearch();
   }
@@ -89,7 +88,7 @@ export class SystemUserListComponent implements OnInit {
   }
 
   async onSearch() {
-    this.loading.set(true);
+    this.startLoading();
     try {
       let a = this.formGroup.getRawValue().name
       let role = this.formGroup.getRawValue().role;
@@ -103,12 +102,12 @@ export class SystemUserListComponent implements OnInit {
     } catch (e) {
       this.error.process(e);
     } finally {
-      this.loading.set(false);
+      this.stopLoading();
     }
   }
 
   async restPassword(item: SystemUserVO) {
-    this.loading.set(true);
+    this.startLoading();
     try {
       const newPassword = await this.userService.restPassword(item.id, 0);
       this.modal.success({
@@ -118,33 +117,20 @@ export class SystemUserListComponent implements OnInit {
     } catch (e) {
       this.error.process(e);
     } finally {
-      this.loading.set(false);
+      this.stopLoading();
     }
   }
 
-  async disable(item: SystemUserVO) {
-    this.loading.set(true);
+  async enable(item: SystemUserVO, target: boolean) {
+    this.startLoading();
     try {
-      await this.userService.disable(item.id);
+      await this.userService.enable(item.id, target);
       this.message.success("操作成功");
       this.onSearch();
     } catch (e) {
       this.error.process(e);
     } finally {
-      this.loading.set(false);
-    }
-  }
-
-  async enable(item: SystemUserVO) {
-    this.loading.set(true);
-    try {
-      await this.userService.enable(item.id);
-      this.message.success("操作成功");
-      this.onSearch();
-    } catch (e) {
-      this.error.process(e);
-    } finally {
-      this.loading.set(false);
+      this.stopLoading();
     }
   }
 

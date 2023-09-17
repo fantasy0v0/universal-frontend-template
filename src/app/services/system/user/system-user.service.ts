@@ -139,22 +139,12 @@ export class SystemUserService {
   }
 
   /**
-   * 将用户状态修改为禁用状态
+   * 是否启用该用户
    * @param userId 用户编号
+   * @param target 是否
    */
-  disable(userId: number) {
-    let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/disable`, null, {
-      headers: getAuthorizationHeader()
-    });
-    return getResult(observable);
-  }
-
-  /**
-   * 将用户状态修改为正常状态
-   * @param userId 用户编号
-   */
-  enable(userId: number) {
-    let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/enable`, null, {
+  enable(userId: number, target: boolean) {
+    let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/enable`, target, {
       headers: getAuthorizationHeader()
     });
     return getResult(observable);

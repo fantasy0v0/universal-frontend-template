@@ -1,12 +1,39 @@
-<div class="resources">
-  <div>
-    <span>资源列表</span>
-    <button nz-button nzType="link" nzSize="small" title="刷新">
-        <span nz-icon nzType="reload"></span>
-    </button>
-  </div>
-    <nz-tree></nz-tree>
-</div>
-<div class="actions">
-  动作列表
-</div>
+<nz-tree nzAsyncData [nzData]="nodes"
+         nzShowLine="false" nzShowIcon="false"
+         (nzDblClick)="expandNode($event)"
+         (nzExpandChange)="nzExpandChange($event)"
+         [nzTreeTemplate]="nzTreeTemplate"
+         (nzContextMenu)="openMenu($event, menu)"
+>
+</nz-tree>
+<ng-template #nzTreeTemplate let-node>
+  <span class="node-template">
+    <span *ngIf="!node.isLeaf">
+      <span nz-icon nzType="file-image" nzTheme="twotone"></span>
+    </span>
+    <span *ngIf="node.isLeaf">
+      <span nz-icon nzType="file"></span>
+    </span>
+    <span class="title">{{ node.title }}</span>
+    <span class="remark">{{ node.origin.remark }}</span>
+  </span>
+</ng-template>
+<nz-dropdown-menu #menu="nzDropdownMenu" class="dropdown-menu">
+  <ul nz-menu (contextmenu)="$event.preventDefault()">
+    <ng-container *ngIf="null != selectedNode">
+      <li nz-menu-item>{{ selectedNode.title }}</li>
+      <li nz-menu-divider></li>
+      <li nz-menu-item>编辑</li>
+      <li nz-menu-item (click)="toDelete()">删除</li>
+      <li nz-menu-divider></li>
+    </ng-container>
+    <ng-container *ngIf="null == selectedNode || isResource()">
+      <li nz-menu-item>添加资源</li>
+    </ng-container>
+    <ng-container *ngIf="isResource()">
+      <li nz-menu-item>添加动作</li>
+      <li nz-menu-divider></li>
+    </ng-container>
+    <li nz-menu-item (click)="refresh()">刷新</li>
+  </ul>
+</nz-dropdown-menu>

@@ -1,4 +1,28 @@
 :host {
-  display: flex;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #1890ff;
+  padding: .3rem;
+}
+
+nz-tree {
+  width: 100%;
+  height: 100%;
+}
+
+.node-template {
+  display: inline-flex;
   flex-direction: row;
+  column-gap: .5rem;
+
+  & > span.remark {
+    color: gray;
+    font-style: italic;
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 0;
 }

@@ -34,6 +34,7 @@ export const subRouteAnimation = trigger('subRouteAnimation', [
           opacity: '0',
           // 1rem等于padding的宽度
           width: 'calc(100% - 1rem)',
+          height: 'calc(100% - 1rem)',
           left: '1.5rem'
         }),
         animate('.3s ease-out', style({
@@ -46,6 +47,7 @@ export const subRouteAnimation = trigger('subRouteAnimation', [
           position: 'absolute',
           // 1rem等于padding的宽度
           width: 'calc(100% - 1rem)',
+          height: 'calc(100% - 1rem)',
           left: '.5rem'
         }),
         animate('.3s ease-out', style({

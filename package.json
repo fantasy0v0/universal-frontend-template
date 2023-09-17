@@ -1,7 +1,7 @@
 {
   "name": "universal-frontend-template",
-  "version": "0.0.0",
-  "description": "对应backend-core:3.0.8-SNAPSHOT",
+  "version": "3.1.0",
+  "description": "对应backend-core:3.1.x-SNAPSHOT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

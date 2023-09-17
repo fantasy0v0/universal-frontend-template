@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, signal} from '@angular/core';
+import {Component, inject, Inject, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {NZ_MODAL_DATA, NzModalRef} from "ng-zorro-antd/modal";
@@ -10,6 +10,7 @@ import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzInputModule} from 'ng-zorro-antd/input';
+import {BaseComponent} from "../../../util/base.component";
 
 @Component({
   standalone: true,
@@ -24,23 +25,24 @@ import {NzInputModule} from 'ng-zorro-antd/input';
     NzButtonModule
   ]
 })
-export class SystemRoleUpdateComponent implements OnInit {
+export class SystemRoleUpdateComponent extends BaseComponent {
 
   formGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)])
   });
 
-  loading = signal(false);
+  private modal = inject(NzModalRef);
 
-  constructor(private modal: NzModalRef,
-              private roleService: SystemRoleService,
-              private error: ErrorService,
-              private message: NzMessageService,
-              @Inject(NZ_MODAL_DATA)
+  private roleService = inject(SystemRoleService);
+
+  private message = inject(NzMessageService);
+
+  constructor(@Inject(NZ_MODAL_DATA)
               public data: SimpleDataVO) {
+    super();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     if (null != this.data) {
       this.formGroup.controls.name.setValue(this.data.name);
     }
@@ -52,7 +54,7 @@ export class SystemRoleUpdateComponent implements OnInit {
     }
 
     const name = this.formGroup.getRawValue().name!;
-    this.loading.set(true);
+    this.startLoading();
     try {
       await this.roleService.saveOrUpdate({
         id: this.data?.id ?? 0,
@@ -63,7 +65,7 @@ export class SystemRoleUpdateComponent implements OnInit {
     } catch (e) {
       this.error.process(e);
     } finally {
-      this.loading.set(false);
+      this.stopLoading();
     }
   }
 }

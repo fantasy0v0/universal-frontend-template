@@ -12,10 +12,20 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import {IconDefinition} from '@ant-design/icons-angular';
 import {
-  UserOutline, LockOutline,
-  MenuUnfoldOutline, MenuFoldOutline,
-  SettingOutline, FundTwoTone, TeamOutline, PlusOutline,
-  AppstoreOutline, ReloadOutline
+  UserOutline,
+  LockOutline,
+  MenuUnfoldOutline,
+  MenuFoldOutline,
+  SettingOutline,
+  FundTwoTone,
+  TeamOutline,
+  PlusOutline,
+  AppstoreOutline,
+  ReloadOutline,
+  PictureOutline,
+  PictureTwoTone,
+  FileImageTwoTone,
+  MinusSquareTwoTone, PlusSquareOutline, MinusSquareOutline
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -26,7 +36,8 @@ const icons: IconDefinition[] = [
   UserOutline, LockOutline,
   MenuUnfoldOutline, MenuFoldOutline,
   SettingOutline, FundTwoTone, TeamOutline, PlusOutline,
-  AppstoreOutline, ReloadOutline
+  AppstoreOutline, ReloadOutline, FileImageTwoTone,
+  MinusSquareOutline, PlusSquareOutline
 ];
 
 export const appConfig: ApplicationConfig = {

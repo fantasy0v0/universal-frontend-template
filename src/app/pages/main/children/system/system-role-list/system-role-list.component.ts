@@ -1,10 +1,11 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {SystemRoleService} from "../../../../../services/system/role/system-role.service";
 import {SimpleDataVO} from "../../../../../services/vo/SimpleDataVO";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {SystemDialogService} from "../../../../../services/dialog/system/system-dialog.service";
-import {ErrorService} from "../../../../../services/error/error.service";
+import {
+  SystemDialogService
+} from "../../../../../services/dialog/system/system-dialog.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzInputModule} from 'ng-zorro-antd/input';
@@ -13,6 +14,8 @@ import {NzSpaceModule} from "ng-zorro-antd/space";
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
+import {SystemRoleVO} from "../../../../../services/system/role/vo/SystemRoleVO";
+import {BaseComponent} from "../../../../../util/base.component";
 
 @Component({
   standalone: true,
@@ -31,40 +34,38 @@ import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
     NzPopconfirmModule
   ]
 })
-export class SystemRoleListComponent implements OnInit {
+export class SystemRoleListComponent extends BaseComponent {
 
   formGroup = new FormGroup({
     name: new FormControl<string | null>(null)
   });
 
-  loading = signal(false);
+  data: SystemRoleVO[] = [];
 
-  data: SimpleDataVO[] = [];
+  private roleService = inject(SystemRoleService);
 
-  constructor(private roleService: SystemRoleService,
-              private dialogService: SystemDialogService,
-              private error: ErrorService,
-              private message: NzMessageService) {
-  }
+  private dialogService = inject(SystemDialogService);
 
-  ngOnInit(): void {
+  private message = inject(NzMessageService);
+
+  override ngOnInit(): void {
     this.onSearch();
   }
 
   async onSearch() {
-    this.loading.set(true);
+    this.startLoading();
     try {
       const name = this.formGroup.getRawValue().name;
       this.data = await this.roleService.findAll(name);
     } catch (e) {
       this.error.process(e);
     } finally {
-      this.loading.set(false);
+      this.stopLoading();
     }
   }
 
   async deleteRole(item: SimpleDataVO) {
-    this.loading.set(true);
+    this.startLoading();
     try {
       await this.roleService.deleteById(item.id);
       this.message.success("删除成功");
@@ -72,7 +73,7 @@ export class SystemRoleListComponent implements OnInit {
     } catch (e) {
       this.error.process(e);
     } finally {
-      this.loading.set(false);
+      this.stopLoading();
     }
   }
 

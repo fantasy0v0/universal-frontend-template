@@ -10,6 +10,7 @@ import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
+import {BaseComponent} from "../../util/base.component";
 
 @Component({
   standalone: true,
@@ -25,9 +26,7 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
     NzCheckboxModule
   ]
 })
-export class LoginComponent implements OnInit {
-
-  loading = signal(false);
+export class LoginComponent extends BaseComponent {
 
   formGroup = new FormGroup({
     account: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(255)]),
@@ -35,15 +34,15 @@ export class LoginComponent implements OnInit {
     rememberMe: new FormControl(false)
   });
 
-  constructor(
-    private elementRef: ElementRef,
-    private bingService: BingService,
-    private userService: SystemUserService,
-    private notification: NzNotificationService,
-    private router: Router) {
-  }
+  private bingService = inject(BingService);
 
-  ngOnInit(): void {
+  private userService = inject(SystemUserService);
+
+  private notification = inject(NzNotificationService);
+
+  private router = inject(Router);
+
+  override ngOnInit(): void {
     this.bingService.wallpaper().then(url => {
       this.setBackgroundImage(url)
     });
@@ -64,7 +63,7 @@ export class LoginComponent implements OnInit {
     const account = this.formGroup.getRawValue().account!;
     const password = this.formGroup.getRawValue().password!;
     const rememberMe = this.formGroup.getRawValue().rememberMe!;
-    this.loading.set(true);
+    this.startLoading();
     try {
       await this.userService.login(account, password, rememberMe);
       const ref = this.notification.success('登录成功', '正在加载中, 请稍后...', {
@@ -77,7 +76,7 @@ export class LoginComponent implements OnInit {
       const message = errorMessage(e);
       this.notification.error('登录失败', message);
     } finally {
-      this.loading.set(false);
+      this.stopLoading();
     }
   }
 

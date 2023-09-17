@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SystemRoleService} from "../../../services/system/role/system-role.service";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
@@ -6,12 +6,12 @@ import {formGroupInvalid} from "../../../services/util";
 import {NzModalRef} from "ng-zorro-antd/modal";
 import {SystemUserService} from "../../../services/system/user/system-user.service";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {ErrorService} from "../../../services/error/error.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {NzInputModule} from 'ng-zorro-antd/input';
+import {BaseComponent} from "../../../util/base.component";
 
 @Component({
   standalone: true,
@@ -27,29 +27,28 @@ import {NzInputModule} from 'ng-zorro-antd/input';
     NzSelectModule
   ]
 })
-export class SystemUserAddComponent implements OnInit {
+export class SystemUserAddComponent extends BaseComponent {
 
   formGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
     role: new FormControl<number | null>(null, Validators.required),
     contactNumber: new FormControl<string | null>(null),
     type: new FormControl(0, Validators.required),
-    account: new FormControl('', [ Validators.required, Validators.minLength(6) ]),
-    password: new FormControl('', [ Validators.required, Validators.minLength(6) ])
+    account: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
-
-  loading = signal(false);
 
   roles: SimpleDataVO[] = [];
 
-  constructor(private roleService: SystemRoleService,
-              private modal: NzModalRef,
-              private message: NzMessageService,
-              private error: ErrorService,
-              private userService: SystemUserService) {
-  }
+  private roleService = inject(SystemRoleService);
 
-  ngOnInit(): void {
+  private modal = inject(NzModalRef);
+
+  private message = inject(NzMessageService);
+
+  private userService = inject(SystemUserService);
+
+  override ngOnInit(): void {
     this.roleService.findAll(null).then(result => {
       this.roles = result;
       if (this.roles.length > 0) {
@@ -68,7 +67,7 @@ export class SystemUserAddComponent implements OnInit {
     const type = this.formGroup.getRawValue().type!;
     const account = this.formGroup.getRawValue().account!;
     const password = this.formGroup.getRawValue().password!;
-    this.loading.set(true);
+    this.startLoading();
     try {
       await this.userService.addUser({
         name, role, contactNumber, type,
@@ -79,7 +78,7 @@ export class SystemUserAddComponent implements OnInit {
     } catch (e) {
       this.error.process(e);
     } finally {
-      this.loading.set(false);
+      this.stopLoading();
     }
   }
 }
