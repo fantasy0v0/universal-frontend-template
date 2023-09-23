@@ -119,7 +119,7 @@ export class SystemUserService {
     if (null != role) {
       params = params.append("role", role);
     }
-    let observable = this.http.get<Result<PagingData<SystemUserVO>>>(`${ApiPrefix}/system/user/findAll`, {
+    let observable = this.http.get<Result<PagingData<SystemUserVO>>>(`${ApiPrefix}/backend/user/findAll`, {
       params, headers: getAuthorizationHeader()
     });
     return getResult(observable);
@@ -132,7 +132,7 @@ export class SystemUserService {
    */
   restPassword(userId: number, type: number) {
     let params = new HttpParams().append("type", type);
-    let observable = this.http.post<Result<string>>(`${ApiPrefix}/system/user/${userId}/resetPassword`, null, {
+    let observable = this.http.post<Result<string>>(`${ApiPrefix}/backend/user/${userId}/resetPassword`, null, {
       params, headers: getAuthorizationHeader()
     });
     return getResult(observable);
@@ -144,7 +144,7 @@ export class SystemUserService {
    * @param target 是否
    */
   enable(userId: number, target: boolean) {
-    let observable = this.http.put<Result<void>>(`${ApiPrefix}/system/user/${userId}/enable`, target, {
+    let observable = this.http.put<Result<void>>(`${ApiPrefix}/backend/user/${userId}/enable`, target, {
       headers: getAuthorizationHeader()
     });
     return getResult(observable);
@@ -155,7 +155,7 @@ export class SystemUserService {
    * @param request 请求
    */
   addUser(request: SystemUserAddRequest) {
-    let observable = this.http.post<Result<void>>(`${ApiPrefix}/system/user`, request, {
+    let observable = this.http.post<Result<void>>(`${ApiPrefix}/backend/user`, request, {
       headers: getAuthorizationHeader()
     });
     return getResult(observable);

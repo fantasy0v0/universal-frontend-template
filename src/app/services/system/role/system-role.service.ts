@@ -21,7 +21,7 @@ export class SystemRoleService {
     if (null != name && name.length > 0) {
       params = params.append("name", name);
     }
-    let observable = this.http.get<Result<SystemRoleVO[]>>(`${ApiPrefix}/system/role/findAll`, {
+    let observable = this.http.get<Result<SystemRoleVO[]>>(`${ApiPrefix}/backend/role/findAll`, {
       params, headers: getAuthorizationHeader()
     });
     return getResult(observable);
@@ -32,7 +32,7 @@ export class SystemRoleService {
    * @param role 角色信息
    */
   saveOrUpdate(role: SimpleDataVO) {
-    let observable = this.http.post<Result<void>>(`${ApiPrefix}/system/role`, role, {
+    let observable = this.http.post<Result<void>>(`${ApiPrefix}/backend/role`, role, {
       headers: getAuthorizationHeader()
     });
     return getResult(observable);
@@ -43,7 +43,7 @@ export class SystemRoleService {
    * @param id 角色编号
    */
   deleteById(id: number) {
-    let observable = this.http.delete<Result<void>>(`${ApiPrefix}/system/role/${id}`, {
+    let observable = this.http.delete<Result<void>>(`${ApiPrefix}/backend/role/${id}`, {
       headers: getAuthorizationHeader()
     });
     return getResult(observable);

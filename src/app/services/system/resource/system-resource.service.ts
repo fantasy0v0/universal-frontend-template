@@ -15,7 +15,7 @@ export class SystemResourceService {
    * 查询系统内所有的资源
    */
   findAll() {
-    let observable = this.http.get<Result<SystemResourceVO[]>>(`${ApiPrefix}/system/resource/findAll`, {
+    let observable = this.http.get<Result<SystemResourceVO[]>>(`${ApiPrefix}/backend/resource/findAll`, {
       headers: getAuthorizationHeader()
     });
     return getResult(observable);
@@ -26,7 +26,7 @@ export class SystemResourceService {
    * @param id 资源编号
    */
   deleteById(id: number) {
-    let observable = this.http.delete<Result<void>>(`${ApiPrefix}/system/resource/${id}`, {
+    let observable = this.http.delete<Result<void>>(`${ApiPrefix}/backend/resource/${id}`, {
       headers: getAuthorizationHeader()
     });
     return getResult(observable);

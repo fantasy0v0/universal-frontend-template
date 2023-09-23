@@ -14,7 +14,7 @@ export class SystemActionService {
   constructor() { }
 
   findAll() {
-    let observable = this.http.get<Result<SystemActionVO[]>>(`${ApiPrefix}/system/action/findAll`, {
+    let observable = this.http.get<Result<SystemActionVO[]>>(`${ApiPrefix}/backend/action/findAll`, {
       headers: getAuthorizationHeader()
     });
     return getResult(observable);
