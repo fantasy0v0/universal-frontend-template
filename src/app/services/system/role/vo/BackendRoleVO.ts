@@ -1,5 +1,5 @@
 
-export interface SystemRoleVO {
+export interface BackendRoleVO {
   id: number,
   name: string,
   isAdmin: boolean,

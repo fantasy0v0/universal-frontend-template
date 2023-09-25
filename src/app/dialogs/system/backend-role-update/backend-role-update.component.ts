@@ -4,7 +4,7 @@ import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {NZ_MODAL_DATA, NzModalRef} from "ng-zorro-antd/modal";
 import {formGroupInvalid} from "../../../services/util";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {SystemRoleService} from "../../../services/system/role/system-role.service";
+import {BackendRoleService} from "../../../services/system/role/backend-role.service";
 import {ErrorService} from "../../../services/error/error.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -14,9 +14,9 @@ import {BaseComponent} from "../../../util/base.component";
 
 @Component({
   standalone: true,
-  selector: 'app-system-role-update',
-  templateUrl: './system-role-update.component.html',
-  styleUrls: ['./system-role-update.component.scss'],
+  selector: 'app-backend-role-update',
+  templateUrl: './backend-role-update.component.html',
+  styleUrls: ['./backend-role-update.component.scss'],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -25,7 +25,7 @@ import {BaseComponent} from "../../../util/base.component";
     NzButtonModule
   ]
 })
-export class SystemRoleUpdateComponent extends BaseComponent {
+export class BackendRoleUpdateComponent extends BaseComponent {
 
   formGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)])
@@ -33,7 +33,7 @@ export class SystemRoleUpdateComponent extends BaseComponent {
 
   private modal = inject(NzModalRef);
 
-  private roleService = inject(SystemRoleService);
+  private roleService = inject(BackendRoleService);
 
   private message = inject(NzMessageService);
 

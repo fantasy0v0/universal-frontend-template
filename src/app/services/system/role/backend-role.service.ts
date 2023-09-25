@@ -3,12 +3,12 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {ApiPrefix, getResult, Null, Result} from "../../util";
 import {SimpleDataVO} from "../../vo/SimpleDataVO";
 import {getAuthorizationHeader} from "../user/system-user.service";
-import {SystemRoleVO} from "./vo/SystemRoleVO";
+import {BackendRoleVO} from "./vo/BackendRoleVO";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SystemRoleService {
+export class BackendRoleService {
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +21,7 @@ export class SystemRoleService {
     if (null != name && name.length > 0) {
       params = params.append("name", name);
     }
-    let observable = this.http.get<Result<SystemRoleVO[]>>(`${ApiPrefix}/backend/role/findAll`, {
+    let observable = this.http.get<Result<BackendRoleVO[]>>(`${ApiPrefix}/backend/role/findAll`, {
       params, headers: getAuthorizationHeader()
     });
     return getResult(observable);

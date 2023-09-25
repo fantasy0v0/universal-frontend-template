@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {NzModalService} from "ng-zorro-antd/modal";
 import { ChangePasswordComponent } from "../../../dialogs/change-password/change-password.component";
 import {SimpleDataVO} from "../../vo/SimpleDataVO";
-import { SystemRoleUpdateComponent } from "../../../dialogs/system/system-role-update/system-role-update.component";
+import { BackendRoleUpdateComponent } from "../../../dialogs/system/backend-role-update/backend-role-update.component";
 import {firstValueFrom} from "rxjs";
 import {SystemUserAddComponent} from "../../../dialogs/system/system-user-add/system-user-add.component";
 
@@ -29,9 +29,9 @@ export class SystemDialogService {
    * @param data
    */
   systemRoleSaveOrUpdate(data?: SimpleDataVO) {
-    let observable = this.modal.create<SystemRoleUpdateComponent, SimpleDataVO>({
+    let observable = this.modal.create<BackendRoleUpdateComponent, SimpleDataVO>({
       nzTitle: data ? "更新角色" : "添加角色",
-      nzContent: SystemRoleUpdateComponent,
+      nzContent: BackendRoleUpdateComponent,
       nzData: data,
       nzFooter: null
     }).afterClose.asObservable();

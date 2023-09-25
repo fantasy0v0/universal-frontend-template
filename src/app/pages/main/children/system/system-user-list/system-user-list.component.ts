@@ -19,7 +19,7 @@ import {NzBadgeModule} from 'ng-zorro-antd/badge';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
 import {SimpleDataVO} from "../../../../../services/vo/SimpleDataVO";
-import {SystemRoleService} from "../../../../../services/system/role/system-role.service";
+import {BackendRoleService} from "../../../../../services/system/role/backend-role.service";
 import {BaseComponent} from "../../../../../util/base.component";
 
 @Component({
@@ -64,7 +64,7 @@ export class SystemUserListComponent extends BaseComponent {
   }]
 
   constructor(private userService: SystemUserService,
-              private systemRoleService: SystemRoleService,
+              private roleService: BackendRoleService,
               private modal: NzModalService,
               private dialogService: SystemDialogService,
               private message: NzMessageService) {
@@ -78,7 +78,7 @@ export class SystemUserListComponent extends BaseComponent {
 
   async refreshRole() {
     try {
-      const data = await this.systemRoleService.findAll(null);
+      const data = await this.roleService.findAll(null);
       this.roles = [{
         id: -1, name: "所有"
       }, ...data];

@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {SystemRoleService} from "../../../services/system/role/system-role.service";
+import {BackendRoleService} from "../../../services/system/role/backend-role.service";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {formGroupInvalid} from "../../../services/util";
 import {NzModalRef} from "ng-zorro-antd/modal";
@@ -40,7 +40,7 @@ export class SystemUserAddComponent extends BaseComponent {
 
   roles: SimpleDataVO[] = [];
 
-  private roleService = inject(SystemRoleService);
+  private roleService = inject(BackendRoleService);
 
   private modal = inject(NzModalRef);
 

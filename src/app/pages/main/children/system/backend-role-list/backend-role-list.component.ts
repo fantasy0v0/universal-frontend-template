@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {SystemRoleService} from "../../../../../services/system/role/system-role.service";
+import {BackendRoleService} from "../../../../../services/system/role/backend-role.service";
 import {SimpleDataVO} from "../../../../../services/vo/SimpleDataVO";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {
@@ -14,14 +14,14 @@ import {NzSpaceModule} from "ng-zorro-antd/space";
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
-import {SystemRoleVO} from "../../../../../services/system/role/vo/SystemRoleVO";
+import {BackendRoleVO} from "../../../../../services/system/role/vo/BackendRoleVO";
 import {BaseComponent} from "../../../../../util/base.component";
 
 @Component({
   standalone: true,
-  selector: 'app-system-role-list',
-  templateUrl: './system-role-list.component.html',
-  styleUrls: ['./system-role-list.component.scss'],
+  selector: 'app-backend-role-list',
+  templateUrl: './backend-role-list.component.html',
+  styleUrls: ['./backend-role-list.component.scss'],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -34,15 +34,15 @@ import {BaseComponent} from "../../../../../util/base.component";
     NzPopconfirmModule
   ]
 })
-export class SystemRoleListComponent extends BaseComponent {
+export class BackendRoleListComponent extends BaseComponent {
 
   formGroup = new FormGroup({
     name: new FormControl<string | null>(null)
   });
 
-  data: SystemRoleVO[] = [];
+  data: BackendRoleVO[] = [];
 
-  private roleService = inject(SystemRoleService);
+  private roleService = inject(BackendRoleService);
 
   private dialogService = inject(SystemDialogService);
 
