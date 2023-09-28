@@ -15,9 +15,9 @@ import {BaseComponent} from "../../../util/base.component";
 
 @Component({
   standalone: true,
-  selector: 'app-system-user-add',
-  templateUrl: './system-user-add.component.html',
-  styleUrls: ['./system-user-add.component.scss'],
+  selector: 'app-backend-user-add',
+  templateUrl: './backend-user-add.component.html',
+  styleUrls: ['./backend-user-add.component.scss'],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -27,7 +27,7 @@ import {BaseComponent} from "../../../util/base.component";
     NzSelectModule
   ]
 })
-export class SystemUserAddComponent extends BaseComponent {
+export class BackendUserAddComponent extends BaseComponent {
 
   formGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),

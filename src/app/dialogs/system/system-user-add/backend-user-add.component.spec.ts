@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SystemUserAddComponent } from './system-user-add.component';
+import { BackendUserAddComponent } from './backend-user-add.component';
 
-describe('SystemUserAddComponent', () => {
-  let component: SystemUserAddComponent;
-  let fixture: ComponentFixture<SystemUserAddComponent>;
+describe('BackendUserAddComponent', () => {
+  let component: BackendUserAddComponent;
+  let fixture: ComponentFixture<BackendUserAddComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SystemUserAddComponent ]
+      declarations: [ BackendUserAddComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SystemUserAddComponent);
+    fixture = TestBed.createComponent(BackendUserAddComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
