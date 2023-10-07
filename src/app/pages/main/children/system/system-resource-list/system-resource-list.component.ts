@@ -1,26 +1,25 @@
-import {Component, ElementRef, inject, OnInit, signal, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NzTreeModule, NzTreeNode, NzTreeNodeOptions} from "ng-zorro-antd/tree";
 import {
-  SystemResourceService
-} from "../../../../../services/system/resource/system-resource.service";
+  BackendResourceService
+} from "../../../../../services/system/resource/backend-resource.service";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzIconModule} from "ng-zorro-antd/icon";
 import {
-  SystemResourceVO
-} from "../../../../../services/system/resource/vo/SystemResourceVO";
+  BackendResourceVO
+} from "../../../../../services/system/resource/vo/BackendResourceVO";
 import {NzFormatEmitEvent} from "ng-zorro-antd/core/tree/nz-tree-base.definitions";
 import {
-  SystemActionService
-} from "../../../../../services/system/action/system-action.service";
-import {SystemActionVO} from "../../../../../services/system/action/vo/SystemActionVO";
+  BackendActionService
+} from "../../../../../services/system/action/backend-action.service";
+import {BackendActionVO} from "../../../../../services/system/action/vo/BackendActionVO";
 import {
   NzContextMenuService,
   NzDropdownMenuComponent,
   NzDropDownModule
 } from "ng-zorro-antd/dropdown";
 import {NzModalModule, NzModalService} from "ng-zorro-antd/modal";
-import {ErrorService} from "../../../../../services/error/error.service";
 import {BaseComponent} from "../../../../../util/base.component";
 import {NzMessageModule, NzMessageService} from "ng-zorro-antd/message";
 
@@ -41,17 +40,17 @@ import {NzMessageModule, NzMessageService} from "ng-zorro-antd/message";
 })
 export class SystemResourceListComponent extends BaseComponent {
 
-  private resourceService = inject(SystemResourceService);
+  private resourceService = inject(BackendResourceService);
 
-  private actionService = inject(SystemActionService);
+  private actionService = inject(BackendActionService);
 
   private nzContextMenuService = inject(NzContextMenuService);
 
   private elementRef = inject(ElementRef<HTMLElement>);
 
-  resources: SystemResourceVO[] = [];
+  resources: BackendResourceVO[] = [];
 
-  actions: SystemActionVO[] = [];
+  actions: BackendActionVO[] = [];
 
   nodes: NzTreeNodeOptions[] = [];
 
@@ -64,8 +63,6 @@ export class SystemResourceListComponent extends BaseComponent {
 
   private message = inject(NzMessageService);
 
-  private systemResourceService = inject(SystemResourceService);
-
   override ngOnInit(): void {
     this.refresh()
     this.elementRef.nativeElement.oncontextmenu = (event: MouseEvent) => {
@@ -73,7 +70,7 @@ export class SystemResourceListComponent extends BaseComponent {
     }
   }
 
-  private buildNodeFromResource(resource: SystemResourceVO): NzTreeNodeOptions {
+  private buildNodeFromResource(resource: BackendResourceVO): NzTreeNodeOptions {
     return {
       key: `r${resource.id}`,
       isLeaf: false,
@@ -83,7 +80,7 @@ export class SystemResourceListComponent extends BaseComponent {
     };
   }
 
-  private buildNodeFromAction(action: SystemActionVO): NzTreeNodeOptions {
+  private buildNodeFromAction(action: BackendActionVO): NzTreeNodeOptions {
     return {
       key: `a${action.id}`,
       isLeaf: true,
@@ -184,7 +181,7 @@ export class SystemResourceListComponent extends BaseComponent {
     this.startLoading();
     try {
       if ('r' === type) {
-        await this.systemResourceService.deleteById(id);
+        await this.resourceService.deleteById(id);
       } else if ('a' === type) {
         typeName = '动作';
       } else {

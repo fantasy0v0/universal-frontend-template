@@ -22,14 +22,11 @@ import {
   PlusOutline,
   AppstoreOutline,
   ReloadOutline,
-  PictureOutline,
-  PictureTwoTone,
   FileImageTwoTone,
-  MinusSquareTwoTone, PlusSquareOutline, MinusSquareOutline
+  PlusSquareOutline, MinusSquareOutline
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import {MyInterceptor} from "./interceptors/my/my.interceptor";
 
 registerLocaleData(zh);
 const icons: IconDefinition[] = [
@@ -56,9 +53,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withDebugTracing(), withHashLocation()),
     {
       provide: HTTP_INTERCEPTORS, useClass: NgProgressHttpInterceptor, multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi: true
     }
   ]
 };

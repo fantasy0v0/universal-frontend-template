@@ -9,7 +9,7 @@ import {
 } from "@angular/forms";
 import {formGroupInvalid} from "../../services/util";
 import {NzModalRef} from "ng-zorro-antd/modal";
-import {SystemUserService} from "../../services/system/user/system-user.service";
+import {BackendUserService} from "../../services/system/user/backend-user.service";
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -54,7 +54,7 @@ export class ChangePasswordComponent extends BaseComponent {
 
   private modal = inject(NzModalRef);
 
-  private userService = inject(SystemUserService);
+  private userService = inject(BackendUserService);
 
   private message = inject(NzMessageService);
 

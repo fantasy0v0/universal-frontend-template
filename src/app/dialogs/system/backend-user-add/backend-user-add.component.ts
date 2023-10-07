@@ -4,7 +4,7 @@ import {BackendRoleService} from "../../../services/system/role/backend-role.ser
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {formGroupInvalid} from "../../../services/util";
 import {NzModalRef} from "ng-zorro-antd/modal";
-import {SystemUserService} from "../../../services/system/user/system-user.service";
+import {BackendUserService} from "../../../services/system/user/backend-user.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -46,7 +46,7 @@ export class BackendUserAddComponent extends BaseComponent {
 
   private message = inject(NzMessageService);
 
-  private userService = inject(SystemUserService);
+  private userService = inject(BackendUserService);
 
   override ngOnInit(): void {
     this.roleService.findAll(null).then(result => {

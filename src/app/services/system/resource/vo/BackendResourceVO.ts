@@ -1,20 +1,20 @@
 
-export interface SystemActionVO {
+export interface BackendResourceVO {
 
   /**
-   * 动作编号
+   * 资源编号
    */
   id: number,
 
   /**
-   * 动作名称
+   * 资源名称
    */
   name: string,
 
   /**
-   * 关联的资源编号
+   * 上级资源编号
    */
-  resource?: number,
+  parent?: number,
 
   /**
    * 资源标识
@@ -35,4 +35,5 @@ export interface SystemActionVO {
    * 更新时间
    */
   updatedAt: string
+
 }

@@ -6,14 +6,24 @@ import {SystemResourceListComponent} from "./children/system/system-resource-lis
 
 export const routes: Routes = [{
   path: 'welcome',
-  component: WeclomeComponent
+  component: WeclomeComponent,
+  data: {}
 }, {
   path: 'backend-role-list',
-  component: BackendRoleListComponent
+  component: BackendRoleListComponent,
+  data: {
+    permissions: ['ROLE_管理员']
+  }
 }, {
   path: 'system-user-list',
-  component: SystemUserListComponent
+  component: SystemUserListComponent,
+  data: {
+    permissions: ['ROLE_管理员']
+  }
 }, {
   path: 'system-resource-list',
-  component: SystemResourceListComponent
+  component: SystemResourceListComponent,
+  data: {
+    permissions: ['ROLE_管理员']
+  }
 }];

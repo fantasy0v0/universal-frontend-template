@@ -23,7 +23,7 @@ export class NgProgressHttpInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(finalize(() => {
       this._inProgressCount--;
       if (this._inProgressCount === 0) {
-        this.nProgress.done()
+        this.nProgress.done();
       }
     }));
   }

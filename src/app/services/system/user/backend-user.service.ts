@@ -12,7 +12,7 @@ const SessionKey = "universal_session";
 @Injectable({
   providedIn: 'root'
 })
-export class SystemUserService {
+export class BackendUserService {
 
   constructor(private http: HttpClient) {
   }

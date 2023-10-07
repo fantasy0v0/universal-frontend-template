@@ -3,7 +3,7 @@ import {BingService} from "../../services/bing/bing.service";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {NzNotificationService} from "ng-zorro-antd/notification";
-import {SystemUserService} from "../../services/system/user/system-user.service";
+import {BackendUserService} from "../../services/system/user/backend-user.service";
 import {errorMessage, formGroupInvalid, sleep} from "../../services/util";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
@@ -36,7 +36,7 @@ export class LoginComponent extends BaseComponent {
 
   private bingService = inject(BingService);
 
-  private userService = inject(SystemUserService);
+  private userService = inject(BackendUserService);
 
   private notification = inject(NzNotificationService);
 

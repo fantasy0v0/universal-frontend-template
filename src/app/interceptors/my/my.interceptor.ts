@@ -8,7 +8,7 @@ import {finalize} from "rxjs/operators";
  */
 export const $loading = signal(false);
 
-@Injectable()
+// @Injectable()
 export class MyInterceptor implements HttpInterceptor {
 
   constructor() {

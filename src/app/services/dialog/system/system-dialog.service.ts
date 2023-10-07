@@ -4,7 +4,7 @@ import { ChangePasswordComponent } from "../../../dialogs/change-password/change
 import {SimpleDataVO} from "../../vo/SimpleDataVO";
 import { BackendRoleUpdateComponent } from "../../../dialogs/system/backend-role-update/backend-role-update.component";
 import {firstValueFrom} from "rxjs";
-import {BackendUserAddComponent} from "../../../dialogs/system/system-user-add/backend-user-add.component";
+import {BackendUserAddComponent} from "../../../dialogs/system/backend-user-add/backend-user-add.component";
 
 @Injectable({
   providedIn: 'root'

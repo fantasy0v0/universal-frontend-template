@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {ApiPrefix, getResult, Null, Result} from "../../util";
 import {SimpleDataVO} from "../../vo/SimpleDataVO";
-import {getAuthorizationHeader} from "../user/system-user.service";
+import {getAuthorizationHeader} from "../user/backend-user.service";
 import {BackendRoleVO} from "./vo/BackendRoleVO";
 
 @Injectable({

@@ -1,13 +1,11 @@
 import {inject} from "@angular/core";
-import {SystemUserService} from "../services/system/user/system-user.service";
+import {BackendUserService} from "../services/system/user/backend-user.service";
 import {CanActivateFn, Router} from "@angular/router";
 import {NzMessageService} from "ng-zorro-antd/message";
 
-async function isOnline() {
-  const userService = inject(SystemUserService);
+async function isOnline(userService: BackendUserService,
+                        message: NzMessageService) {
   const router = inject(Router);
-  const message = inject(NzMessageService);
-
   const urlTree = router.parseUrl("/login");
   try {
     const result = await userService.online();
@@ -23,6 +21,21 @@ async function isOnline() {
   }
 }
 
-export const canActivate: CanActivateFn = (_, __) => {
-  return isOnline();
+export const canActivate: CanActivateFn = async (route, __) => {
+  const userService = inject(BackendUserService);
+  const message = inject(NzMessageService);
+  /*let result = await isOnline(userService, message);
+  if (true !== result) {
+    return result;
+  }*/
+  // 权限判断
+  const permissions = route.data["permissions"] as string[] | undefined;
+  if (null != permissions && permissions.length > 0) {
+    const hasPermission = userService.hasPermission(permissions);
+    if (!hasPermission) {
+      message.warning('没有访问权限');
+    }
+    return hasPermission;
+  }
+  return true;
 }

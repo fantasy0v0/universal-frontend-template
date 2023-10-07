@@ -1,13 +1,13 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {SystemResourceVO} from "./vo/SystemResourceVO";
+import {BackendResourceVO} from "./vo/BackendResourceVO";
 import {ApiPrefix, getResult, Result} from "../../util";
-import {getAuthorizationHeader} from "../user/system-user.service";
+import {getAuthorizationHeader} from "../user/backend-user.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SystemResourceService {
+export class BackendResourceService {
 
   private http = inject(HttpClient)
 
@@ -15,7 +15,7 @@ export class SystemResourceService {
    * 查询系统内所有的资源
    */
   findAll() {
-    let observable = this.http.get<Result<SystemResourceVO[]>>(`${ApiPrefix}/backend/resource/findAll`, {
+    let observable = this.http.get<Result<BackendResourceVO[]>>(`${ApiPrefix}/backend/resource/findAll`, {
       headers: getAuthorizationHeader()
     });
     return getResult(observable);

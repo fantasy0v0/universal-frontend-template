@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {SystemUserService} from "../../../../../services/system/user/system-user.service";
+import {BackendUserService} from "../../../../../services/system/user/backend-user.service";
 import {SystemUserVO} from "../../../../../services/system/user/vo/SystemUserVO";
 import {Paging} from "../../../../../services/util";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -63,7 +63,7 @@ export class SystemUserListComponent extends BaseComponent {
     id: 1, name: "管理员"
   }]
 
-  constructor(private userService: SystemUserService,
+  constructor(private userService: BackendUserService,
               private roleService: BackendRoleService,
               private modal: NzModalService,
               private dialogService: SystemDialogService,
