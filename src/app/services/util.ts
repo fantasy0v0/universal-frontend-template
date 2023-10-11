@@ -45,6 +45,16 @@ export interface Result<T> {
   msg?: string;
 
   /**
+   * 时间戳
+   */
+  timestamp: number,
+
+  /**
+   * 结果消耗的时间
+   */
+  elapsed: number,
+
+  /**
    * 响应内容
    */
   data: T;

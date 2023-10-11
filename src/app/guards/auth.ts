@@ -24,10 +24,10 @@ async function isOnline(userService: BackendUserService,
 export const canActivate: CanActivateFn = async (route, __) => {
   const userService = inject(BackendUserService);
   const message = inject(NzMessageService);
-  /*let result = await isOnline(userService, message);
+  let result = await isOnline(userService, message);
   if (true !== result) {
     return result;
-  }*/
+  }
   // 权限判断
   const permissions = route.data["permissions"] as string[] | undefined;
   if (null != permissions && permissions.length > 0) {
