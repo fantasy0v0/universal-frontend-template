@@ -1,6 +1,6 @@
-import {Component, ElementRef, inject, OnInit, signal, ViewChild} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {BingService} from "../../services/bing/bing.service";
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import {BackendUserService} from "../../services/system/user/backend-user.service";
@@ -63,7 +63,9 @@ export class LoginComponent extends BaseComponent {
     const account = this.formGroup.getRawValue().account!;
     const password = this.formGroup.getRawValue().password!;
     const rememberMe = this.formGroup.getRawValue().rememberMe!;
-    this.startLoading();
+    this.startLoading(() => {
+      this.formGroup.disable();
+    });
     try {
       await this.userService.login(account, password, rememberMe);
       const ref = this.notification.success('登录成功', '正在加载中, 请稍后...', {
@@ -76,7 +78,11 @@ export class LoginComponent extends BaseComponent {
       const message = errorMessage(e);
       this.notification.error('登录失败', message);
     } finally {
-      this.stopLoading();
+      this.stopLoading({
+        after: () => {
+          this.formGroup.enable();
+        }
+      });
     }
   }
 
