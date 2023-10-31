@@ -10,6 +10,9 @@ export const ApiPrefix = "/api";
  */
 export type Null<T> = T | null;
 
+// 可为空
+export type Optional<T> = T | undefined | null;
+
 /**
  * 异常
  */
