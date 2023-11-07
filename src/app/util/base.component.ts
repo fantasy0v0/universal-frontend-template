@@ -29,6 +29,12 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
    */
   protected loading = signal(false);
 
+  /**
+   * 加载队列
+   * @private
+   */
+  private loadingQueue = 0;
+
   protected nProgress = inject(NgProgress);
 
   protected error = inject(ErrorService);
@@ -44,6 +50,7 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
    * @param before 开始加载后的初始化操作
    */
   protected startLoading(before?: Action): void | Promise<void> {
+    this.loadingQueue += 1;
     this.loading.set(true);
     this.nProgress.start();
     const result = before?.apply(this);
@@ -60,7 +67,11 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
     const delay = config?.delay ? config?.delay : 300;
     const action = config?.after;
     setTimeout(() => {
-      this.loading.set(false);
+      this.loadingQueue -= 1;
+      if (this.loadingQueue <= 0) {
+        this.loadingQueue = 0;
+        this.loading.set(false);
+      }
       this.nProgress.done(true);
       action?.apply(this);
     }, delay);
