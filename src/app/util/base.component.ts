@@ -54,7 +54,7 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
     this.loading.set(true);
     this.nProgress.start();
     const result = before?.apply(this);
-    if (result instanceof Promise<void>) {
+    if (result instanceof Promise) {
       return result;
     }
   }
