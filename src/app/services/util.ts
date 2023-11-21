@@ -83,9 +83,10 @@ export function errorMessage(err: any, topic?: string) {
     if (err instanceof ResultError) {
       msg = err.msg ? err.msg : '服务异常';
     } else {
-      console.error(err);
       msg = err.message ? err.message : '未知错误';
     }
+  } else if (typeof err === 'string') {
+    msg = err;
   } else {
     console.error(err);
     msg = "未知错误";
@@ -93,6 +94,7 @@ export function errorMessage(err: any, topic?: string) {
   if (null != topic) {
     msg = topic + ":" + msg;
   }
+  console.error(err);
   return msg;
 }
 

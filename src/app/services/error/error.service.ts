@@ -19,8 +19,15 @@ export class ErrorService {
       nzTitle: '操作失败',
       nzContent: msg
     });
+    // 会话失效处理, 或者弹出登陆对话框?
     if (err instanceof ResultError && "1" === err.code) {
-      this.router.navigateByUrl("/login");
+      this.modal.confirm({
+        nzTitle: '会话已失效',
+        nzContent: '是否需要重新登录?',
+        nzOnOk: () => {
+          this.router.navigateByUrl("/login");
+        }
+      });
     }
   }
 
