@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -11,10 +11,6 @@ import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzFormModule} from "ng-zorro-antd/form";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzInputModule} from "ng-zorro-antd/input";
-import {
-  NzTransitionPatchModule
-} from "ng-zorro-antd/core/transition-patch/transition-patch.module";
-import {NzWaveModule} from "ng-zorro-antd/core/wave";
 import {BaseComponent} from "../../../util/base.component";
 import {NZ_MODAL_DATA} from "ng-zorro-antd/modal";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
@@ -23,7 +19,7 @@ import {SystemResourceUpdateConfig} from "./vo/SystemResourceUpdateConfig";
 @Component({
   selector: 'app-system-resource-update',
   standalone: true,
-  imports: [CommonModule, FormsModule, NzButtonModule, NzFormModule, NzGridModule, NzInputModule, NzTransitionPatchModule, NzWaveModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, NzButtonModule, NzFormModule, NzGridModule, NzInputModule, ReactiveFormsModule],
   templateUrl: './system-resource-update.component.html',
   styleUrls: ['./system-resource-update.component.scss']
 })
