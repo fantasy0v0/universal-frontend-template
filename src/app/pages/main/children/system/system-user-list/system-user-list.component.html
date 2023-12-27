@@ -55,25 +55,24 @@
       <td>{{ item.createdAt | date: 'yyyy年MM月dd日 HH:mm:ss' }}</td>
       <td>
         <nz-space>
-          <ng-container *ngIf="item.role.id !== 0">
+          @if (item.role.id !== 0) {
             <button  *nzSpaceItem
-              nz-button nzType="link" nzSize="small"
-              nz-popconfirm nzPopconfirmTitle="是否确认重置该用户的密码?"
-              (nzOnConfirm)="restPassword(item)"
+                     nz-button nzType="link" nzSize="small"
+                     nz-popconfirm nzPopconfirmTitle="是否确认重置该用户的密码?"
+                     (nzOnConfirm)="restPassword(item)"
             >重置密码</button>
-            <ng-container *ngIf="'正常' === item.status">
+            @if ('正常' === item.status) {
               <button *nzSpaceItem
-                nz-button nzType="link" nzSize="small"
-                nz-popconfirm nzPopconfirmTitle="是否确认禁用该用户?"
-                (nzOnConfirm)="enable(item, false)">禁用</button>
-            </ng-container>
-            <ng-container *ngIf="'已禁用' === item.status">
+                      nz-button nzType="link" nzSize="small"
+                      nz-popconfirm nzPopconfirmTitle="是否确认禁用该用户?"
+                      (nzOnConfirm)="enable(item, false)">禁用</button>
+            } @else if ('已禁用' === item.status) {
               <button *nzSpaceItem
                       nz-button nzType="link" nzSize="small"
                       nz-popconfirm nzPopconfirmTitle="是否确认启用该用户?"
                       (nzOnConfirm)="enable(item, true)">启用</button>
-            </ng-container>
-          </ng-container>
+            }
+          }
         </nz-space>
       </td>
     </tr>

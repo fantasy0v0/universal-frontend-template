@@ -5,12 +5,12 @@
                      [nzErrorTip]="nameErrorTpl">
       <input nz-input formControlName="name" />
       <ng-template #nameErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
+        @if (control.hasError('required')) {
           请输入用户姓名
-        </ng-container>
-        <ng-container *ngIf="control.hasError('minLength')">
+        }
+        @if (control.hasError('minLength')) {
           用户姓名不能少于2位
-        </ng-container>
+        }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -24,9 +24,9 @@
         </ng-container>
       </nz-select>
       <ng-template #roleErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
+        @if (control.hasError('required')) {
           请选择用户角色
-        </ng-container>
+        }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -44,9 +44,9 @@
         <nz-option [nzValue]="0" nzLabel="网页"></nz-option>
       </nz-select>
       <ng-template #typeErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
+        @if (control.hasError('required')) {
           请选择认证方式
-        </ng-container>
+        }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -56,12 +56,12 @@
                      [nzErrorTip]="accountErrorTpl">
       <input nz-input formControlName="account" />
       <ng-template #accountErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
+        @if (control.hasError('required')) {
           请输入用户账号
-        </ng-container>
-        <ng-container *ngIf="control.hasError('minLength')">
+        }
+        @if (control.hasError('minLength')) {
           用户账号不能少于6位
-        </ng-container>
+        }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -71,12 +71,12 @@
                      [nzErrorTip]="passwordErrorTpl">
       <input nz-input formControlName="password" />
       <ng-template #passwordErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
+        @if (control.hasError('required')) {
           请输入用户密码
-        </ng-container>
-        <ng-container *ngIf="control.hasError('minLength')">
+        }
+        @if (control.hasError('minLength')) {
           用户密码不能少于6位
-        </ng-container>
+        }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
