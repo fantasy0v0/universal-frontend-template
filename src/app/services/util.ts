@@ -237,3 +237,36 @@ export function sleep(millis: number) {
     setTimeout(resolve, millis);
   });
 }
+
+/**
+ * 弹出文件选择对话框
+ * @param accept 文件筛选
+ */
+export function selectFiles(accept: string) {
+  const input = document.createElement('input');
+  input.type = 'file';
+  if (accept) {
+    input.accept = accept;
+  }
+  let isResolve = false;
+  const promise = new Promise<FileList | undefined>((resolve, reject) => {
+    input.onchange = () => {
+      isResolve = true;
+      if (null == input.files || 0 === input.files?.length) {
+        resolve(undefined);
+        return;
+      }
+      resolve(input.files);
+    };
+    window.addEventListener('focus', () => {
+      setTimeout(() => {
+        input.remove();
+        if (!isResolve) {
+          resolve(undefined);
+        }
+      }, 150);
+    }, { once: true });
+  });
+  input.click();
+  return promise;
+}
