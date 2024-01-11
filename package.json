@@ -19,9 +19,9 @@
     "@angular/platform-browser": "^17.0.4",
     "@angular/platform-browser-dynamic": "^17.0.4",
     "@angular/router": "^17.0.4",
-    "@ant-design/icons-angular": "^16.0.0",
     "luxon": "^3.3.0",
-    "ng-zorro-antd": "17.0.1",
+    "ng-zorro-antd": "^17.1.0",
+    "@ant-design/icons-angular": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
