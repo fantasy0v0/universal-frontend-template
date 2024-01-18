@@ -3,11 +3,6 @@ import {SimpleDataVO} from "../../../vo/SimpleDataVO";
 export interface Session {
 
   /**
-   * 认证信息
-   */
-  token: string;
-
-  /**
    * 用户信息
    */
   user: SimpleDataVO;

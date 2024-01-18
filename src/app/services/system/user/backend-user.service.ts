@@ -25,7 +25,7 @@ export class BackendUserService {
    */
   async login(account: string, password: string, rememberMe: boolean) {
     let observable = this.http.post<Result<Session>>(`${ApiPrefix}/user/login`, {
-      account, password, rememberMe, type: 0
+      account, password, rememberMe, type: 0,
     });
     const session = await getResult(observable);
     saveSession(session);
@@ -198,9 +198,9 @@ function expired(session: Session) {
  * 生成认证消息头
  */
 export function getAuthorizationHeader() {
-  let session = getSession();
+  // let session = getSession();
   return {
-    Authorization: session ? session.token : ""
+    Authorization: ""
   };
 }
 
