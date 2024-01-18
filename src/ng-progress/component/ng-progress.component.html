@@ -1,10 +1,14 @@
 @if (state.active) {
-  <div class="nprogress" *ngIf="settings">
-    <div class="bar" role="bar" [ngStyle]="state.style" [style.background-color]="settings.color">
-      <div class="peg" [style.box-shadow]="'0 0 10px ' + settings.color + ', 0 0 5px ' + settings.color"></div>
+  @if (settings) {
+    <div class="nprogress">
+      <div class="bar" role="bar" [ngStyle]="state.style" [style.background-color]="settings.color">
+        <div class="peg" [style.box-shadow]="'0 0 10px ' + settings.color + ', 0 0 5px ' + settings.color"></div>
+      </div>
+      @if (settings.showSpinner) {
+        <div class="spinner" role="spinner">
+          <div class="spinner-icon" [style.border-top-color]="settings.color" [style.border-left-color]="settings.color"></div>
+        </div>
+      }
     </div>
-    <div class="spinner" role="spinner" *ngIf="settings.showSpinner">
-      <div class="spinner-icon" [style.border-top-color]="settings.color" [style.border-left-color]="settings.color"></div>
-    </div>
-  </div>
+  }
 }

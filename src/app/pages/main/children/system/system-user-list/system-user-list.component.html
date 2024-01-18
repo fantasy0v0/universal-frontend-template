@@ -7,14 +7,16 @@
         </ng-container>
       </nz-select>
       <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" *nzSpaceItem>
-        <input type="text" nz-input placeholder="按名称搜索" formControlName="name" />
+        <input type="text" nz-input placeholder="按名称搜索" formControlName="name"/>
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch (click)="onSearch()" [nzLoading]="loading()">
+        <button nz-button nzType="primary" nzSearch (click)="onSearch()"
+                [nzLoading]="loading()">
           <span nz-icon nzType="search"></span>
         </button>
       </ng-template>
-      <button nz-button nzType="primary" nzShape="circle" *nzSpaceItem title="新增用户" (click)="toAddUser()">
+      <button nz-button nzType="primary" nzShape="circle" *nzSpaceItem title="新增用户"
+              (click)="toAddUser()">
         <span nz-icon nzType="plus"></span>
       </button>
     </nz-space>
@@ -39,43 +41,52 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of data">
-      <td>{{ item.id }}</td>
-      <td>{{ item.name }}</td>
-      <td>{{ item.role.name }}</td>
-      <td>
-        <ng-container [ngSwitch]="item.status">
-          <nz-badge *ngSwitchCase="'未确认'" nzStatus="warning" [nzText]="item.status"></nz-badge>
-          <nz-badge *ngSwitchCase="'正常'" nzStatus="success" [nzText]="item.status"></nz-badge>
-          <nz-badge *ngSwitchCase="'已禁用'" nzStatus="error" [nzText]="item.status"></nz-badge>
-          <nz-badge *ngSwitchDefault nzStatus="default" [nzText]="item.status"></nz-badge>
-        </ng-container>
-      </td>
-      <td>{{ item.contactNumber ?? '无' }}</td>
-      <td>{{ item.createdAt | date: 'yyyy年MM月dd日 HH:mm:ss' }}</td>
-      <td>
-        <nz-space>
-          @if (item.role.id !== 0) {
-            <button  *nzSpaceItem
-                     nz-button nzType="link" nzSize="small"
-                     nz-popconfirm nzPopconfirmTitle="是否确认重置该用户的密码?"
-                     (nzOnConfirm)="restPassword(item)"
-            >重置密码</button>
-            @if ('正常' === item.status) {
-              <button *nzSpaceItem
-                      nz-button nzType="link" nzSize="small"
-                      nz-popconfirm nzPopconfirmTitle="是否确认禁用该用户?"
-                      (nzOnConfirm)="enable(item, false)">禁用</button>
-            } @else if ('已禁用' === item.status) {
-              <button *nzSpaceItem
-                      nz-button nzType="link" nzSize="small"
-                      nz-popconfirm nzPopconfirmTitle="是否确认启用该用户?"
-                      (nzOnConfirm)="enable(item, true)">启用</button>
-            }
-          }
-        </nz-space>
-      </td>
-    </tr>
+      @for (item of data; track item.id) {
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.role.name }}</td>
+          <td>
+            <ng-container [ngSwitch]="item.status">
+              <nz-badge *ngSwitchCase="'未确认'" nzStatus="warning"
+                        [nzText]="item.status"></nz-badge>
+              <nz-badge *ngSwitchCase="'正常'" nzStatus="success"
+                        [nzText]="item.status"></nz-badge>
+              <nz-badge *ngSwitchCase="'已禁用'" nzStatus="error"
+                        [nzText]="item.status"></nz-badge>
+              <nz-badge *ngSwitchDefault nzStatus="default"
+                        [nzText]="item.status"></nz-badge>
+            </ng-container>
+          </td>
+          <td>{{ item.contactNumber ?? '无' }}</td>
+          <td>{{ item.createdAt | date: 'yyyy年MM月dd日 HH:mm:ss' }}</td>
+          <td>
+            <nz-space>
+              @if (item.role.id !== 0) {
+                <button *nzSpaceItem
+                        nz-button nzType="link" nzSize="small"
+                        nz-popconfirm nzPopconfirmTitle="是否确认重置该用户的密码?"
+                        (nzOnConfirm)="restPassword(item)"
+                >重置密码
+                </button>
+                @if ('正常' === item.status) {
+                  <button *nzSpaceItem
+                          nz-button nzType="link" nzSize="small"
+                          nz-popconfirm nzPopconfirmTitle="是否确认禁用该用户?"
+                          (nzOnConfirm)="enable(item, false)">禁用
+                  </button>
+                } @else if ('已禁用' === item.status) {
+                  <button *nzSpaceItem
+                          nz-button nzType="link" nzSize="small"
+                          nz-popconfirm nzPopconfirmTitle="是否确认启用该用户?"
+                          (nzOnConfirm)="enable(item, true)">启用
+                  </button>
+                }
+              }
+            </nz-space>
+          </td>
+        </tr>
+      }
     </tbody>
   </nz-table>
 </div>

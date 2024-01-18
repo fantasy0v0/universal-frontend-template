@@ -5,12 +5,12 @@
                      [nzErrorTip]="nameErrorTpl">
       <input nz-input formControlName="name" />
       <ng-template #nameErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
+        @if (control.hasError('required')) {
           请输入角色名称
-        </ng-container>
-        <ng-container *ngIf="control.hasError('minLength')">
+        }
+        @if (control.hasError('minLength')) {
           角色名称不能少于2个字符
-        </ng-container>
+        }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
