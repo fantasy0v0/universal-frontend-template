@@ -1,11 +1,11 @@
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { BackendUserService } from "../../services/system/user/backend-user.service";
+import {Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
+import {BackendUserService} from "../../services/system/user/backend-user.service";
 
 @Directive({
-  standalone: true,
-  selector: '[appHasPermission]'
+  selector: '[appSecuredAny]',
+  standalone: true
 })
-export class HasPermissionDirective {
+export class SecuredAnyDirective {
 
   constructor(private userService: BackendUserService,
               private viewContainer: ViewContainerRef,
@@ -15,7 +15,7 @@ export class HasPermissionDirective {
    * 允许的权限列表, 满足任意一个即可
    */
   @Input()
-  set appHasPermission(permissions: string[]) {
+  set appSecuredAny(permissions: string[]) {
     const result = this.userService.hasPermission(permissions);
     if (!result) {
       this.viewContainer.clear();
@@ -23,5 +23,4 @@ export class HasPermissionDirective {
       this.viewContainer.createEmbeddedView(this.templateRef);
     }
   }
-
 }

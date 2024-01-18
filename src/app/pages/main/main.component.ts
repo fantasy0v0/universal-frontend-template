@@ -10,8 +10,8 @@ import {BackendUserService} from "../../services/system/user/backend-user.servic
 import {UserInfo} from "../../services/system/user/vo/UserInfo";
 import {SystemDialogService} from "../../services/dialog/system/system-dialog.service";
 import {CommonModule, NgOptimizedImage} from '@angular/common';
-import {HasPermissionDirective} from 'src/app/directives/has-permission/has-permission.directive';
 import {ErrorService} from 'src/app/services/error/error.service';
+import {SecuredDirective} from "../../directives/secured/secured.directive";
 
 @Component({
   standalone: true,
@@ -30,8 +30,8 @@ import {ErrorService} from 'src/app/services/error/error.service';
     NzIconModule,
     NzAvatarModule,
     NzDropDownModule,
-    HasPermissionDirective,
-    NgOptimizedImage
+    NgOptimizedImage,
+    SecuredDirective
   ]
 })
 export class MainComponent implements OnInit {
