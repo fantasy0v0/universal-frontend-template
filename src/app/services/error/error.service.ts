@@ -15,10 +15,6 @@ export class ErrorService {
   process(err: any, topic?: string) {
     console.debug(err);
     const msg = errorMessage(err, topic);
-    this.modal.error({
-      nzTitle: '操作失败',
-      nzContent: msg
-    });
     // 会话失效处理, 或者弹出登陆对话框?
     if (err instanceof ResultError && "1" === err.code) {
       this.modal.confirm({
@@ -27,6 +23,11 @@ export class ErrorService {
         nzOnOk: () => {
           this.router.navigateByUrl("/login");
         }
+      });
+    } else {
+      this.modal.error({
+        nzTitle: '操作失败',
+        nzContent: msg
       });
     }
   }
