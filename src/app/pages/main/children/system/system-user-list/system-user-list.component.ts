@@ -98,7 +98,7 @@ export class SystemUserListComponent extends BaseComponent {
       const name = this.formGroup.getRawValue().name;
       const pagingResult = await this.userService.findAll(this.paging, name, role);
       this.total = pagingResult.total;
-      this.data = pagingResult.content;
+      this.data = pagingResult.data;
     } catch (e) {
       this.error.process(e);
     } finally {

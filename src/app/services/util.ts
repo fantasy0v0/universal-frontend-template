@@ -179,7 +179,7 @@ export class PagingData<T> {
   /**
    * 分页记录
    */
-  content!: T[];
+  data!: T[];
 
 }
 
