@@ -72,8 +72,9 @@ export class LoginComponent extends BaseComponent {
         nzDuration: 0
       });
       this.router.navigateByUrl('/main');
-      await sleep(200);
-      this.notification.remove(ref.messageId);
+      setTimeout(() => {
+        this.notification.remove(ref.messageId);
+      }, 1000);
     } catch (e) {
       const message = errorMessage(e);
       this.notification.error('登录失败', message);
