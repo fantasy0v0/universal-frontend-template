@@ -18,11 +18,6 @@ export interface SystemUserVO {
   status: string
 
   /**
-   * 联系号码
-   */
-  contactNumber?: string;
-
-  /**
    * 角色
    */
   role: SimpleDataVO,
