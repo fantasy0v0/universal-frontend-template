@@ -5,12 +5,12 @@
                      [nzErrorTip]="nameErrorTpl">
       <input nz-input formControlName="name" />
       <ng-template #nameErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
+        @if (control.hasError('required')) {
           请输入资源名称
-        </ng-container>
-        <ng-container *ngIf="control.hasError('minLength')">
+        }
+        @if (control.hasError('minLength')) {
           资源名称不能少于2个字符
-        </ng-container>
+        }
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -29,21 +29,13 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="7">上级信息</nz-form-label>
     <nz-form-control [nzSpan]="12">
-      @if (undefined !== parent) {
-        {{ parent.name }}
-      } @else {
-        无
-      }
+      {{ undefined !== parent ? parent.name : '无' }}
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button nz-button nzType="primary" type="submit" [nzLoading]="loading()">
-        @if (0 !== id) {
-          修改
-        } @else {
-          添加
-        }
+        {{ 0 !== id ? '修改' : '添加' }}
       </button>
     </nz-form-control>
   </nz-form-item>

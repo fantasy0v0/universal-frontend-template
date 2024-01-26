@@ -2,14 +2,16 @@
   <form [formGroup]="formGroup">
     <nz-space>
       <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" *nzSpaceItem>
-        <input type="text" nz-input placeholder="按名称搜索" formControlName="name" />
+        <input type="text" nz-input placeholder="按名称搜索" formControlName="name"/>
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch (click)="onSearch()" [nzLoading]="loading()">
+        <button nz-button nzType="primary" nzSearch (click)="onSearch()"
+                [nzLoading]="loading()">
           <span nz-icon nzType="search"></span>
         </button>
       </ng-template>
-      <button nz-button nzType="primary" nzShape="circle" *nzSpaceItem title="新增角色" (click)="saveOrUpdate()">
+      <button nz-button nzType="primary" nzShape="circle" *nzSpaceItem title="新增角色"
+              (click)="saveOrUpdate()">
         <span nz-icon nzType="plus"></span>
       </button>
     </nz-space>
@@ -26,25 +28,27 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of data">
-      <td>{{ item.id }}</td>
-      <td>{{ item.name }}</td>
-      <td>
-        <nz-space>
-          @if (item.id > 1000) {
-            <button  *nzSpaceItem
-                     nz-button nzType="link" nzSize="small"
-                     nz-popconfirm nzPopconfirmTitle="是否确认删除该角色?"
-                     (nzOnConfirm)="deleteRole(item)"
-            >删除</button>
-            <button  *nzSpaceItem
-                     nz-button nzType="link" nzSize="small"
-                     (click)="saveOrUpdate(item)"
-            >编辑</button>
-          }
-        </nz-space>
-      </td>
-    </tr>
+      @for (item of data; track item.id) {
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>
+          <nz-space>
+            @if (item.id > 1000) {
+              <button *nzSpaceItem
+                      nz-button nzType="link" nzSize="small"
+                      nz-popconfirm nzPopconfirmTitle="是否确认删除该角色?"
+                      (nzOnConfirm)="deleteRole(item)"
+              >删除
+              </button>
+              <button *nzSpaceItem
+                      nz-button nzType="link" nzSize="small"
+                      (click)="saveOrUpdate(item)"
+              >编辑
+              </button>
+            }
+          </nz-space>
+        </td>
+      }
     </tbody>
   </nz-table>
 </div>

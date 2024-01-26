@@ -17,12 +17,7 @@
   <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button nz-button nzType="primary" type="submit" [nzLoading]="loading()">
-        <ng-container *ngIf="null != data else elseTemplate">
-          修改
-        </ng-container>
-        <ng-template #elseTemplate>
-          添加
-        </ng-template>
+        {{ undefined != data ? '修改' : '添加' }}
       </button>
     </nz-form-control>
   </nz-form-item>

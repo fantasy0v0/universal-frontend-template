@@ -1,4 +1,4 @@
-import {Component, inject, Inject, OnInit, signal} from '@angular/core';
+import {Component, inject, Inject, OnInit, Optional, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {NZ_MODAL_DATA, NzModalRef} from "ng-zorro-antd/modal";
@@ -37,8 +37,9 @@ export class BackendRoleUpdateComponent extends BaseComponent {
 
   private message = inject(NzMessageService);
 
-  constructor(@Inject(NZ_MODAL_DATA)
-              public data: SimpleDataVO) {
+  constructor(@Optional()
+              @Inject(NZ_MODAL_DATA)
+              public data?: SimpleDataVO) {
     super();
   }
 

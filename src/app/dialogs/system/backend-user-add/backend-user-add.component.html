@@ -19,9 +19,9 @@
     <nz-form-control [nzSpan]="12" nzHasFeedback
                      [nzErrorTip]="roleErrorTpl">
       <nz-select formControlName="role">
-        <ng-container *ngFor="let role of roles">
+        @for (role of roles; track role.id) {
           <nz-option [nzValue]="role.id" [nzLabel]="role.name"></nz-option>
-        </ng-container>
+        }
       </nz-select>
       <ng-template #roleErrorTpl let-control>
         @if (control.hasError('required')) {
