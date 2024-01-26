@@ -1,11 +1,10 @@
-import {Component, inject, Inject, OnInit, Optional, signal} from '@angular/core';
+import {Component, inject, Inject, Optional} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SimpleDataVO} from "../../../services/vo/SimpleDataVO";
 import {NZ_MODAL_DATA, NzModalRef} from "ng-zorro-antd/modal";
 import {formGroupInvalid} from "../../../services/util";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {BackendRoleService} from "../../../services/system/role/backend-role.service";
-import {ErrorService} from "../../../services/error/error.service";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzButtonModule} from 'ng-zorro-antd/button';
