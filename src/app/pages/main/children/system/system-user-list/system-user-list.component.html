@@ -35,7 +35,6 @@
       <th>姓名</th>
       <th>角色</th>
       <th nzWidth="5rem">状态</th>
-      <th>联系号码</th>
       <th>创建时间</th>
       <th>操作</th>
     </tr>
@@ -58,7 +57,6 @@
                         [nzText]="item.status"></nz-badge>
             </ng-container>
           </td>
-          <td>{{ item.contactNumber ?? '无' }}</td>
           <td>{{ item.createdAt | date: 'yyyy年MM月dd日 HH:mm:ss' }}</td>
           <td>
             <nz-space>
