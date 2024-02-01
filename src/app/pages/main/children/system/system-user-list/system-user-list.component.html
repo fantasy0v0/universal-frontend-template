@@ -46,16 +46,24 @@
           <td>{{ item.name }}</td>
           <td>{{ item.role.name }}</td>
           <td>
-            <ng-container [ngSwitch]="item.status">
-              <nz-badge *ngSwitchCase="'未确认'" nzStatus="warning"
-                        [nzText]="item.status"></nz-badge>
-              <nz-badge *ngSwitchCase="'正常'" nzStatus="success"
-                        [nzText]="item.status"></nz-badge>
-              <nz-badge *ngSwitchCase="'已禁用'" nzStatus="error"
-                        [nzText]="item.status"></nz-badge>
-              <nz-badge *ngSwitchDefault nzStatus="default"
-                        [nzText]="item.status"></nz-badge>
-            </ng-container>
+            @switch (item.status) {
+              @case ('未确认') {
+                <nz-badge nzStatus="warning"
+                          [nzText]="item.status"></nz-badge>
+              }
+              @case ('正常') {
+                <nz-badge nzStatus="success"
+                          [nzText]="item.status"></nz-badge>
+              }
+              @case ('已禁用') {
+                <nz-badge nzStatus="error"
+                          [nzText]="item.status"></nz-badge>
+              }
+              @default {
+                <nz-badge nzStatus="default"
+                          [nzText]="item.status"></nz-badge>
+              }
+            }
           </td>
           <td>{{ item.createdAt | date: 'yyyy年MM月dd日 HH:mm:ss' }}</td>
           <td>
