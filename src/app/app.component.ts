@@ -18,9 +18,6 @@ import {NgProgressRouterService} from 'src/ng-progress/ng-progress-router.servic
   ]
 })
 export class AppComponent {
-
-  private ngProgressRouterService = inject(NgProgressRouterService);
-
   prepareRoute(outlet: RouterOutlet) {
     return outlet.isActivated ? outlet.activatedRoute : '';
   }
