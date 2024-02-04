@@ -1,8 +1,7 @@
-import {Component, inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {routeAnimation} from './animations/route';
 import {NgProgressComponent} from 'src/ng-progress/component/ng-progress.component';
-import {NgProgressRouterService} from 'src/ng-progress/ng-progress-router.service';
 
 @Component({
   selector: 'app-root',
