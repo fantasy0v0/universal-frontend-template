@@ -3,6 +3,7 @@ import {ErrorService} from "../services/error/error.service";
 import {NgProgress} from "../../ng-progress/ng-progress.service";
 
 type Action = () => void | Promise<void>;
+type ActionError = (e: unknown) => void | Promise<void>;
 
 type StopLoadingConfig = {
   /**
@@ -77,17 +78,18 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
     }, delay);
   }
 
-  protected async action(action: Action, config?: { before?: Action, after?: Action, done?: Action, error?: Action, finally?: Action }) {
+  protected async action(action: Action, config?: { before?: Action, after?: Action, done?: Action, error?: ActionError, finally?: Action }) {
     await this.startLoading(config?.before);
     try {
-      action();
+      await action();
       if (config?.done) {
-        config.done();
+        await config.done();
       }
     } catch (e) {
-      this.error.process(e);
       if (config?.error) {
-        config.error();
+        await config.error(e);
+      } else {
+        this.error.process(e);
       }
     } finally {
       this.stopLoading({ after: config?.finally })

@@ -1,10 +1,10 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, Signal, signal} from '@angular/core';
 import {BingService} from "../../services/bing/bing.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import {BackendUserService} from "../../services/system/user/backend-user.service";
-import {errorMessage, formGroupInvalid, sleep} from "../../services/util";
+import {errorMessage, formGroupInvalid} from "../../services/util";
 import {CommonModule} from '@angular/common';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzButtonModule} from 'ng-zorro-antd/button';
@@ -42,31 +42,26 @@ export class LoginComponent extends BaseComponent {
 
   private router = inject(Router);
 
-  override ngOnInit(): void {
+  backgroundImage = signal<string | undefined>(undefined);
+
+  opacity = signal(.1);
+
+  constructor() {
+    super();
     this.bingService.wallpaper().then(url => {
-      this.setBackgroundImage(url)
+      this.backgroundImage.set(`url(${ url })`);
+      setTimeout(() => this.opacity.set(1), 100);
     });
   }
 
-  private setBackgroundImage(url: string) {
-    const element = document.querySelector('#wallpaper') as HTMLElement | null;
-    if (null != element) {
-      element.style.backgroundImage = `url(${ url })`;
-      setTimeout(() => element.style.opacity = '1', 100);
-    }
-  }
-
-  async submitForm() {
+  submitForm() {
     if (formGroupInvalid(this.formGroup)) {
       return;
     }
     const account = this.formGroup.getRawValue().account!;
     const password = this.formGroup.getRawValue().password!;
     const rememberMe = this.formGroup.getRawValue().rememberMe!;
-    this.startLoading(() => {
-      this.formGroup.disable();
-    });
-    try {
+    this.action(async () => {
       await this.userService.login(account, password, rememberMe);
       const ref = this.notification.success('登录成功', '正在加载中, 请稍后...', {
         nzDuration: 0
@@ -75,16 +70,17 @@ export class LoginComponent extends BaseComponent {
       setTimeout(() => {
         this.notification.remove(ref.messageId);
       }, 1000);
-    } catch (e) {
-      const message = errorMessage(e);
-      this.notification.error('登录失败', message);
-    } finally {
-      this.stopLoading({
-        after: () => {
-          this.formGroup.enable();
-        }
-      });
-    }
+    }, {
+      error: e => {
+        const message = errorMessage(e);
+        this.notification.error('登录失败', message, {
+          nzPlacement: "topLeft"
+        });
+      },
+      after: () => {
+        this.formGroup.enable();
+      }
+    });
   }
 
 }

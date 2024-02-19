@@ -1,7 +1,12 @@
-<div id="wallpaper"></div>
+<div id="wallpaper"
+     [style.background-image]="backgroundImage()"
+     [style.opacity]="opacity()"></div>
 <div class="box">
-  <div class="logo">Logo</div>
-  <div class="title">登录通用管理后台</div>
+  <div class="title">
+    <img src="assets/logo.svg">
+    <span>Ant Design</span>
+  </div>
+  <div class="sub-title text-shadow">Ant Design 是西湖区最具影响力的 Web 设计规范</div>
   <div class="content">
     <form nz-form [formGroup]="formGroup" class="login-form"
           nzLayout="vertical"
@@ -9,11 +14,11 @@
       <nz-form-item>
         <nz-form-label nzFor="account">账号</nz-form-label>
         <nz-form-control [nzErrorTip]="accountErrorTpl">
-          <nz-input-group nzPrefixIcon="user">
+          <nz-input-group nzPrefixIcon="user" nzSize="large">
             <input type="text" nz-input formControlName="account"
                    id="account"
                    autocomplete="username"
-                   placeholder="帐号"/>
+                   placeholder="请输入账号"/>
           </nz-input-group>
           <ng-template #accountErrorTpl let-control>
             @if (control.hasError('required')) {
@@ -31,11 +36,11 @@
       <nz-form-item>
         <nz-form-label nzFor="password">密码:</nz-form-label>
         <nz-form-control [nzErrorTip]="passwordErrorTpl">
-          <nz-input-group nzPrefixIcon="lock">
+          <nz-input-group nzPrefixIcon="lock" nzSize="large">
             <input type="password" nz-input formControlName="password"
                    id="password"
                    autocomplete="current-password"
-                   placeholder="密码"/>
+                   placeholder="请输入密码"/>
           </nz-input-group>
           <ng-template #passwordErrorTpl let-control>
             @if (control.hasError('required')) {
@@ -53,7 +58,7 @@
       <div nz-row class="login-form-margin">
         <div nz-col [nzSpan]="12">
           <label nz-checkbox formControlName="rememberMe">
-            <span>记住我</span>
+            <span class="text-shadow">自动登录</span>
           </label>
         </div>
       </div>
