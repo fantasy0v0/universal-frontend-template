@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -16,6 +16,7 @@ import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {BaseComponent} from "../../util/base.component";
+import {NzIconDirective} from "ng-zorro-antd/icon";
 
 function passwordMatcherValidator(control: AbstractControl): ValidationErrors | null {
   if (null == control.parent) {
@@ -42,7 +43,9 @@ function passwordMatcherValidator(control: AbstractControl): ValidationErrors | 
     NzFormModule,
     NzInputModule,
     NzButtonModule,
-  ]
+    NzIconDirective,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangePasswordComponent extends BaseComponent {
 
@@ -52,11 +55,33 @@ export class ChangePasswordComponent extends BaseComponent {
     repeat: new FormControl("", [ passwordMatcherValidator ])
   });
 
+  passwordVisible = signal(false);
+
   private modal = inject(NzModalRef);
 
   private userService = inject(BackendUserService);
 
   private message = inject(NzMessageService);
+
+  constructor() {
+    super();
+    this.modal.updateConfig({
+      nzFooter: [
+        {
+          label: '确认',
+          type: 'primary',
+          show: true,
+          onClick: () => this.submitForm()
+        },
+        {
+          label: '取消',
+          type: 'default',
+          show: true,
+          onClick: () => this.modal.close()
+        }
+      ]
+    })
+  }
 
   destroyModal(): void {
     this.modal.destroy();
@@ -68,16 +93,11 @@ export class ChangePasswordComponent extends BaseComponent {
     }
     const password = this.formGroup.getRawValue().password!;
     const newPassword = this.formGroup.getRawValue().newPassword!;
-    this.startLoading();
-    try {
+    await this.action(async () => {
       await this.userService.changePassword(password, newPassword);
       this.message.success('密码修改成功');
       this.destroyModal();
-    } catch (e) {
-      this.error.process(e, "密码修改失败");
-    } finally {
-      this.stopLoading();
-    }
+    });
   }
 
 }

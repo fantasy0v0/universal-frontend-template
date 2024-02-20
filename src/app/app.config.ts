@@ -23,7 +23,8 @@ import {
   AppstoreOutline,
   ReloadOutline,
   FileImageTwoTone,
-  PlusSquareOutline, MinusSquareOutline
+  PlusSquareOutline, MinusSquareOutline,
+  LogoutOutline, EyeOutline, EyeInvisibleOutline
 } from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -34,7 +35,8 @@ const icons: IconDefinition[] = [
   MenuUnfoldOutline, MenuFoldOutline,
   SettingOutline, FundTwoTone, TeamOutline, PlusOutline,
   AppstoreOutline, ReloadOutline, FileImageTwoTone,
-  MinusSquareOutline, PlusSquareOutline
+  MinusSquareOutline, PlusSquareOutline,
+  LogoutOutline, EyeOutline, EyeInvisibleOutline
 ];
 
 export const appConfig: ApplicationConfig = {

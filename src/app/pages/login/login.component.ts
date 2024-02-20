@@ -1,4 +1,4 @@
-import {Component, inject, Signal, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {BingService} from "../../services/bing/bing.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";

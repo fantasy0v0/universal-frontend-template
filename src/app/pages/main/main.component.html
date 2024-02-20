@@ -50,16 +50,22 @@
       ></i>
       @if (userInfo) {
         <span class="user-info">
-          <nz-avatar [nzSize]="35" nzIcon="user"></nz-avatar>
+          <nz-avatar [nzSize]="35" nzSrc="assets/default_face.png"></nz-avatar>
           <span class="role">{{ userInfo.role.name }}</span>
           <span class="name" nz-dropdown
                 [nzDropdownMenu]="menu">{{ userInfo.name }}</span>
         </span>
       }
       <nz-dropdown-menu #menu="nzDropdownMenu">
-        <ul nz-menu>
-          <li nz-menu-item (click)="changePassword()">修改密码</li>
-          <li nz-menu-item (click)="logout()">退出</li>
+        <ul class="dropdown-menu" nz-menu>
+          <li nz-menu-item (click)="changePassword()">
+            <i nz-icon nzTheme="outline" nzType="lock"></i>
+            <span>修改密码</span>
+          </li>
+          <li nz-menu-item (click)="logout()">
+            <i nz-icon nzTheme="outline" nzType="logout"></i>
+            <span>退出</span>
+          </li>
         </ul>
       </nz-dropdown-menu>
     </nz-header>

@@ -92,3 +92,9 @@ nz-header {
     }
   }
 }
+
+ul.dropdown-menu {
+  & > li i {
+    margin-right: .75rem;
+  }
+}
