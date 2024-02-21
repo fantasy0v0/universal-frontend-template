@@ -80,7 +80,7 @@ export class ChangePasswordComponent extends BaseComponent {
           onClick: () => this.modal.close()
         }
       ]
-    })
+    });
   }
 
   destroyModal(): void {
