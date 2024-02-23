@@ -1,5 +1,5 @@
 import {Component, inject, OnDestroy, OnInit, signal} from "@angular/core";
-import {ErrorService} from "../services/error/error.service";
+import {ErrorService} from "../services/built-in/error/error.service";
 import {NgProgress} from "../../ng-progress/ng-progress.service";
 
 type Action = () => void | Promise<void>;

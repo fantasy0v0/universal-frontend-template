@@ -1,0 +1,71 @@
+<div id="wallpaper"
+     [style.background-image]="backgroundImage()"
+     [style.opacity]="opacity()"></div>
+<div class="box">
+  <div class="title">
+    <img src="../../../../favicon.png">
+    <img src="../../../../assets/logo.svg">
+    <span>Ant Design</span>
+  </div>
+  <div class="sub-title text-shadow">Ant Design 是西湖区最具影响力的 Web 设计规范</div>
+  <div class="content">
+    <form nz-form [formGroup]="formGroup" class="login-form"
+          nzLayout="vertical"
+          (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label nzFor="account">账号</nz-form-label>
+        <nz-form-control [nzErrorTip]="accountErrorTpl">
+          <nz-input-group nzPrefixIcon="user" nzSize="large">
+            <input type="text" nz-input formControlName="account"
+                   id="account"
+                   autocomplete="username"
+                   placeholder="请输入账号"/>
+          </nz-input-group>
+          <ng-template #accountErrorTpl let-control>
+            @if (control.hasError('required')) {
+              请输入您的帐号
+            }
+            @if (control.hasError('minlength')) {
+              帐号的长度不能少于6位
+            }
+            @if (control.hasError('maxlength')) {
+              帐号的长度不能超过255
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="password">密码:</nz-form-label>
+        <nz-form-control [nzErrorTip]="passwordErrorTpl">
+          <nz-input-group nzPrefixIcon="lock" nzSize="large">
+            <input type="password" nz-input formControlName="password"
+                   id="password"
+                   autocomplete="current-password"
+                   placeholder="请输入密码"/>
+          </nz-input-group>
+          <ng-template #passwordErrorTpl let-control>
+            @if (control.hasError('required')) {
+              请输入您的密码
+            }
+            @if (control.hasError('minlength')) {
+              密码的长度不能少于6
+            }
+            @if (control.hasError('maxlength')) {
+              帐号的长度不能超过255
+            }
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+          <label nz-checkbox formControlName="rememberMe">
+            <span class="text-shadow">自动登录</span>
+          </label>
+        </div>
+      </div>
+      <button nz-button class="login-form-button login-form-margin"
+              [nzLoading]="loading()" [nzType]="'primary'">登录
+      </button>
+    </form>
+  </div>
+</div>

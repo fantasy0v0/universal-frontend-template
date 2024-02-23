@@ -1,5 +1,9 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter, withDebugTracing, withHashLocation } from '@angular/router';
+import {
+  provideRouter,
+  withHashLocation,
+  withViewTransitions
+} from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { zh_CN } from 'ng-zorro-antd/i18n';
@@ -10,34 +14,11 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { NgProgressHttpInterceptor } from 'src/ng-progress/ng-progress-http.interceptor';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzMessageModule } from 'ng-zorro-antd/message';
-import {IconDefinition} from '@ant-design/icons-angular';
-import {
-  UserOutline,
-  LockOutline,
-  MenuUnfoldOutline,
-  MenuFoldOutline,
-  SettingOutline,
-  FundTwoTone,
-  TeamOutline,
-  PlusOutline,
-  AppstoreOutline,
-  ReloadOutline,
-  FileImageTwoTone,
-  PlusSquareOutline, MinusSquareOutline,
-  LogoutOutline, EyeOutline, EyeInvisibleOutline
-} from '@ant-design/icons-angular/icons';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import icons from "./icons.config";
 
 registerLocaleData(zh);
-const icons: IconDefinition[] = [
-  UserOutline, LockOutline,
-  MenuUnfoldOutline, MenuFoldOutline,
-  SettingOutline, FundTwoTone, TeamOutline, PlusOutline,
-  AppstoreOutline, ReloadOutline, FileImageTwoTone,
-  MinusSquareOutline, PlusSquareOutline,
-  LogoutOutline, EyeOutline, EyeInvisibleOutline
-];
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -52,7 +33,13 @@ export const appConfig: ApplicationConfig = {
     },
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
-    provideRouter(routes, withDebugTracing(), withHashLocation()),
+    provideRouter(
+      routes,
+      // https://developer.chrome.com/docs/web-platform/view-transitions/
+      withViewTransitions(),
+      // 根据实际需要开启
+      withHashLocation()
+    ),
     {
       provide: HTTP_INTERCEPTORS, useClass: NgProgressHttpInterceptor, multi: true
     }

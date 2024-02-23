@@ -1,0 +1,76 @@
+<nz-layout>
+  <nz-sider
+    nzCollapsible
+    [nzCollapsed]="isCollapsed()" [nzTrigger]="null"
+    nzWidth="215px" nzBreakpoint="md" nzTheme="light">
+    <div class="logo">
+      <a routerLink="/" class="flex items-center">
+        <img ngSrc="/favicon.png" alt="logo" height="200" width="200">
+        <h1>通用管理系统</h1>
+      </a>
+    </div>
+    <ul nz-menu nzMode="inline" class="menu">
+      <li nz-menu-item
+          nzMatchRouter
+          routerLink="/welcome">
+        <i nz-icon nzType="fund" nzTheme="twotone"></i>
+        <span>欢迎页面</span>
+      </li>
+      <li nz-submenu nzTitle="系统管理" nzIcon="setting" *appSecured="[ 'ROLE_管理员' ]">
+        <ul>
+          <li nz-menu-item
+              nzMatchRouter
+              routerLink="/system-resource-list">
+            <i nz-icon nzType="appstore" nzTheme="outline"></i>
+            <span>资源管理</span>
+          </li>
+          <li nz-menu-item
+              nzMatchRouter
+              routerLink="/backend-role-list">
+            <i nz-icon nzType="team" nzTheme="outline"></i>
+            <span>角色管理</span>
+          </li>
+          <li nz-menu-item
+              nzMatchRouter
+              routerLink="/system-user-list">
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+            <span>用户管理</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <i
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed() ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed.set(!isCollapsed())"
+      ></i>
+      @if (userInfo()) {
+        <span class="user-info">
+          <nz-avatar [nzSize]="35" nzSrc="assets/default_face.png"></nz-avatar>
+          <span class="role">{{ userInfo()?.role?.name }}</span>
+          <span class="name" nz-dropdown
+                [nzDropdownMenu]="menu">{{ userInfo()?.name }}</span>
+        </span>
+      }
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul class="dropdown-menu" nz-menu>
+          <li nz-menu-item (click)="changePassword()">
+            <i nz-icon nzTheme="outline" nzType="lock"></i>
+            <span>修改密码</span>
+          </li>
+          <li nz-menu-item (click)="logout()">
+            <i nz-icon nzTheme="outline" nzType="logout"></i>
+            <span>退出</span>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-header>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

@@ -1,17 +1,15 @@
 import {Routes} from '@angular/router';
-import {canActivate} from './guards/auth';
+import {canActivate} from './guards/built-in/auth';
 
 export const routes: Routes = [{
   path: 'login',
-  loadComponent: () => import('./pages/login/login.component').then(mod => mod.LoginComponent)
+  loadComponent: () => import('./pages/built-in/login/login.component').then(mod => mod.LoginComponent)
 }, {
   path: '',
-  loadComponent: () => import('./pages/main/main.component').then(mod => mod.MainComponent),
+  loadComponent: () => import('./layout/default/default.component').then(mod => mod.DefaultComponent),
   canActivate: [ canActivate ],
   canActivateChild: [ canActivate ],
-  loadChildren: () => import('./pages/main/main.routes').then(mod => mod.routes)
+  loadChildren: () => import('./pages/route.config').then(mod => mod.routes)
 }, {
-  path: '**',
-  pathMatch: 'full',
-  redirectTo: ''
+  path: '**', redirectTo: ''
 }];
