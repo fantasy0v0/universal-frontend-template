@@ -32,11 +32,4 @@
       {{ undefined !== parent ? parent.name : '无' }}
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button nz-button nzType="primary" type="submit" [nzLoading]="loading()">
-        {{ 0 !== id ? '修改' : '添加' }}
-      </button>
-    </nz-form-control>
-  </nz-form-item>
 </form>

@@ -49,6 +49,23 @@ export class BackendUserAddComponent extends BaseComponent {
   private userService = inject(BackendUserService);
 
   override ngOnInit(): void {
+    this.modal.updateConfig({
+      nzFooter: [
+        {
+          label: '确认',
+          type: 'primary',
+          show: true,
+          onClick: () => this.submitForm()
+        },
+        {
+          label: '取消',
+          type: 'default',
+          show: true,
+          onClick: () => this.modal.close()
+        }
+      ]
+    });
+
     this.roleService.findAll(null).then(result => {
       this.roles = result;
       if (this.roles.length > 0) {

@@ -40,6 +40,22 @@ export class BackendRoleUpdateComponent extends BaseComponent {
               @Inject(NZ_MODAL_DATA)
               public data?: SimpleDataVO) {
     super();
+    this.modal.updateConfig({
+      nzFooter: [
+        {
+          label: undefined != data ? '修改' : '添加',
+          type: 'primary',
+          show: true,
+          onClick: () => this.submitForm()
+        },
+        {
+          label: '取消',
+          type: 'default',
+          show: true,
+          onClick: () => this.modal.close()
+        }
+      ]
+    });
   }
 
   override ngOnInit(): void {
