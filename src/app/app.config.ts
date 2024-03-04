@@ -17,6 +17,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import icons from "./icons.config";
+import {MyInterceptor} from "./interceptors/built-in/my/my.interceptor";
 
 registerLocaleData(zh);
 
@@ -42,6 +43,9 @@ export const appConfig: ApplicationConfig = {
     ),
     {
       provide: HTTP_INTERCEPTORS, useClass: NgProgressHttpInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi: true
     }
   ]
 };
