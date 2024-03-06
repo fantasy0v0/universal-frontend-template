@@ -22,6 +22,7 @@ import {BackendUserService} from "../../services/built-in/system/user/backend-us
 import {SystemDialogService} from "../../services/built-in/dialog/system/system-dialog.service";
 import {subRouteAnimation} from "../../animations/route";
 import {SecuredDirective} from "../../directives/built-in/secured/secured.directive";
+import {SettingDrawerComponent} from "./setting-drawer/setting-drawer.component";
 
 @Component({
   selector: 'app-layout-default',
@@ -41,7 +42,8 @@ import {SecuredDirective} from "../../directives/built-in/secured/secured.direct
     NzSubMenuComponent,
     RouterLink,
     RouterOutlet,
-    SecuredDirective
+    SecuredDirective,
+    SettingDrawerComponent
   ],
   templateUrl: './default.component.html',
   styleUrl: './default.component.scss',

@@ -1,32 +1,39 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgProgressState, NgProgressSettings } from '../ng-progress.interface';
-import { NgProgress } from '../ng-progress.service';
-import { Subscription } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  signal
+} from '@angular/core';
+import {NgProgressSettings, NgProgressState} from '../ng-progress.interface';
+import {NgProgress} from '../ng-progress.service';
+import {Subscription} from 'rxjs';
+import {delay} from 'rxjs/operators';
+import {CommonModule} from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'ng-progress-component',
   templateUrl: './ng-progress.component.html',
   styleUrls: ['./ng-progress.component.scss'],
-  imports: [CommonModule]
+  imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgProgressComponent implements OnInit, OnDestroy {
 
-  settings?: NgProgressSettings;
+  settings = signal<NgProgressSettings | undefined>(undefined);
 
   private settingsSubscription: Subscription;
 
-  state: NgProgressState = { active: false };
+  state  = signal<NgProgressState>({ active: false });
 
   private stateSubscription: Subscription;
 
   constructor(private ngProgress: NgProgress) {
     this.settingsSubscription = this.ngProgress.settings
-      .subscribe(settings => this.settings = settings);
+      .subscribe(settings => this.settings.set(settings));
     this.stateSubscription = this.ngProgress.state
-      .pipe(delay(1)).subscribe(state => this.state = state);
+      .pipe(delay(1)).subscribe(state => this.state.set(state));
   }
 
   ngOnInit() {

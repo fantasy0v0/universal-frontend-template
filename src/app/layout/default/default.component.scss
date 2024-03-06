@@ -1,5 +1,3 @@
-@import "src/variables";
-
 :host {
   display: block;
   width: 100%;
@@ -88,7 +86,7 @@ nz-header {
     transition: color .3s;
 
     &:hover {
-      color: #1890ff;
+      color: var(--ant-primary-color);
     }
   }
 }
