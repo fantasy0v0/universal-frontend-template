@@ -10,7 +10,7 @@ import {
 import {NzDropDownDirective, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
 import {NzIconDirective} from "ng-zorro-antd/icon";
 import {
-  NzMenuDirective,
+  NzMenuDirective, NzMenuDividerDirective,
   NzMenuItemComponent,
   NzSubMenuComponent
 } from "ng-zorro-antd/menu";
@@ -23,6 +23,9 @@ import {SystemDialogService} from "../../services/built-in/dialog/system/system-
 import {subRouteAnimation} from "../../animations/route";
 import {SecuredDirective} from "../../directives/built-in/secured/secured.directive";
 import {SettingDrawerComponent} from "./setting-drawer/setting-drawer.component";
+import {
+  LocalSettingService
+} from "../../services/built-in/system/setting/local-setting.service";
 
 @Component({
   selector: 'app-layout-default',
@@ -43,7 +46,8 @@ import {SettingDrawerComponent} from "./setting-drawer/setting-drawer.component"
     RouterLink,
     RouterOutlet,
     SecuredDirective,
-    SettingDrawerComponent
+    SettingDrawerComponent,
+    NzMenuDividerDirective
   ],
   templateUrl: './default.component.html',
   styleUrl: './default.component.scss',
@@ -59,6 +63,8 @@ export class DefaultComponent implements OnInit {
   userInfo = signal<UserInfo | undefined>(undefined);
 
   private error = inject(ErrorService);
+
+  private localSettingService = inject(LocalSettingService);
 
   constructor(private message: NzMessageService,
               private userService: BackendUserService,
@@ -90,5 +96,10 @@ export class DefaultComponent implements OnInit {
 
   changePassword() {
     this.dialogService.changePassword();
+  }
+
+  clear() {
+    this.localSettingService.reset();
+    this.message.success("清理成功");
   }
 }

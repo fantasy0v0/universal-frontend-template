@@ -50,7 +50,7 @@ export class LocalSettingService {
    */
   reset() {
     localStorage.removeItem(KEY);
-    this.setting$.next(DefaultSetting);
+    this.updateSetting(DefaultSetting);
   }
 
   /**

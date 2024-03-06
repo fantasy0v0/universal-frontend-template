@@ -12,7 +12,7 @@ import {
   ReloadOutline,
   FileImageTwoTone,
   PlusSquareOutline, MinusSquareOutline,
-  LogoutOutline, EyeOutline, EyeInvisibleOutline
+  LogoutOutline, EyeOutline, EyeInvisibleOutline, ClearOutline
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -21,7 +21,8 @@ const icons: IconDefinition[] = [
   SettingOutline, FundTwoTone, TeamOutline, PlusOutline,
   AppstoreOutline, ReloadOutline, FileImageTwoTone,
   MinusSquareOutline, PlusSquareOutline,
-  LogoutOutline, EyeOutline, EyeInvisibleOutline
+  LogoutOutline, EyeOutline, EyeInvisibleOutline,
+  ClearOutline
 ];
 
 export default icons;

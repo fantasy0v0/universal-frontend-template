@@ -24,7 +24,7 @@ div.logo {
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  border-bottom: 1px solid #e2e2e2;
+  box-shadow: 0 0 .5rem var(--ant-primary-color);
   transition: all .3s;
 
   & > a {

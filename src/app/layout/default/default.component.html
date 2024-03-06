@@ -62,6 +62,11 @@
             <i nz-icon nzTheme="outline" nzType="lock"></i>
             <span>修改密码</span>
           </li>
+          <li nz-menu-divider></li>
+          <li nz-menu-item (click)="clear()">
+            <i nz-icon nzTheme="outline" nzType="clear"></i>
+            <span>清除缓存</span>
+          </li>
           <li nz-menu-item (click)="logout()">
             <i nz-icon nzTheme="outline" nzType="logout"></i>
             <span>退出</span>
