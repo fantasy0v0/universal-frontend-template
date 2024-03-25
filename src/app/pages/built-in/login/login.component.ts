@@ -77,7 +77,7 @@ export class LoginComponent extends BaseComponent {
           nzPlacement: "topLeft"
         });
       },
-      after: () => {
+      finally: () => {
         this.formGroup.enable();
       }
     });

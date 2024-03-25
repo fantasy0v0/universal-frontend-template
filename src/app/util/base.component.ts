@@ -78,7 +78,7 @@ export abstract class BaseComponent implements OnInit, OnDestroy {
     }, delay);
   }
 
-  protected async action(action: Action, config?: { before?: Action, after?: Action, done?: Action, error?: ActionError, finally?: Action }) {
+  protected async action(action: Action, config?: { before?: Action, done?: Action, error?: ActionError, finally?: Action }) {
     await this.startLoading(config?.before);
     try {
       await action();

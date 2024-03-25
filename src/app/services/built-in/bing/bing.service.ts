@@ -22,7 +22,7 @@ export class BingService {
   wallpaper() {
     const date = DateTime.now().toFormat('yyyyMMdd');
     const defaultImage = this.getDefaultImage();
-    if (!this.needUpdate(date)) {
+    if (!this.needUpdate(date, defaultImage)) {
       return Promise.resolve(defaultImage);
     }
     let observable = this.http.get<Result<string[]>>(`${ApiPrefix}/bing/wallpaper`, {
@@ -55,9 +55,9 @@ export class BingService {
     }
   }
 
-  private needUpdate(date: string) {
+  private needUpdate(date: string, image: string) {
     const localDate = localStorage.getItem(wallpaper_date_key);
-    return null == localDate || date != localDate;
+    return null == localDate || date != localDate || !image.startsWith("http");
   }
 
   private updateDefaultImages(date: string, image: string) {
