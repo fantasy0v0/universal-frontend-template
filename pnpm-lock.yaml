@@ -32,6 +32,9 @@ dependencies:
   '@ant-design/icons-angular':
     specifier: ^17.0.0
     version: 17.0.0(@angular/common@17.2.1)(@angular/core@17.2.1)(@angular/platform-browser@17.2.1)(rxjs@7.8.0)
+  ag-grid-angular:
+    specifier: ^31.2.0
+    version: 31.2.0(@angular/common@17.2.1)(@angular/core@17.2.1)(ag-grid-community@31.2.0)
   luxon:
     specifier: ^3.3.0
     version: 3.3.0
@@ -2814,6 +2817,23 @@ packages:
       loader-utils: 2.0.4
       regex-parser: 2.2.11
     dev: true
+
+  /ag-grid-angular@31.2.0(@angular/common@17.2.1)(@angular/core@17.2.1)(ag-grid-community@31.2.0):
+    resolution: {integrity: sha512-dVRB9bQzbt3LBKQgHDjJ4NG9s8b1kXh/h0iS0jcrjgPzCLg4GTHomd5FLvbDWBiKOwCpurT4dy/O5+NKtGrGdg==}
+    peerDependencies:
+      '@angular/common': '>= 14.0.0'
+      '@angular/core': '>= 14.0.0'
+      ag-grid-community: 31.2.0
+    dependencies:
+      '@angular/common': 17.2.1(@angular/core@17.2.1)(rxjs@7.8.0)
+      '@angular/core': 17.2.1(rxjs@7.8.0)(zone.js@0.14.2)
+      ag-grid-community: 31.2.0
+      tslib: 2.6.2
+    dev: false
+
+  /ag-grid-community@31.2.0:
+    resolution: {integrity: sha512-Ija6X171Iq3mFZASZlriQIIdEFqA71rZIsjQD6KHy5lMmxnoseZTX2neThBav1gvr6SA6n5B2PD6eUHdZnrUfw==}
+    dev: false
 
   /agent-base@7.1.0:
     resolution: {integrity: sha512-o/zjMZRhJxny7OyEF+Op8X+efiELC7k7yOjMzgfzVqOzXqkBkWI79YoTdOtsuWd5BWhAGAuOY/Xa6xpiaWXiNg==}
