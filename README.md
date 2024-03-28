@@ -1,6 +1,6 @@
-# UniversalFrontendTemplateNew
+# 通用后端管理模板
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.3.
+该项目与通用后端项目搭配使用。
 
 ## Development server
 
