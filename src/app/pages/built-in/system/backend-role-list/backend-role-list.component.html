@@ -29,25 +29,27 @@
     </thead>
     <tbody>
       @for (item of data; track item.id) {
-        <td>{{ item.id }}</td>
-        <td>{{ item.name }}</td>
-        <td>
-          <nz-space>
-            @if (item.id > 1000) {
-              <button *nzSpaceItem
-                      nz-button nzType="link" nzSize="small"
-                      nz-popconfirm nzPopconfirmTitle="是否确认删除该角色?"
-                      (nzOnConfirm)="deleteRole(item)"
-              >删除
-              </button>
-              <button *nzSpaceItem
-                      nz-button nzType="link" nzSize="small"
-                      (click)="saveOrUpdate(item)"
-              >编辑
-              </button>
-            }
-          </nz-space>
-        </td>
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>
+            <nz-space>
+              @if (item.id > 1000) {
+                <button *nzSpaceItem
+                        nz-button nzType="link" nzSize="small"
+                        nz-popconfirm nzPopconfirmTitle="是否确认删除该角色?"
+                        (nzOnConfirm)="deleteRole(item)"
+                >删除
+                </button>
+                <button *nzSpaceItem
+                        nz-button nzType="link" nzSize="small"
+                        (click)="saveOrUpdate(item)"
+                >编辑
+                </button>
+              }
+            </nz-space>
+          </td>
+        </tr>
       }
     </tbody>
   </nz-table>
