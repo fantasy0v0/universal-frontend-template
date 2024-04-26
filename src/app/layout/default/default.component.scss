@@ -10,7 +10,7 @@
 }
 
 nz-sider {
-  box-shadow: 1px 0 5px #00152959;
+  box-shadow: 0 0 0.5rem rgb(219 219 219);
 }
 
 nz-header {
@@ -24,7 +24,7 @@ div.logo {
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  box-shadow: 0 0 .5rem var(--ant-primary-color);
+  box-shadow: 0 0 0.5rem rgb(219 219 219);
   transition: all .3s;
 
   & > a {

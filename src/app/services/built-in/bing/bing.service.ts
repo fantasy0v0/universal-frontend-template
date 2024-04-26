@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ApiPrefix, checkResult, Result} from "../util";
 import {firstValueFrom, map, of} from "rxjs";
@@ -13,7 +13,9 @@ const wallpaper_default_images_key = 'wallpaper_default_images';
 })
 export class BingService {
 
-  constructor(private http: HttpClient) {
+  private http = inject(HttpClient);
+
+  constructor() {
   }
 
   /**
@@ -63,5 +65,12 @@ export class BingService {
   private updateDefaultImages(date: string, image: string) {
     localStorage.setItem(wallpaper_default_images_key, JSON.stringify(image));
     localStorage.setItem(wallpaper_date_key, date);
+  }
+
+  /**
+   * 清理默认壁纸
+   */
+  public clear() {
+    localStorage.removeItem(wallpaper_date_key);
   }
 }

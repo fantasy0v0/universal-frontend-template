@@ -13,7 +13,6 @@
           nzLayout="vertical"
           (ngSubmit)="submitForm()">
       <nz-form-item>
-        <nz-form-label nzFor="account">账号</nz-form-label>
         <nz-form-control [nzErrorTip]="accountErrorTpl">
           <nz-input-group nzPrefixIcon="user" nzSize="large">
             <input type="text" nz-input formControlName="account"
@@ -35,7 +34,6 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label nzFor="password">密码:</nz-form-label>
         <nz-form-control [nzErrorTip]="passwordErrorTpl">
           <nz-input-group nzPrefixIcon="lock" nzSize="large">
             <input type="password" nz-input formControlName="password"
@@ -59,7 +57,7 @@
       <div nz-row class="login-form-margin">
         <div nz-col [nzSpan]="12">
           <label nz-checkbox formControlName="rememberMe">
-            <span class="text-shadow">自动登录</span>
+            <span class="text-shadow">保持会话</span>
           </label>
         </div>
       </div>

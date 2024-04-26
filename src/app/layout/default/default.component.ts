@@ -26,6 +26,7 @@ import {SettingDrawerComponent} from "./setting-drawer/setting-drawer.component"
 import {
   LocalSettingService
 } from "../../services/built-in/system/setting/local-setting.service";
+import {BingService} from "../../services/built-in/bing/bing.service";
 
 @Component({
   selector: 'app-layout-default',
@@ -66,6 +67,8 @@ export class DefaultComponent implements OnInit {
 
   private localSettingService = inject(LocalSettingService);
 
+  private bing = inject(BingService);
+
   constructor(private message: NzMessageService,
               private userService: BackendUserService,
               private dialogService: SystemDialogService,
@@ -100,6 +103,7 @@ export class DefaultComponent implements OnInit {
 
   clear() {
     this.localSettingService.reset();
+    this.bing.clear();
     this.message.success("清理成功");
   }
 }

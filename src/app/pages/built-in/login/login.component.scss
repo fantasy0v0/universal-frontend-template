@@ -14,7 +14,7 @@
   height: 100%;
   /*background-image: url('/assets/wallpaper.jfif');*/
   background-size: cover;
-  transition: opacity 3s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: opacity .3s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .text-shadow {
@@ -31,7 +31,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 .5rem .125rem #000;
-  backdrop-filter: blur(1rem);
+  backdrop-filter: blur(3rem);
 
   & > .title {
     font-size: 1.875rem;
