@@ -77,7 +77,7 @@ export class BackendRoleUpdateComponent extends BaseComponent {
         name
       });
       this.message.success("操作成功");
-      this.modal.close();
+      this.modal.close(true);
     } catch (e) {
       this.error.process(e);
     } finally {

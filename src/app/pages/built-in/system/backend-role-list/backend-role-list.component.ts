@@ -78,8 +78,10 @@ export class BackendRoleListComponent extends BaseComponent {
   }
 
   async saveOrUpdate(data?: SimpleDataVO) {
-    await this.dialogService.backendRoleSaveOrUpdate(data);
-    this.onSearch();
+    const result = await this.dialogService.backendRoleSaveOrUpdate(data);
+    if (result) {
+      this.onSearch();
+    }
   }
 
 }

@@ -29,7 +29,7 @@ export class SystemDialogService {
    * @param data
    */
   backendRoleSaveOrUpdate(data?: SimpleDataVO) {
-    let observable = this.modal.create<BackendRoleUpdateComponent, SimpleDataVO>({
+    let observable = this.modal.create<BackendRoleUpdateComponent, SimpleDataVO, boolean>({
       nzTitle: data ? "更新角色" : "添加角色",
       nzContent: BackendRoleUpdateComponent,
       nzData: data,
