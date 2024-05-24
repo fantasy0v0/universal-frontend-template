@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {ApiPrefix, getResult, Result} from "../../util";
 import {BackendActionVO} from "./vo/BackendActionVO";
 import {getAuthorizationHeader} from "../user/backend-user.service";
