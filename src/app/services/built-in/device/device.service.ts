@@ -24,7 +24,9 @@ export class DeviceService {
    * 创建一个设备
    */
   create() {
-    const observable = this.http.post<Result<string>>(`${ApiPrefix}/device/create`, null);
+    const formData = new FormData();
+    formData.set("resolution", `${window.outerWidth}x${window.outerHeight}`);
+    const observable = this.http.post<Result<string>>(`${ApiPrefix}/device/create`, formData);
     return getResult(observable).then(id => {
       localStorage.setItem(KEY, id);
       return id;
