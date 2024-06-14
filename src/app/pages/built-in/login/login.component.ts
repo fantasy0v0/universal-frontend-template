@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, ElementRef, inject, signal} from '@angular/core';
 import {BingService} from "../../../services/built-in/bing/bing.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -11,6 +11,7 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {BaseComponent} from "../../../util/base.component";
+import {turnstileInit} from "../../../util/turnstile";
 
 @Component({
   standalone: true,
@@ -46,12 +47,18 @@ export class LoginComponent extends BaseComponent {
 
   opacity = signal(.1);
 
+  private elementRef = inject(ElementRef);
+
   constructor() {
     super();
     this.bingService.wallpaper().then(url => {
       this.backgroundImage.set(`url(${ url })`);
       setTimeout(() => this.opacity.set(1), 100);
     });
+  }
+
+  override ngOnInit() {
+    turnstileInit(this.elementRef);
   }
 
   submitForm() {
