@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, signal} from '@angular/core';
+import {Component, ComponentRef, ElementRef, inject, signal} from '@angular/core';
 import {BingService} from "../../../services/built-in/bing/bing.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -12,6 +12,7 @@ import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {BaseComponent} from "../../../util/base.component";
 import {turnstileInit} from "../../../util/turnstile";
+import {NzIconDirective} from "ng-zorro-antd/icon";
 
 @Component({
   standalone: true,
@@ -24,7 +25,8 @@ import {turnstileInit} from "../../../util/turnstile";
     NzFormModule,
     NzButtonModule,
     NzInputModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzIconDirective
   ]
 })
 export class LoginComponent extends BaseComponent {
@@ -43,11 +45,28 @@ export class LoginComponent extends BaseComponent {
 
   private router = inject(Router);
 
+  /**
+   * 遮罩背景图片
+   */
   backgroundImage = signal<string | undefined>(undefined);
 
+  /**
+   * 遮罩透明度
+   */
   opacity = signal(.1);
 
   private elementRef = inject(ElementRef);
+
+  /**
+   * 密码框是否显示明文
+   */
+  passwordVisible = signal(false);
+
+  /**
+   * 存储turnstile返回的token
+   * @private
+   */
+  private turnstileToken?: string;
 
   constructor() {
     super();
@@ -58,11 +77,24 @@ export class LoginComponent extends BaseComponent {
   }
 
   override ngOnInit() {
-    turnstileInit(this.elementRef);
+    this.loading.set(true);
+    this.formGroup.disable();
+    turnstileInit(this.elementRef, '.cf-turnstile').then(token => {
+      this.turnstileToken = token;
+    }).catch(err => {
+      this.notification.error('安全组件加载失败', `错误原因: ${err}`);
+    }).finally(() => {
+      this.formGroup.enable();
+      this.loading.set(false);
+    });
   }
 
   submitForm() {
-    if (formGroupInvalid(this.formGroup)) {
+    if (formGroupInvalid(this.formGroup) || this.loading()) {
+      return;
+    }
+    if (undefined == this.turnstileToken) {
+      this.notification.error('安全组件加载失败', '请刷新页面重试');
       return;
     }
     const account = this.formGroup.getRawValue().account!;

@@ -9,8 +9,8 @@
   </div>
   <div class="sub-title text-shadow">Ant Design 是西湖区最具影响力的 Web 设计规范</div>
   <div class="content">
-    <form nz-form [formGroup]="formGroup" class="login-form"
-          nzLayout="vertical"
+    <form nz-form [formGroup]="formGroup"
+          class="login-form" nzLayout="vertical"
           (ngSubmit)="submitForm()">
       <nz-form-item>
         <nz-form-control [nzErrorTip]="accountErrorTpl">
@@ -35,9 +35,10 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-control [nzErrorTip]="passwordErrorTpl">
-          <nz-input-group nzPrefixIcon="lock" nzSize="large">
+          <nz-input-group nzPrefixIcon="lock" nzSize="large" [nzSuffix]="suffixTemplate">
             <input type="password" nz-input formControlName="password"
                    id="password"
+                   [type]="passwordVisible() ? 'text' : 'password'"
                    autocomplete="current-password"
                    placeholder="请输入密码"/>
           </nz-input-group>
@@ -52,14 +53,18 @@
               帐号的长度不能超过255
             }
           </ng-template>
+          <ng-template #suffixTemplate>
+            <span nz-icon [nzType]="passwordVisible() ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisible.set(!passwordVisible())"></span>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAAAcinSdXeU5MbE6G" data-callback="javascriptCallback"></div>
+        <div class="cf-turnstile"></div>
       </nz-form-item>
       <div nz-row class="login-form-margin">
         <div nz-col [nzSpan]="12">
-          <label nz-checkbox formControlName="rememberMe">
+          <label nz-checkbox [nzDisabled]="loading()" formControlName="rememberMe">
             <span class="text-shadow">保持会话</span>
           </label>
         </div>
@@ -70,4 +75,3 @@
     </form>
   </div>
 </div>
-<script src="" defer></script>

@@ -22,10 +22,11 @@ export class BackendUserService {
    * @param account 账号
    * @param password 密码
    * @param rememberMe 是否记住我
+   * @param token 用于安全验证
    */
-  async login(account: string, password: string, rememberMe: boolean) {
+  async login(account: string, password: string, rememberMe: boolean, token?: string) {
     let observable = this.http.post<Result<Session>>(`${ApiPrefix}/user/login`, {
-      account, password, rememberMe, type: 0,
+      account, password, rememberMe, type: 0, token
     });
     const session = await getResult(observable);
     saveSession(session);
