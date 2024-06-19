@@ -1,4 +1,4 @@
-import {Component, ComponentRef, ElementRef, inject, signal} from '@angular/core';
+import {Component, ComponentRef, ElementRef, inject, NgZone, signal} from '@angular/core';
 import {BingService} from "../../../services/built-in/bing/bing.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -11,8 +11,15 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {BaseComponent} from "../../../util/base.component";
-import {turnstileInit} from "../../../util/turnstile";
+import {
+  turnstileInit,
+  turnstileIsExpired,
+  turnstileRemove,
+  turnstileReset
+} from "../../../util/turnstile";
 import {NzIconDirective} from "ng-zorro-antd/icon";
+
+const Turnstile_Container = '.cf-turnstile';
 
 @Component({
   standalone: true,
@@ -62,6 +69,8 @@ export class LoginComponent extends BaseComponent {
    */
   passwordVisible = signal(false);
 
+  private zone = inject(NgZone);
+
   /**
    * 存储turnstile返回的token
    * @private
@@ -79,13 +88,17 @@ export class LoginComponent extends BaseComponent {
   override ngOnInit() {
     this.loading.set(true);
     this.formGroup.disable();
-    turnstileInit(this.elementRef, '.cf-turnstile').then(token => {
-      this.turnstileToken = token;
-    }).catch(err => {
-      this.notification.error('安全组件加载失败', `错误原因: ${err}`);
-    }).finally(() => {
-      this.formGroup.enable();
-      this.loading.set(false);
+    turnstileInit(this.elementRef, Turnstile_Container, {
+      callback: token => {
+        this.turnstileToken = token;
+        this.zone.run(() => {
+          this.formGroup.enable();
+          this.loading.set(false);
+        });
+      },
+      "error-callback": () => {
+        this.notification.error('安全组件加载失败', `错误原因: error`);
+      }
     });
   }
 
@@ -97,20 +110,29 @@ export class LoginComponent extends BaseComponent {
       this.notification.error('安全组件加载失败', '请刷新页面重试');
       return;
     }
+    if (turnstileIsExpired(Turnstile_Container)) {
+      this.notification.error('安全验证已过期', '请重试');
+      turnstileReset(Turnstile_Container);
+      return;
+    }
     const account = this.formGroup.getRawValue().account!;
     const password = this.formGroup.getRawValue().password!;
     const rememberMe = this.formGroup.getRawValue().rememberMe!;
     this.action(async () => {
-      await this.userService.login(account, password, rememberMe);
+      await this.userService.login(account, password, rememberMe, this.turnstileToken);
       const ref = this.notification.success('登录成功', '正在加载中, 请稍后...', {
         nzDuration: 0
       });
+      this.turnstileToken = undefined;
+      turnstileRemove(Turnstile_Container);
       this.router.navigateByUrl('/main');
       setTimeout(() => {
         this.notification.remove(ref.messageId);
       }, 1000);
     }, {
       error: e => {
+        this.turnstileToken = undefined;
+        turnstileReset(Turnstile_Container);
         const message = errorMessage(e);
         this.notification.error('登录失败', message, {
           nzPlacement: "topLeft"

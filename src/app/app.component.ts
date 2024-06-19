@@ -39,9 +39,6 @@ export class AppComponent implements OnInit {
     ).subscribe(setting => {
       console.log("setting:", setting);
     });
-    setTimeout(() => {
-      this.localSettingService.updateColor("orange");
-    }, 8000);
   }
 
   prepareRoute(outlet: RouterOutlet) {
