@@ -111,7 +111,10 @@ export class LoginComponent extends BaseComponent {
       return;
     }
     if (turnstileIsExpired(Turnstile_Container)) {
-      this.notification.error('安全验证已过期', '请重试');
+      this.turnstileToken = undefined;
+      this.notification.warning('安全验证已过期', '正在重新加载...');
+      this.loading.set(true);
+      this.formGroup.disable();
       turnstileReset(Turnstile_Container);
       return;
     }
