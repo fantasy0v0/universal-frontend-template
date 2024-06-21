@@ -69,8 +69,6 @@ export class LoginComponent extends BaseComponent {
    */
   passwordVisible = signal(false);
 
-  private zone = inject(NgZone);
-
   /**
    * 存储turnstile返回的token
    * @private
@@ -91,10 +89,8 @@ export class LoginComponent extends BaseComponent {
     turnstileInit(this.elementRef, Turnstile_Container, {
       callback: token => {
         this.turnstileToken = token;
-        this.zone.run(() => {
-          this.formGroup.enable();
-          this.loading.set(false);
-        });
+        this.formGroup.enable();
+        this.loading.set(false);
       },
       "error-callback": () => {
         this.notification.error('安全组件加载失败', `错误原因: error`);

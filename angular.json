@@ -7,14 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
-          "standalone": true
-        },
-        "@schematics/angular:directive": {
-          "standalone": true
-        },
-        "@schematics/angular:pipe": {
-          "standalone": true
+          "style": "scss"
         }
       },
       "root": "",
@@ -33,8 +26,10 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.png",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
             ],
             "styles": [
               "./node_modules/ng-zorro-antd/ng-zorro-antd.variable.min.css",
@@ -95,8 +90,10 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.png",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
             ],
             "styles": [
               "./node_modules/ng-zorro-antd/ng-zorro-antd.variable.min.css",
