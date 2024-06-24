@@ -50,7 +50,7 @@
       ></i>
       @if (userInfo()) {
         <span class="user-info">
-          <nz-avatar [nzSize]="35" nzSrc="assets/default_face.png"></nz-avatar>
+          <nz-avatar [nzSize]="35" nzSrc="/default_face.png"></nz-avatar>
           <span class="role">{{ userInfo()?.role?.name }}</span>
           <span class="name" nz-dropdown
                 [nzDropdownMenu]="menu">{{ userInfo()?.name }}</span>
