@@ -23,8 +23,8 @@
   </form>
 </div>
 <div class="body">
-  <nz-table [nzData]="data" nzFrontPagination="false"
-            [nzLoading]="loading()" nzSize="small" [nzTotal]="total"
+  <nz-table [nzData]="data()" nzFrontPagination="false"
+            [nzLoading]="loading()" nzSize="small" [nzTotal]="total()"
             [(nzPageIndex)]="paging.pageNumber"
             [(nzPageSize)]="paging.pageSize"
             (nzPageSizeChange)="onSearch()"
@@ -40,7 +40,7 @@
     </tr>
     </thead>
     <tbody>
-      @for (item of data; track item.id) {
+      @for (item of data(); track item.id) {
         <tr>
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>

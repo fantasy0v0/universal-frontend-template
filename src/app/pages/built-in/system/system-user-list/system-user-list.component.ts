@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {BackendUserService} from "../../../../services/built-in/system/user/backend-user.service";
 import {SystemUserVO} from "../../../../services/built-in/system/user/vo/SystemUserVO";
@@ -50,9 +50,9 @@ export class SystemUserListComponent extends BaseComponent {
 
   paging = Paging.of(1, 10);
 
-  total = 0;
+  total = signal(0);
 
-  data: SystemUserVO[] = [];
+  data = signal<SystemUserVO[]>([]);
 
   /**
    * 角色列表
@@ -90,15 +90,14 @@ export class SystemUserListComponent extends BaseComponent {
   async onSearch() {
     this.startLoading();
     try {
-      let a = this.formGroup.getRawValue().name
       let role = this.formGroup.getRawValue().role;
       if (-1 === role) {
         role = null;
       }
       const name = this.formGroup.getRawValue().name;
       const pagingResult = await this.userService.findAll(this.paging, name, role);
-      this.total = pagingResult.total;
-      this.data = pagingResult.data;
+      this.total.set(pagingResult.total);
+      this.data.set(pagingResult.data);
     } catch (e) {
       this.error.process(e);
     } finally {

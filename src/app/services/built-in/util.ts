@@ -82,13 +82,13 @@ export function errorMessage(err: any, topic?: string) {
   if (err instanceof Error) {
     if (err instanceof ResultError) {
       msg = err.msg ? err.msg : '服务异常';
+      // TODO 如果是认证失效需要额外处理
     } else {
       msg = err.message ? err.message : '未知错误';
     }
   } else if (typeof err === 'string') {
     msg = err;
   } else {
-    console.error(err);
     msg = "未知错误";
   }
   if (null != topic) {

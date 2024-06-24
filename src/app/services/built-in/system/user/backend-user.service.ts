@@ -35,6 +35,7 @@ export class BackendUserService {
 
   /**
    * 判断当前是否处于在线状态
+   * @deprecated 目前用不到
    */
   online() {
     let session = getSession();
