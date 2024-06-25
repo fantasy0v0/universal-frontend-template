@@ -16,6 +16,7 @@ export class ErrorService {
     console.debug(err);
     const msg = errorMessage(err, topic);
     // 会话失效处理, 或者弹出登陆对话框?
+    // TODO 考虑将登录页面改造成组件的形式
     if (err instanceof ResultError && "1" === err.code) {
       this.modal.confirm({
         nzTitle: '会话已失效',
