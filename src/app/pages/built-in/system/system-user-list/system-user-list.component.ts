@@ -83,7 +83,7 @@ export class SystemUserListComponent extends BaseComponent {
         id: -1, name: "所有"
       }, ...data];
     } catch (e) {
-      this.error.process(e);
+      this.error.process(e, '查询角色列表失败');
     }
   }
 
@@ -99,7 +99,7 @@ export class SystemUserListComponent extends BaseComponent {
       this.total.set(pagingResult.total);
       this.data.set(pagingResult.data);
     } catch (e) {
-      this.error.process(e);
+      this.error.process(e, "查询用户列表失败");
     } finally {
       this.stopLoading();
     }
